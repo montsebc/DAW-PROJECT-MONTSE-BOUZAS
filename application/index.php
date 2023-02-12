@@ -9,7 +9,7 @@
         <link rel="stylesheet" href="">
     </head>
     <body>
-        Prueba
+        <a href="./views/prueba.php">Enlace a prueba</a>
         <script src=""></script>
     </body>
 </html>

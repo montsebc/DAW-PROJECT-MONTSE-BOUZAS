@@ -1,0 +1,63 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema PROYECTO_FIN_GRADO
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `PROYECTO_FIN_GRADO` ;
+
+-- -----------------------------------------------------
+-- Schema PROYECTO_FIN_GRADO
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `PROYECTO_FIN_GRADO` DEFAULT CHARACTER SET utf8 ;
+SHOW WARNINGS;
+USE `PROYECTO_FIN_GRADO` ;
+
+-- -----------------------------------------------------
+-- Table `PROYECTO_FIN_GRADO`.`PRESTAMO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PROYECTO_FIN_GRADO`.`PRESTAMO` (
+  `ID_PRESTAMO` INT NOT NULL,
+  `FECHA_FIN` DATETIME NULL,
+  `NOMBRE(USUARIO)` VARCHAR(45) NULL,
+  `APELLIDOS(USUARIO)` VARCHAR(45) NULL,
+  `DNI` VARCHAR(9) NULL,
+  `TELEFONO` VARCHAR(9) NULL,
+  `EMAIL` VARCHAR(45) NULL,
+  `HISTORICO` INT NULL,
+  PRIMARY KEY (`ID_PRESTAMO`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `PROYECTO_FIN_GRADO`.`CATEGORIA`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PROYECTO_FIN_GRADO`.`CATEGORIA` (
+  `ID_CATEGORIA` INT NOT NULL,
+  PRIMARY KEY (`ID_CATEGORIA`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `PROYECTO_FIN_GRADO`.`LIBRO`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `PROYECTO_FIN_GRADO`.`LIBRO` (
+  `ISBN` INT NOT NULL,
+  `TITULO` VARCHAR(45) NULL,
+  `AUTOR` VARCHAR(45) NULL,
+  `FECHA_ALTA` DATETIME NULL,
+  `PRESTAMO_ID_PRESTAMO` INT NOT NULL,
+  `CATEGORIA_ID_CATEGORIA` INT NOT NULL,
+  PRIMARY KEY (`ISBN`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
