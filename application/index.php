@@ -11,25 +11,19 @@
     <body>
         <?php 
             if (isset($_POST['email']) && isset($_POST['dni'])) {
-                $existUser = Login($_COOKIE['email'], $_COOKIE['dni']);
+                $existUser = Login($_POST['email'], $_POST['dni']);
 
-				// Crear cookies y actualizar la web en el que caso de que el usuario no exista
-				if ($existUser == true) {
+				// Crear cookies y actualizar la web en el que caso de que el usuario exista
+				if ($existUser == "usuario") {
 					setcookie("email", $_POST['email'], time()+500, "/", "localhost");
 					setcookie("dni", $_POST['dni'], time()+500, "/", "localhost");
 
                     header("location: ./views/dashboard.php");
 				}
 				else{
-						//este código es para borrar las cookies tanto de nombre como de correo, para que no quede el usuario antiguo. Hay que hacerlo en las dos porque con cambiar una sola
-						//sigue dando acceso a usuarios sin permisos suficientes.
-						setcookie('nombre','',time() - 3600,'/',"localhost");
-						setcookie('correo','',time() - 3600,'/',"localhost");
-                        echo "true";
-					}
-					
-					header("location: index.php");//lo que hacemos con esto es indicarle al navegador que vaya a index "de cero" y con el set cookies "limpiamos"las cookies.
+                    echo "Usuario no registrado.";
 				}
+			}
         ?>
         <div class="container mt-5">
             <div class="row">
@@ -39,18 +33,18 @@
                         <form method="POST">
                             <div class="mb-3">
                                 <label for="email" class="form-label">Email</label>
-                                <input type="email" class="form-control" id="email" aria-describedby="emailHelp">
+                                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
                                 <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                             </div>
                             <div class="mb-3">
-                                <label for="exampleInputPassword1" class="form-label">Password</label>
-                                <input type="dni" class="form-control" id="pass">
+                                <label for="dni" class="form-label">Password</label>
+                                <input type="text" class="form-control" id="dni" name="dni">
                             </div>
                             <div class="mb-3 form-check">
                                 <input type="checkbox" class="form-check-input" id="exampleCheck1">
                                 <label class="form-check-label" for="exampleCheck1">Check me out</label>
                             </div>
-                            <button type="submit" class="btn btn-primary">Login</a>
+                            <button type="submit" class="btn btn-primary">Login</button>
                         </form>
                     </div>
                 </div>
@@ -59,3 +53,4 @@
         <script src=""></script>
     </body>
 </html>
+
