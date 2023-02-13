@@ -1,20 +1,15 @@
 <?php 
-	function connect() {
-		$host = "localhost";
-		$user = "root";
-		$pass = "";
-		$database = "proyecto_fin_grado";
-
-		$conection = new PDO("mysql:host=".$host.";dbname=".$database.";charset=utf8", $user, $pass);
-		$conection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-
-		if (!$conection)
-			die("<h3>Error: " . $conection->errorCode() . "</h3>");
-
-		return $conection;
-	}
-
-	function close($conection) {
-		$conexion = null;
-	}
+$host = "localhost";
+$usuario = "root";
+$contraseña = "";
+$baseDatos = "proyecto_fin_grado";
+// Create connection
+$conn = mysqli_connect($host, $usuario, $contraseña, $baseDatos);
+// Check connection
+if (!$conn) {
+    die("Conexión fallida: " . mysqli_connect_error());
+}
+echo "Conexión realizada con éxito ";
+mysqli_close($conn);
 ?>
+		

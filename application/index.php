@@ -11,10 +11,10 @@
     <body>
         <?php 
             if (isset($_POST['email']) && isset($_POST['dni'])) {
-                $existUser = login($_COOKIE['email'], $_COOKIE['dni']);
+                $existUser = Login($_COOKIE['email'], $_COOKIE['dni']);
 
 				// Crear cookies y actualizar la web en el que caso de que el usuario no exista
-				if ($existUser != "usuario no registrado") {
+				if ($existUser == true) {
 					setcookie("email", $_POST['email'], time()+500, "/", "localhost");
 					setcookie("dni", $_POST['dni'], time()+500, "/", "localhost");
 
@@ -25,6 +25,7 @@
 						//sigue dando acceso a usuarios sin permisos suficientes.
 						setcookie('nombre','',time() - 3600,'/',"localhost");
 						setcookie('correo','',time() - 3600,'/',"localhost");
+                        echo "true";
 					}
 					
 					header("location: index.php");//lo que hacemos con esto es indicarle al navegador que vaya a index "de cero" y con el set cookies "limpiamos"las cookies.
