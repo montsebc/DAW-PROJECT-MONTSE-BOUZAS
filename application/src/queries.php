@@ -1,20 +1,19 @@
 <?php 
 	include "database.php";
 
-    function Login($email, $dni) {
-        $conn = mysqli_connect();
-        $query = $conn->prepare("SELECT * FROM usuario WHERE EMAIL = ? AND DNI = ?");
-        $query->bind_param("ss", $email, $dni);
-        $query->execute();
-        $query->store_result();
-        $numeroUsuarios = $query->num_rows;
-        $datos = $query->fetch();
-        
-
-        if ($numeroUsuarios == 1) { 
+    function Login($EMAIL, $DNI) {
+        $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
+        if (!$conn) {
+            die("Connection failed: " . mysqli_connect_error());
+        }
+        $sql = "SELECT * FROM usuario WHERE EMAIL = '$EMAIL' AND dni = '$DNI'";
+        $result = mysqli_query($conn, $sql);
+        if (mysqli_num_rows($result) > 0) {
+            mysqli_close($conn);
             return "usuario";
         } else {
-            return "usuario no registrado";
+            mysqli_close($conn);
+            return "no-usuario";
         }
-    }     
+    }
 ?>
