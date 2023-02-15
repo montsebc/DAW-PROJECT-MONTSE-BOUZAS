@@ -27,7 +27,7 @@ Fecha de Deshabilitación: <input type="text" name="FECHA_DESHABILITADO"><br>
 if (isset($_POST['submit'])) {
     // Incluir el archivo de conexión a la base de datos
     require_once '../src/database.php';
-
+    
     // Recoger los datos del formulario
     $NOMBRE = $_POST['NOMBRE'];
     $PRIMER_APELLIDO = $_POST['PRIMER_APELLIDO'];
