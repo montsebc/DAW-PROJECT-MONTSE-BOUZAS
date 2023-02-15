@@ -7,8 +7,10 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
+       
     </head>
     <body>
+        
         <?php 
          require_once "./src/queries.php";
 
@@ -17,9 +19,9 @@
             $PASSWORD = $_POST['PASSWORD'];
             $existUser = Login($EMAIL, $PASSWORD);
         
-//prueba commit
+
 				// Crear cookies y actualizar la web en el caso de que el usuario exista
-				if ($existUser == "usuario") {
+				if ($existUser == "usuarios") {
 					setcookie("EMAIL", $_POST['EMAIL'], time()+500, "/", "localhost");
 					setcookie("PASSWORD", $_POST['PASSWORD'], time()+500, "/", "localhost");
 
@@ -30,7 +32,7 @@
 				}
 			}
         ?>
-        <div class="container mt-5">
+        <div class="container mt-5" >
             <div class="row">
                 <div class="card mx-auto" style="width: 18rem;">
                     <div class="card-body">

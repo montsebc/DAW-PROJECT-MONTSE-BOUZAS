@@ -7,7 +7,18 @@
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
+        
+        
+        <style>
+            body{
+                background-image: url(../assets/img/dashboard.jpg);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
+                
+        </style>   
     </head>
+
     <body>
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
@@ -22,11 +33,11 @@
                     </li>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Usuarios
+                            Socios
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="../views/alta_usuarios.php">Alta</a></li>
-                            <li><a class="dropdown-item" href="../views/lista_usuarios.php">Listado de usuarios</a></li>
+                            <li><a class="dropdown-item" href="../views/alta_socios.php">Alta</a></li>
+                            <li><a class="dropdown-item" href="../views/lista_socios.php">Listado de socios</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Prestamos</a></li>
                         </ul>
@@ -43,13 +54,11 @@
                         </ul>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
+                
                 </div>
             </div>
         </nav>
+        
         <script src="../assets/js/bootstrap.bundle.min.js"></script>
     </body>
 </html>
