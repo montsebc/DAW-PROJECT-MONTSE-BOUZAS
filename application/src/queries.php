@@ -13,7 +13,7 @@
             return "usuario";
         } else {
             mysqli_close($conn);
-            return "no-usuario";//prueba para borrar
+            return "no-usuario";
         }
     }
 ?>
