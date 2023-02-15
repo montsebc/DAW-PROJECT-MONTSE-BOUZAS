@@ -13,7 +13,8 @@ Segundo Apellido: <input type="text" name="SEGUNDO_APELLIDO"><br>
 Teléfono: <input type="text" name="TELEFONO"><br>
 Correo Electrónico: <input type="text" name="EMAIL"><br>
 DNI: <input type="text" name="DNI"><br>
-$FECHA_ALTA = date('Y-m-d H:i:s');<br>
+Fecha de Alta: <input type="text" name="FECHA_ALTA" value="<?php echo date('d-m-y H:i:s'); ?>"><br>
+
 
 Fecha de Modificación: <input type="text" name="FECHA_MODIFICACION"><br>
 Fecha de Deshabilitación: <input type="text" name="FECHA_DESHABILITADO"><br>
@@ -27,7 +28,7 @@ Fecha de Deshabilitación: <input type="text" name="FECHA_DESHABILITADO"><br>
 if (isset($_POST['submit'])) {
     // Incluir el archivo de conexión a la base de datos
     require_once '../src/database.php';
-    
+    //
     // Recoger los datos del formulario
     $NOMBRE = $_POST['NOMBRE'];
     $PRIMER_APELLIDO = $_POST['PRIMER_APELLIDO'];
