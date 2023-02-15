@@ -13,7 +13,8 @@ Segundo Apellido: <input type="text" name="SEGUNDO_APELLIDO"><br>
 Teléfono: <input type="text" name="TELEFONO"><br>
 Correo Electrónico: <input type="text" name="EMAIL"><br>
 DNI: <input type="text" name="DNI"><br>
-Fecha de Alta: <input type="text" name="FECHA_ALTA" value="<?php echo date('d-m-y H:i:s'); ?>"><br>
+Fecha de Alta: <input type="date" name="FECHA_ALTA" value="<?php echo date('Y-m-d'); ?>" readonly><br>
+
 
 
 Fecha de Modificación: <input type="text" name="FECHA_MODIFICACION"><br>
