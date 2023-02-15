@@ -17,7 +17,7 @@
             $PASSWORD = $_POST['PASSWORD'];
             $existUser = Login($EMAIL, $PASSWORD);
         
-
+//prueba commit
 				// Crear cookies y actualizar la web en el que caso de que el usuario exista
 				if ($existUser == "usuario") {
 					setcookie("EMAIL", $_POST['EMAIL'], time()+500, "/", "localhost");
