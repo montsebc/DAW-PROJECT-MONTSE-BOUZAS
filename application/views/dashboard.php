@@ -26,7 +26,7 @@
                         </a>
                         <ul class="dropdown-menu">
                             <li><a class="dropdown-item" href="../views/alta_usuarios.php">Alta</a></li>
-                            <li><a class="dropdown-item" href="../views/lista_usuarios.php">Consulta</a></li>
+                            <li><a class="dropdown-item" href="../views/lista_usuarios.php">Listado de usuarios</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Prestamos</a></li>
                         </ul>

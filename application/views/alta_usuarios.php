@@ -13,7 +13,8 @@ Segundo Apellido: <input type="text" name="SEGUNDO_APELLIDO"><br>
 Teléfono: <input type="text" name="TELEFONO"><br>
 Correo Electrónico: <input type="text" name="EMAIL"><br>
 DNI: <input type="text" name="DNI"><br>
-Fecha de Alta: <input type="text" name="FECHA_ALTA"><br>
+$FECHA_ALTA = date('Y-m-d H:i:s');<br>
+
 Fecha de Modificación: <input type="text" name="FECHA_MODIFICACION"><br>
 Fecha de Deshabilitación: <input type="text" name="FECHA_DESHABILITADO"><br>
 <input type="submit" name="submit" value="Enviar">
@@ -34,7 +35,7 @@ if (isset($_POST['submit'])) {
     $TELEFONO = $_POST['TELEFONO'];
     $EMAIL = $_POST['EMAIL'];
     $DNI = $_POST['DNI'];
-    $FECHA_ALTA = $_POST['FECHA_ALTA'];
+    $FECHA_ALTA = date('Y-m-d H:i:s');
     $FECHA_MODIFICACION = $_POST['FECHA_MODIFICACION'];
     $FECHA_DESHABILITADO = $_POST['FECHA_DESHABILITADO'];
 
@@ -52,6 +53,7 @@ if (isset($_POST['submit'])) {
     }
 
     // Crear la consulta SQL para insertar los datos
+    $fechaActual = date("Y-m-d H:i:s");
     $sql = "INSERT INTO usuario (NOMBRE, PRIMER_APELLIDO, SEGUNDO_APELLIDO, TELEFONO, EMAIL, DNI, FECHA_ALTA, FECHA_MODIFICACION, FECHA_DESHABILITADO)
             VALUES ('$NOMBRE', '$PRIMER_APELLIDO', '$SEGUNDO_APELLIDO', '$TELEFONO', '$EMAIL', '$DNI', '$FECHA_ALTA', '$FECHA_MODIFICACION', '$FECHA_DESHABILITADO')";
 
