@@ -20,7 +20,7 @@
 <th>Fecha de Deshabilitación</th>
 </tr>
 
-<a class="dropdown-item" href="../views/dashboard.php">Volver a panel principal</a></li>
+<a class="dropdown-item" href="../views/dashboard.php">Volver al panel principal</a></li>
 
 <?php
   require_once '../src/database.php';
