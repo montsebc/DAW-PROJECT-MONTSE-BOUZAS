@@ -33,7 +33,7 @@ if (isset($_POST['submit'])) {
         echo "Error: todos los campos marcados con * son obligatorios.";
         exit;
     }
-    // Recoger los datos del formulario
+    // Recoger los datos del formulario/
 $NOMBRE = $_POST['NOMBRE'];
 $PRIMER_APELLIDO = $_POST['PRIMER_APELLIDO'];
 $SEGUNDO_APELLIDO = $_POST['SEGUNDO_APELLIDO'];
