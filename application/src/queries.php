@@ -1,5 +1,5 @@
 <?php 
-	include "database.php";
+	include "database.php";//
 
     function Login($EMAIL, $PASSWORD) {
         $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
