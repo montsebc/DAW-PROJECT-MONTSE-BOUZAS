@@ -15,5 +15,5 @@
             mysqli_close($conn);
             return "usuario no reconocido";
         }
-    }
+    }//
 ?>
