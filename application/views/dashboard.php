@@ -39,7 +39,7 @@
                             <li><a class="dropdown-item" href="#">Alta</a></li>
                             <li><a class="dropdown-item" href="#">Consulta</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Prestamos</a></li>
+                            <li><a class="dropdown-item" href="#">Préstamos</a></li>
                         </ul>
                     </li>
                 </ul>
