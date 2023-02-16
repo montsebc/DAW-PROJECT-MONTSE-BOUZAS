@@ -22,7 +22,7 @@
             $existUser = Login($EMAIL, $PASSWORD);
         
 
-				// Crear cookies y actualizar la web en el caso de que el usuario exista
+				// Crear cookies y actualizar la web en el caso de que el usuario exista/
 				if ($existUser == "usuarios") {
 					setcookie("EMAIL", $_POST['EMAIL'], time()+500, "/", "localhost");
 					setcookie("PASSWORD", $_POST['PASSWORD'], time()+500, "/", "localhost");
