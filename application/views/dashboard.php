@@ -59,7 +59,7 @@
                             <li><a class="dropdown-item" href="../views/alta_socios.php">Alta</a></li>
                             <li><a class="dropdown-item" href="../views/lista_socios.php">Listado de socios</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Prestamos</a></li>
+                            <li><a class="dropdown-item" href="#">Préstamos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
