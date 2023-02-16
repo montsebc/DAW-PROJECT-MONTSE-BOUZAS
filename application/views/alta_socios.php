@@ -73,7 +73,7 @@ if (empty($NOMBRE) || empty($PRIMER_APELLIDO) || empty($TELEFONO) || empty($DNI)
     exit;
 }
 
-// Conectar a la base de datos
+// Conectar a la base de datos/
 $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
 if (!$conn) {
     echo "Error: No se pudo conectar a la base de datos.";
