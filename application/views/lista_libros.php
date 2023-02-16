@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lista de libros en la base de datos</title> 
+<title>Lista de libros de la base de datos</title> 
 <style>
 
   body {
