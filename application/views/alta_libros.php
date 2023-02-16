@@ -75,7 +75,7 @@ if (isset($_POST['submit'])) {
         if (empty($_POST['ISBN']) || empty($_POST['TITULO']) || empty($_POST['AUTOR']) || empty($_POST['CATEGORIA_ID'])) {
             echo '<div class="mensaje-error">Error: Debe rellenar los campos obligatorios.</div>';
         }else{
-            //conectarse a la base de datos
+            //conectarse a base de datos
             $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
             if (!$conn) {
             echo "Error: No se pudo conectar a la base de datos.";
