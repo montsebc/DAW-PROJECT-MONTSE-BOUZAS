@@ -17,7 +17,7 @@
         }
     }
     
-    // Función para obtener todas las categorías desde la base de datos
+    // Función para obtener todas las categorías desde la BBDD
     function getCategorias() {
         $host = "localhost";
         $usuario = "nombre_usuario";
