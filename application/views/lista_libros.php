@@ -2,11 +2,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Lista de Socios</title> 
+<title>Lista de libros en la base de datos</title> 
 <style>
 
   body {
-    background-image: url(DAW-PROJECT-MONTSE-BOUZAS\application\assets\img\lista-socios1.jpg);
+    background-image: url("../assets/img/lista-socios1.jpg");
     background-size:auto;
     background-position: center;
     background-attachment: fixed;
@@ -42,22 +42,19 @@
 
 </style>
 </head>
-<body class="lista-socios">
+<body class="lista-libros">
     <div id="tabla-container">
         <table border="2">
             <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Primer Apellido</th>
-                <th>Segundo Apellido</th>
-                <th>Teléfono</th>
-                <th>EMAIL</th>
-                <th>DNI</th>
-                <th>Fecha de Alta</th>
-                <th>Fecha de Modificación</th>
-                <th>Fecha de Deshabilitación</th>
+                <th>ISBN</th>
+                <th>TÍTULO</th>
+                <th>AUTOR</th>
+                <th>FECHA DE ALTA</th>
+                <th>FECHA DE MODIFICACIÓN</th>
+                <th>FECHA BAJA DE LIBRO</th>
+                <th>CATEGORÍA</th>
             </tr>
-
             <?php
             require_once '../src/database.php';
             include "../views/dashboard.php";
@@ -67,33 +64,30 @@
                 die("Fallo la conexión: " . mysqli_connect_error());
             }
 
-            $sql = "SELECT * FROM socios";
+            $sql = "SELECT libro.ID, libro.ISBN, libro.TITULO, libro.AUTOR, libro.FECHA_ALTA, libro.FECHA_MODIFICACION, libro.FECHA_DESHABILITADO, categoria.NOMBRE AS CATEGORIA FROM libro INNER JOIN categoria ON libro.CATEGORIA_ID = categoria.ID";
+
             $result = mysqli_query($conn, $sql);
 
             if (mysqli_num_rows($result) > 0) {
                 while($row = mysqli_fetch_assoc($result)) {
                     $ID = $row['ID'];
-                    $NOMBRE = $row['NOMBRE'];
-                    $PRIMER_APELLIDO = $row['PRIMER_APELLIDO'];
-                    $SEGUNDO_APELLIDO = $row['SEGUNDO_APELLIDO'];
-                    $TELEFONO = $row['TELEFONO'];
-                    $EMAIL = $row['EMAIL'];
-                    $DNI = $row['DNI'];
+                    $ISBN = $row['ISBN'];
+                    $TITULO = $row['TITULO'];
+                    $AUTOR = $row['AUTOR'];
                     $FECHA_ALTA = $row['FECHA_ALTA'];
                     $FECHA_MODIFICACION = isset($row['FECHA_MODIFICACION']) ? $row['FECHA_MODIFICACION'] : '';
-                    $FECHA_DESHABILITACION = isset($row['FECHA_DESHABILITACION']) ? $row['FECHA_DESHABILITACION'] : '';
+                    $FECHA_DESHABILITADO = isset($row['FECHA_DESHABILITADO']) ? $row['FECHA_DESHABILITADO'] : '';
+                    $CATEGORIA_NOMBRE = isset($row['CATEGORIA']) ? $row['CATEGORIA'] : '';
 
                     echo "<tr>";
                     echo "<td>$ID</td>";
-                    echo "<td>$NOMBRE</td>";
-                    echo "<td>$PRIMER_APELLIDO</td>";
-                    echo "<td>$SEGUNDO_APELLIDO</td>";
-                    echo "<td>$TELEFONO</td>";
-                    echo "<td>$EMAIL</td>";
-                    echo "<td>$DNI</td>";
+                    echo "<td>$ISBN</td>";
+                    echo "<td>$TITULO</td>";
+                    echo "<td>$AUTOR</td>";
                     echo "<td>$FECHA_ALTA</td>";
                     echo "<td>$FECHA_MODIFICACION</td>";
-                    echo "<td>$FECHA_DESHABILITACION</td>";
+                    echo "<td>$FECHA_DESHABILITADO</td>";
+                    echo "<td>$CATEGORIA_NOMBRE</td>";
                     echo "</tr>";
                 }
             } else {
@@ -102,10 +96,10 @@
 
             mysqli_close($conn);
             ?>
-        </table>
-    </div>
-</body>
-</html>
 
-
-  
+                  
+                      ?>
+                  </table>
+              </div>
+          </body>
+          </html>

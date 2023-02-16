@@ -22,6 +22,20 @@
                 background-size: cover;
                 background-repeat: no-repeat;
             }
+            .mensaje-exito {
+            background-color: transparent;
+            padding: 5px 10px;
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: gold;
+            }
+            .mensaje-error{
+            background-color: transparent;
+            padding: 5px 10px;
+            font-size: 20px;
+            font-family: Arial, Helvetica, sans-serif;
+            color: red;
+            }
         </style>   
     </head>
          
@@ -53,11 +67,14 @@
                             Libros
                         </a>
                         <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Alta</a></li>
-                            <li><a class="dropdown-item" href="#">Consulta</a></li>
+                            <li><a class="dropdown-item" href="../views/alta_libros.php">Alta</a></li>
+                            <li><a class="dropdown-item" href="../views/lista_libros.php">Consulta</a></li>
                             <li><hr class="dropdown-divider"></li>
                             <li><a class="dropdown-item" href="#">Préstamos</a></li>
                         </ul>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../views/categorias.php">Categorías</a>
                     </li>
                 </ul>
                 </div>

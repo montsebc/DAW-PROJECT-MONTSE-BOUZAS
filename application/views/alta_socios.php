@@ -2,15 +2,36 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Formulario de Alta de Usuarios</title>
+<title>Formulario de Alta de Socios</title>
+<link rel="stylesheet" href="./assets/css/micss.css">
+<style>
+    .letraFormulario{
+        font-size: 20px;
+        font-family: Arial, Helvetica, sans-serif;
+        color:gold
+    }
+    input.letraFormulario[type="submit"] {
+    background-color: transparent;
+    border: 0px solid black;
+    padding: 5px 10px;
+    font-size: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: gold;
+    }
+    
+
+</style>
 </head>
 <body>
+    
+
 <?php
 include "../views/dashboard.php";
 require_once '../src/database.php';
 ?>
-<form action="alta_socios.php" method="post">
-Nombre: <input type="text" name="NOMBRE"> *<br>
+<div style="display:flex;flex-direction:column;">
+<form action="alta_socios.php" method="post" class="letraFormulario">
+Nombre: <input type="text" name="NOMBRE" > *<br>
 Primer Apellido: <input type="text" name="PRIMER_APELLIDO"> *<br>
 Segundo Apellido: <input type="text" name="SEGUNDO_APELLIDO"><br>
 Teléfono: <input type="text" name="TELEFONO"> *<br>
@@ -19,10 +40,10 @@ DNI: <input type="text" name="DNI"> *<br>
 Fecha de Alta: <input type="date" name="FECHA_ALTA" value="<?php echo date('Y-m-d'); ?>" readonly><br>
 Fecha de Modificación: <input type="text" name="FECHA_MODIFICACION"><br>
 Fecha de Deshabilitación: <input type="text" name="FECHA_DESHABILITADO"><br>
-<input type="submit" name="submit" value="Enviar">
-<a class="dropdown-item" href="../views/lista_socios.php">Ver el listado actualizado</a></li>
+<input type="submit" name="submit" value="Enviar" class="letraFormulario">
+<a class="dropdown-item", href="../views/lista_socios.php">Ver el listado actualizado</a>
 </form> 
-
+</div>
 <?php
 $email_regex = '/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/';
 $dni_regex = '/^[0-9]{8}[A-Z]$/';
@@ -30,7 +51,8 @@ $dni_regex = '/^[0-9]{8}[A-Z]$/';
 if (isset($_POST['submit'])) {
     // Verificar si se han enviado los datos
     if (empty($_POST['NOMBRE']) || empty($_POST['PRIMER_APELLIDO']) || empty($_POST['TELEFONO']) || empty($_POST['EMAIL']) || empty($_POST['DNI'])) {
-        echo "Error: todos los campos marcados con * son obligatorios.";
+        echo '<div class="mensaje-error">Error: Error todos los campos marcados con * son obligatorios.</div>';
+
         exit;
     }
     // Recoger los datos del formulario/
@@ -65,10 +87,9 @@ $sql = "INSERT INTO socios (NOMBRE, PRIMER_APELLIDO, SEGUNDO_APELLIDO, TELEFONO,
 
 // Ejecutar la consulta
 if (mysqli_query($conn, $sql)) {
-    echo "Socio agregado con éxito.";
+    echo '<div class="mensaje-exito">Socio agregado con éxito.</div>';
 } else {
-    echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+    echo '<div class="mensaje-error">Error: ' . $sql . '<br>' . mysqli_error($conn) . '</div>';
 }
-
 }
 ?>

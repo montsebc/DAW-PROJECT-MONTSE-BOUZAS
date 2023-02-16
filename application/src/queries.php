@@ -1,5 +1,5 @@
 <?php 
-	include "database.php";//
+	include "database.php";
 
     function Login($EMAIL, $PASSWORD) {
         $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
@@ -15,5 +15,38 @@
             mysqli_close($conn);
             return "usuario no reconocido";
         }
-    }//
+    }
+    
+    // Función para obtener todas las categorías desde la base de datos
+    function getCategorias() {
+        $host = "localhost";
+        $usuario = "nombre_usuario";
+        $contraseña = "contraseña";
+        $baseDatos = "proyecto_fin_grado";
+
+        // Conexión a la base de datos
+        $conn = new mysqli($host, $usuario, $contraseña, $baseDatos);
+        if ($conn->connect_error) {
+            die("Error de conexión: " . $conn->connect_error);
+        }
+
+        // Consulta SQL para obtener todas las categorías
+        $sql = "SELECT * FROM categoria";
+        $result = $conn->query($sql);
+
+        // Obtener los resultados como un array asociativo
+        $categorias = array();
+        if ($result->num_rows > 0) {
+            while ($row = $result->fetch_assoc()) {
+                $categorias[] = $row;
+            }
+        }
+
+        // Cerrar la conexión y devolver los resultados
+        $conn->close();
+        return $categorias;
+    }
+?>
+
+
 ?>

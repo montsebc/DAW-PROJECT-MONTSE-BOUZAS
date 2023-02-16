@@ -3,12 +3,13 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>Inicio de sesion</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="./assets/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./assets/css/micss.css">
-        
+        <link rel="stylesheet" href="../application/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="../application/assets/css/micss.css">
+       
+
     </head>
     <body>
         
@@ -33,7 +34,7 @@
 				}
 			}
         ?>
-        <body class="inicio_sesion">
+        <body class="inicio_sesion letraFormulario">
         <div class="container mt-5" >
             <div class="row">
                 <div class="card mx-auto" style="width: 18rem;">
