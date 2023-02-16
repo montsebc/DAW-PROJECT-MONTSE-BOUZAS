@@ -3,23 +3,29 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
+        <title>dashboard</title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../assets/css/bootstrap.min.css">
         
         
+        
         <style>
-            body{
-                background-image: url(../assets/img/dashboard.jpg);
+            
+            .dashboard{
+                background-image: url(../assets/img/dashboard1.jpg);
                 background-size: cover;
                 background-repeat: no-repeat;
             }
-                
+            .lista-socios{
+                background-image: url(../assets/img/lista-socios1.jpg);
+                background-size: cover;
+                background-repeat: no-repeat;
+            }
         </style>   
     </head>
-
-    <body>
+         
+        <body class="dashboard">
         <nav class="navbar navbar-expand-lg bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">ADMIN</a>
