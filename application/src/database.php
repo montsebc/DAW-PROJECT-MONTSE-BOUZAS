@@ -1,15 +1,12 @@
-<?php 
-$host = "localhost";
-$usuario = "root";
-$contraseña = "";
-$baseDatos = "proyecto_fin_grado";
-// Create connection
-$conn = mysqli_connect($host, $usuario, $contraseña, $baseDatos);
-// Check connection
-if (!$conn) {
-    die("Conexión fallida: " . mysqli_connect_error());
+<?php
+function connect() {
+  $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
+  if (!$conn) {
+    die("Connection failed: " . mysqli_connect_error());
+  }
+  return $conn;
 }
-return "Conexión realizada con éxito "."<br>";
-mysqli_close($conn);
 ?>
-		
+
+
+

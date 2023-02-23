@@ -58,7 +58,7 @@
             <?php
             require_once '../src/database.php';
             include "../views/dashboard.php";
-            $conn = mysqli_connect($host, $usuario, $contraseña, $baseDatos);
+            $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
 
             if (mysqli_connect_errno()) {
                 die("Fallo la conexión: " . mysqli_connect_error());
@@ -98,7 +98,7 @@
             ?>
 
                   
-                      ?>
+                      
                   </table>
               </div>
           </body>

@@ -59,7 +59,8 @@
                             <li><a class="dropdown-item" href="../views/alta_socios.php">Alta</a></li>
                             <li><a class="dropdown-item" href="../views/lista_socios.php">Listado de socios</a></li>
                             <li><hr class="dropdown-divider"></li>
-                            <li><a class="dropdown-item" href="#">Préstamos</a></li>
+                            <li><a class="dropdown-item" href="../views/prestamo-form.php">Formulario de préstamo</a></li>
+                            <li><a class="dropdown-item" href="../views/prestamo-lista.php">Listado de préstamos</a></li>
                         </ul>
                     </li>
                     <li class="nav-item dropdown">
@@ -75,6 +76,9 @@
                     </li>
                     <li class="nav-item">
                     <a class="nav-link active" aria-current="page" href="../views/categorias.php">Categorías</a>
+                    </li>
+                    <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../views/devolucion-form.php">Devolver libros</a>
                     </li>
                 </ul>
                 </div>

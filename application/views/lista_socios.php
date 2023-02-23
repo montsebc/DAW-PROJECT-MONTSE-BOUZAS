@@ -6,7 +6,7 @@
 <style>
 
   body {
-    background-image: url(DAW-PROJECT-MONTSE-BOUZAS\application\assets\img\lista-socios1.jpg);
+    background-image: url("../views/lista_socios.php");
     background-size:auto;
     background-position: center;
     background-attachment: fixed;
@@ -40,7 +40,6 @@
   }
 </style>
 
-</style>
 </head>
 <body class="lista-socios">
     <div id="tabla-container">
@@ -61,7 +60,7 @@
             <?php
             require_once '../src/database.php';
             include "../views/dashboard.php";
-            $conn = mysqli_connect($host, $usuario, $contraseña, $baseDatos);
+            $conn = mysqli_connect("localhost", "root", "", "proyecto_fin_grado");
 
             if (mysqli_connect_errno()) {
                 die("Fallo la conexión: " . mysqli_connect_error());
