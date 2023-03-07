@@ -1,11 +1,18 @@
 <?php
 
-require_once '../core/Model.php';
-require_once '../models/Prestamo.php';
-require_once '../models/Socio.php';
-require_once '../models/Libro.php';
+require_once __DIR__ . '/../core/Model.php';
+require_once __DIR__. '/../models/Prestamo.php';
+require_once __DIR__. '/../models/Socio.php';
+require_once __DIR__. '/../models/Libro.php';
 
 class PrestamoController {
+
+    private $conexion;
+
+    public function __construct() {
+        $model = new Model();
+        $this->conexion = $model->connect();
+    }
 
     public function nuevo($idSocio, $idLibro) {
         $model = new Model();
@@ -38,15 +45,26 @@ class PrestamoController {
         $prestamo->guardar();
     }
 
-    public function listarPrestamos() {
-        $model = new Model();
-        $conexion = $model->connect();
+    public function listarPrestamos()
+    {
+        $prestamos = array();
 
-        $prestamo = new Prestamo();
-        $prestamo->setConexion($conexion);
+        $sql = "SELECT * FROM prestamos";
+        $result = $this->conexion->query($sql);
 
-        return $prestamo->listar();
+        while ($row = $result->fetch_assoc()) {
+            $prestamo = new Prestamo();
+            $prestamo->setId($row['id']);
+            $prestamo->setSocio($this->buscarSocio($row['socio_id']));
+            $prestamo->setLibro($this->buscarLibro($row['libro_id']));
+            $prestamo->setFechaPrestamo($row['fecha_prestamo']);
+            $prestamo->setFechaDevolucion($row['fecha_devolucion']);
+            $prestamos[] = $prestamo;
+        }
+
+        return $prestamos;
     }
+
 
     public function devolver($id) {
         $model = new Model();
@@ -60,6 +78,3 @@ class PrestamoController {
     }
 
 }
-
-?>
-
