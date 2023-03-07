@@ -1,3 +1,12 @@
+<?php
+require_once __DIR__ . "/../../core/Model.php";
+ require_once __DIR__ . "/../../controllers/PrestamoController.php";
+ require_once __DIR__ . "/../../models/Prestamo.php";
+
+$controller = new PrestamoController();
+$prestamos = $controller->listarPrestamos();
+?>
+
 <!DOCTYPE html>
 <html>
 <head>

@@ -20,8 +20,8 @@ $email = $_SESSION['usuario'];
 	<h1>Bienvenido <?php echo $_SESSION['usuario']; ?></h1>
 	<nav>
 		<ul>
-			<li><a href="index.php?action=prestamos">Préstamos</a></li>
-			<li><a href="index.php?action=socios">Socios</a></li>
+			<li><a href="views/prestamo/listar.php">Préstamos</a></li>
+			<li><a href="views/socios/listar.php">Socios</a></li>
 			<li><a href="index.php?action=libros">Libros</a></li>
 			<li><a href="index.php?action=categorias">Categorías</a></li>
 			<li><a href="index.php?action=logout">Cerrar sesión</a></li>

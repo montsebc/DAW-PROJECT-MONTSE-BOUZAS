@@ -12,7 +12,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $usuario = new Usuario();
     $loginUsuario = $usuario->validar($email, $password);
-    echo $loginUsuario . "hola";
 
     if ($loginUsuario) {
         // Iniciar sesión y redirigir al usuario a la página principal
