@@ -8,6 +8,8 @@ class Socio extends Model {
     private $email;
     private $telefono;
     private $max_libros_prestados = 3;
+    protected $conexion;
+
 
     public function __construct($nombre = '', $apellidos = '', $email = '', $telefono = '') {
         $this->nombre = $nombre;
@@ -99,4 +101,41 @@ class Socio extends Model {
     public function setId($id) {
         $this->id = $id;
     }
+
+    public function setConexion($conexion) {
+        $this->conexion = $conexion;
+    }
+    public function buscar($id) {
+        $query = "SELECT * FROM socios WHERE id = $id";
+        $conexion = $this->connect();
+        $resultado = $conexion->query($query);
+        $socio = null;
+        if ($resultado->num_rows > 0) {
+            $fila = $resultado->fetch_assoc();
+            $socio = new Socio();
+            $socio->setId($fila['id']);
+            $socio->setNombre($fila['nombre']);
+            $socio->setApellidos($fila['apellidos']);
+            $socio->setEmail($fila['email']);
+            $socio->setTelefono($fila['telefono']);
+        }
+    
+        $conexion->close();
+        return $socio;
+    }
+    
+    public function devolver($prestamo_id, $libro_id) {
+        $conexion = $this->connect();
+    
+        // Eliminar el préstamo de la base de datos
+        $query = "DELETE FROM prestamos WHERE id = $prestamo_id";
+        $resultado = $conexion->query($query);
+    
+        // Incrementar la cantidad de ejemplares disponibles del libro
+        $query = "UPDATE libros SET cantidad_ejemplares = cantidad_ejemplares + 1 WHERE id = $libro_id";
+        $resultado = $conexion->query($query);
+    
+        $conexion->close();
+    }
 }
+?>  

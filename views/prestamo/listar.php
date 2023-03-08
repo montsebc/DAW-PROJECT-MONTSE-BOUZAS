@@ -2,9 +2,14 @@
 require_once __DIR__ . "/../../core/Model.php";
  require_once __DIR__ . "/../../controllers/PrestamoController.php";
  require_once __DIR__ . "/../../models/Prestamo.php";
+ 
 
-$controller = new PrestamoController();
-$prestamos = $controller->listarPrestamos();
+// Crear el objeto PrestamoController
+$prestamoController = new PrestamoController();
+
+// Llamar al método listar() del objeto PrestamoController
+$prestamos = $prestamoController->listar();
+require_once __DIR__ . '/listar.php';
 ?>
 
 <!DOCTYPE html>
@@ -22,7 +27,8 @@ $prestamos = $controller->listarPrestamos();
 	    <li><a href="index.php?action=categorias">Categorías</a></li>
 	  </ul>
 	</nav>
-<h1>Listado de préstamos</h1>
+    <h1>Listado de préstamos</h1>
+
 <table>
     <tr>
         <th>ID</th>
@@ -32,19 +38,19 @@ $prestamos = $controller->listarPrestamos();
         <th>Fecha de devolución</th>
         <th>Acciones</th>
     </tr>
+
     <?php foreach ($prestamos as $prestamo): ?>
-    <tr>
-        <td><?php echo $prestamo->getId(); ?></td>
-        <td><?php echo $prestamo->getSocio()->getNombreCompleto(); ?></td>
-        <td><?php echo $prestamo->getLibro()->getTitulo(); ?></td>
-        <td><?php echo $prestamo->getFechaPrestamo(); ?></td>
-        <td><?php echo $prestamo->getFechaDevolucion() ?: 'Pendiente'; ?></td>
-        <td>
-            <?php if (!$prestamo->getFechaDevolucion()): ?>
-                <a href="#">Devolver</a>
-            <?php endif; ?>
-        </td>
-    </tr>
+        <tr>
+            <td><?php echo $prestamo->getId(); ?></td>
+            <td><?php echo $prestamo->getSocio()->getNombreCompleto(); ?></td>
+            <td><?php echo $prestamo->getLibro()->getTitulo(); ?></td>
+            <td><?php echo $prestamo->getFechaPrestamo(); ?></td>
+            <td><?php echo $prestamo->getFechaDevolucion(); ?></td>
+            <td>
+                <a href="?controller=prestamo&action=devolver&id=<?php echo $prestamo->getId(); ?>">Devolver</a>
+                <a href="?controller=prestamo&action=eliminar&id=<?php echo $prestamo->getId(); ?>">Eliminar</a>
+            </td>
+        </tr>
     <?php endforeach; ?>
 </table>
 

@@ -32,6 +32,10 @@ class SocioController {
         // Mostrar el formulario de alta de socios
         require_once('../views/socio/formulario.php');
     }
+
+    public function index() {
+        $socio = new Socio();
+        $socios = $socio->listar();
+        require_once('../views/socio/index.php');
+    }
 }
-
-

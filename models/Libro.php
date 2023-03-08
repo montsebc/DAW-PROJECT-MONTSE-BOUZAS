@@ -9,6 +9,11 @@ class Libro extends Model {
     private $anio_publicacion;
     private $cantidad_ejemplares;
     private $categoria_id;
+    protected $conexion;
+    public function setConexion($conexion) {
+        $this->conexion = $conexion;
+    }
+
 
     public function __construct($titulo = '', $autor = '', $editorial = '', $anio_publicacion = '', $cantidad_ejemplares = '') {
         $this->titulo = $titulo;
@@ -148,5 +153,26 @@ class Libro extends Model {
     public function setCategoriaId($categoria_id) {
     $this->categoria_id = $categoria_id;
 }
+public static function listarDisponibles($conexion)
+{
+    $libros = array();
+
+    $sql = "SELECT * FROM libros WHERE estado = 'disponible'";
+    $result = $conexion->query($sql);
+
+    while ($row = $result->fetch_assoc()) {
+        $libro = new Libro();
+        $libro->setId($row['id']);
+        $libro->setTitulo($row['titulo']);
+        $libro->setAutor($row['autor']);
+        $libro->setEstado($row['estado']);
+        $libro->setConexion($conexion);
+
+        $libros[] = $libro;
+    }
+
+    return $libros;
+}
+
 }
 ?>

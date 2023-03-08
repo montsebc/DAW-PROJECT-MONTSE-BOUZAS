@@ -6,75 +6,77 @@ require_once __DIR__. '/../models/Socio.php';
 require_once __DIR__. '/../models/Libro.php';
 
 class PrestamoController {
-
-    private $conexion;
-
-    public function __construct() {
-        $model = new Model();
-        $this->conexion = $model->connect();
-    }
-
-    public function nuevo($idSocio, $idLibro) {
-        $model = new Model();
-        $conexion = $model->connect();
-
-        $socio = new Socio();
-        $socio->setId($idSocio);
-        $socio->setConexion($conexion);
-
-        $libro = new Libro();
-        $libro->setId($idLibro);
-        $libro->setConexion($conexion);
-
-        return array(
-            'socio' => $socio,
-            'libro' => $libro,
-        );
-    }
-
-    public function guardar($idSocio, $idLibro, $fecha) {
-        $model = new Model();
-        $conexion = $model->connect();
-
-        $prestamo = new Prestamo();
-        $prestamo->setIdSocio($idSocio);
-        $prestamo->setIdLibro($idLibro);
-        $prestamo->setFecha($fecha);
-        $prestamo->setConexion($conexion);
-
-        $prestamo->guardar();
-    }
-
-    public function listarPrestamos()
-    {
-        $prestamos = array();
-
-        $sql = "SELECT * FROM prestamos";
-        $result = $this->conexion->query($sql);
-
-        while ($row = $result->fetch_assoc()) {
-            $prestamo = new Prestamo();
-            $prestamo->setId($row['id']);
-            $prestamo->setSocio($this->buscarSocio($row['socio_id']));
-            $prestamo->setLibro($this->buscarLibro($row['libro_id']));
-            $prestamo->setFechaPrestamo($row['fecha_prestamo']);
-            $prestamo->setFechaDevolucion($row['fecha_devolucion']);
-            $prestamos[] = $prestamo;
+    public function listar() {
+        $conexion = new mysqli("localhost", "root", "", "booking a book");
+        $query = "SELECT * FROM prestamos";
+        $result = $conexion->query($query);
+    
+        $prestamos = [];
+    
+        while ($fila = $result->fetch_object('Prestamo')) {
+            $prestamos[] = $fila;
         }
-
+    
+        $result->free();
+        $conexion->close();
+    
         return $prestamos;
     }
+    
+    
+    public function index()
+{
+    $prestamo = new Prestamo();
+    $prestamos = $prestamo->listar();
+
+    require_once 'views/prestamo/listar.php';
+}
 
 
-    public function devolver($id) {
-        $model = new Model();
-        $conexion = $model->connect();
+    public function crear() {
+        $libro = new Libro();
+        $libros = $libro->listarDisponibles();
 
-        $prestamo = new Prestamo();
-        $prestamo->setId($id);
-        $prestamo->setConexion($conexion);
+        $socio = new Socio();
+        $socios = $socio->listar();
 
-        $prestamo->devolver();
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $idSocio = $_POST['socio'];
+            $idLibro = $_POST['libro'];
+
+            // Obtener la fecha actual
+            $fechaActual = date('Y-m-d');
+
+            // Calcular la fecha de devolución (15 días a partir de la fecha actual)
+            $fechaDevolucion = date('Y-m-d', strtotime($fechaActual . '+ 15 days'));
+
+            // Crear el objeto de préstamo
+            $prestamo = new Prestamo($idSocio, $idLibro, $fechaActual, $fechaDevolucion);
+            $prestamo->guardar();
+
+            // Redirigir al listado de préstamos
+            header('Location: /prestamo/listar');
+            exit;
+        }
+
+        require_once __DIR__ . '/../views/prestamo/nuevo.php';
     }
 
+    public function devolver() {
+        $id = $_GET['id'];
+
+        $prestamo = new Prestamo();
+        $prestamo = $prestamo->buscar($id);
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $prestamo->devolver();
+
+            // Redirigir al listado de préstamos
+            header('Location: /prestamo/listar');
+            exit;
+        }
+
+        require_once __DIR__ . '/../views/prestamo/devolver.php';
+    }
 }
+?>

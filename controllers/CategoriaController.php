@@ -41,10 +41,18 @@ class CategoriaController {
     public function eliminar($id) {
         $categoria = new Categoria();
         $categoria->setId($id);
+        $categoria->buscar();
+    
+        // Pasar la categoría como parámetro a la vista eliminar.php
+        require_once('../views/categoria/eliminar.php');
+        extract(['categoria' => $categoria]);
 
-        $categoria->eliminar();
     }
+    
+    
+    
 }
+?>
 
 
     

@@ -5,6 +5,10 @@ require_once 'controllers/PrestamoController.php';
 require_once 'controllers/SocioController.php';
 require_once 'controllers/LibroController.php';
 require_once 'controllers/CategoriaController.php';
+require_once 'database.php';
+
+// Instanciar la conexión a la base de datos
+$conexion = $conn;
 
 if (isset($_GET['action'])) {
     switch ($_GET['action']) {
@@ -17,7 +21,8 @@ if (isset($_GET['action'])) {
             $usuarioController->logout();
             break;
         case 'prestamos':
-            $prestamoController = new PrestamoController();
+            // Pasar la conexión al controlador de préstamos
+            $prestamoController = new PrestamoController($conexion);
             $prestamoController->index();
             break;
         case 'socios':
@@ -39,5 +44,5 @@ if (isset($_GET['action'])) {
 } else {
     header('Location: index.php?action=login');
 }
-
+?>
 

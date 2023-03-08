@@ -13,14 +13,18 @@
 	    <li><a href="index.php?action=categorias">Categorías</a></li>
 	  </ul>
 	</nav>
-<h1>Eliminar categoría</h1>
+	<h1>Eliminar categoría</h1>
 
-<p>¿Está seguro de que desea eliminar la categoría? "<?php echo $categoria->getNombre(); ?>"?</p>
+<?php if (isset($categoria)): ?>
+    <p>¿Está seguro de que desea eliminar la categoría? "<?php echo $categoria->getNombre(); ?>"?</p>
 
-<form action="/categoria/eliminar" method="POST">
-    <input type="hidden" name="id" value="<?php echo $categoria->getId(); ?>">
+    <form action="/categoria/eliminar" method="POST">
+        <input type="hidden" name="id" value="<?php echo $categoria->getId(); ?>">
+        <input type="submit" value="Eliminar">
+    </form>
+<?php else: ?>
+    <p>No se ha encontrado la categoría a eliminar.</p>
+<?php endif; ?>
 
-    <input type="submit" value="Eliminar">
-</form>
 </body>
 </html>
