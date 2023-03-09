@@ -1,5 +1,4 @@
 <?php
-
 require_once '../core/Model.php';
 require_once '../models/Categoria.php';
 
@@ -30,7 +29,7 @@ class CategoriaController {
         return $categoria;
     }
 
-    public function actualizar($id, $nombre, $descripcion) {
+    public function actualizar($id, $nombre) {
         $categoria = new Categoria();
         $categoria->setId($id);
         $categoria->setNombre($nombre);
@@ -42,19 +41,19 @@ class CategoriaController {
         $categoria = new Categoria();
         $categoria->setId($id);
         $categoria->buscar();
-    
+
         // Pasar la categoría como parámetro a la vista eliminar.php
         require_once('../views/categoria/eliminar.php');
+        
         extract(['categoria' => $categoria]);
-
     }
-    
+
+    public function editar($id) {
+        $id = $_GET['id'];
+        $categoria = $this->buscar($id);
+        require_once('../views/categoria/editar.php');
+    }
     
     
 }
 ?>
-
-
-    
-
-

@@ -40,6 +40,11 @@ if (isset($_GET['action'])) {
         default:
             header('Location: index.php?action=login');
             break;
+        case 'editar_categoria':
+                $categoriaController = new CategoriaController();
+                $categoriaController->editar($_GET['id']);
+                break;
+            
     }
 } else {
     header('Location: index.php?action=login');
