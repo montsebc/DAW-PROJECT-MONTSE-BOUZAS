@@ -1,46 +1,48 @@
+<?php
+// Establecer la conexión a la base de datos
+$conexion = new mysqli('localhost', 'root', '', 'booking a book');
+
+// Verificar si se produjo un error en la conexión
+if ($conexion->connect_error) {
+  die('Error de conexión: ' . $conexion->connect_error);
+}
+
+// Consulta SQL para obtener todos los libros
+$query = "SELECT libros.id, libros.titulo, libros.autor, libros.editorial, libros.isbn, categorias.nombre AS categoria, libros.cantidad_ejemplares FROM libros INNER JOIN categorias ON libros.id_categoria = categorias.id";
+$resultado = $conexion->query($query);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado de Libros</title>
+  <title>Listado de Libros</title>
 </head>
 <body>
-	<!-- Este es el menú de navegación que deberás incluir en todas las páginas que conforman tu aplicación -->
-	<nav>
-	  <ul>
-	    <li><a href="index.php?action=prestamos">Préstamos</a></li>
-	    <li><a href="index.php?action=socios">Socios</a></li>
-	    <li><a href="index.php?action=libros">Libros</a></li>
-	    <li><a href="index.php?action=categorias">Categorías</a></li>
-	  </ul>
-	</nav>
-
-	<h1>Listado de libros</h1>
-<table>
-  <thead>
-    <tr>
-      <th>ID</th>
-      <th>Título</th>
-      <th>Autor</th>
-      <th>Categoría</th>
-      <th>Cantidad disponible</th>
-      <th>Acciones</th>
-    </tr>
-  </thead>
-  <tbody>
-    <?php foreach ($libros as $libro): ?>
-    <tr>
-      <td><?= $libro->getId() ?></td>
-      <td><?= $libro->getTitulo() ?></td>
-      <td><?= $libro->getAutor() ?></td>
-      <td><?= $libro->getCategoria()->getNombre() ?></td>
-      <td><?= $libro->getCantidadDisponible() ?></td>
-      <td>
-        <a href="editar.php?id=<?= $libro->getId() ?>">Editar</a>
-        <a href="borrar.php?id=<?= $libro->getId() ?>">Borrar</a>
-      </td>
-    </tr>
-    <?php endforeach ?>
-  </tbody>
-</table>
+  <h2>Listado de Libros</h2>
+  <table border="1">
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Autor</th>
+        <th>Editorial</th>
+        <th>ISBN</th>
+        <th>Categoría</th>
+        <th>Cantidad de Ejemplares</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php while ($libro = $resultado->fetch_assoc()): ?>
+        <tr>
+          <td><?= $libro['titulo'] ?></td>
+          <td><?= $libro['autor'] ?></td>
+          <td><?= $libro['editorial'] ?></td>
+          <td><?= $libro['isbn'] ?></td>
+          <td><?= $libro['categoria'] ?></td>
+          <td><?= $libro['cantidad_ejemplares'] ?></td>
+        </tr>
+      <?php endwhile; ?>
+    </tbody>
+  </table>
+  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
 </body>
 </html>

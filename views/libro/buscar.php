@@ -1,39 +1,26 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Buscador de libros</title>
+	<title>Buscar Libro</title>
+	<script>
+		function abrirVentanaEmergente(url) {
+			window.open(url, '_blank', 'width=800,height=600');
+		}
+	</script>
 </head>
 <body>
-	<!-- Este es el menú de navegación que deberás incluir en todas las páginas que conforman tu aplicación -->
-	<nav>
-	  <ul>
-	    <li><a href="index.php?action=prestamos">Préstamos</a></li>
-	    <li><a href="index.php?action=socios">Socios</a></li>
-	    <li><a href="index.php?action=libros">Libros</a></li>
-	    <li><a href="index.php?action=categorias">Categorías</a></li>
-	  </ul>
-	</nav>
-<h1>Buscar Libro</h1>
-<form method="POST">
-    <label for="titulo">Título:</label>
-    <input type="text" name="titulo" id="titulo" required>
-    <button type="submit">Buscar</button>
-</form>
-<?php if (isset($libros) && count($libros) > 0) { ?>
-    <h2>Resultados de la búsqueda:</h2>
-    <ul>
-    <?php foreach ($libros as $libro) { ?>
-        <li>
-            <strong>Título:</strong> <?php echo $libro->getTitulo(); ?><br>
-            <strong>Autor:</strong> <?php echo $libro->getAutor(); ?><br>
-            <strong>Categoría:</strong> <?php echo $libro->getCategoria()->getNombre(); ?><br>
-            <strong>Cantidad de Ejemplares:</strong> <?php echo $libro->getCantidadEjemplares(); ?>
-        </li>
-    <?php } ?>
-    </ul>
-<?php } else if ($_SERVER['REQUEST_METHOD'] === 'POST') { ?>
-    <p>No se encontraron resultados para la búsqueda.</p>
-<?php } ?>
+	<h2>Buscar Libro</h2>
+	<form method="GET" onsubmit="abrirVentanaEmergente('resultado_busqueda.php?opcion=' + document.getElementsByName('opcion')[0].value + '&valor_busqueda=' + document.getElementsByName('valor_busqueda')[0].value); return false;">
+		<label>Buscar por:</label>
+		<select name="opcion">
+			<option value="titulo">Título</option>
+			<option value="autor">Autor</option>
+			<option value="editorial">Editorial</option>
+			<option value="isbn">ISBN</option>
+		</select>
+		<input type="text" name="valor_busqueda">
+		<button type="submit">Buscar</button>
+	</form>
+	<button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
 </body>
 </html>
-

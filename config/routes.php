@@ -1,11 +1,11 @@
 <?php
 
-require_once 'controllers/UsuarioController.php';
-require_once 'controllers/PrestamoController.php';
-require_once 'controllers/SocioController.php';
-require_once 'controllers/LibroController.php';
-require_once 'controllers/CategoriaController.php';
-require_once 'database.php';
+require_once __DIR__ . '/../controllers/UsuarioController.php';
+require_once __DIR__ . '/../controllers/PrestamoController.php';
+require_once __DIR__ . '/../controllers/SocioController.php';
+require_once __DIR__ . '/../controllers/LibroController.php';
+require_once __DIR__ . '/../controllers/CategoriaController.php';
+require_once __DIR__ . '/database.php';
 
 // Instanciar la conexión a la base de datos
 $conexion = $conn;
@@ -37,17 +37,14 @@ if (isset($_GET['action'])) {
             $categoriaController = new CategoriaController();
             $categoriaController->index();
             break;
+        case 'editar_categoria':
+            $categoriaController = new CategoriaController();
+            $categoriaController->editar($_GET['id']);
+            break;
         default:
             header('Location: index.php?action=login');
             break;
-        case 'editar_categoria':
-                $categoriaController = new CategoriaController();
-                $categoriaController->editar($_GET['id']);
-                break;
-            
     }
 } else {
     header('Location: index.php?action=login');
 }
-?>
-

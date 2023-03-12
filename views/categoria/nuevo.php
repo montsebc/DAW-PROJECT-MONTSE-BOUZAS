@@ -1,28 +1,43 @@
+<?php
+// Establecer la conexión a la base de datos
+$conexion = new mysqli('localhost', 'root', '', 'booking a book');
+
+// Verificar si se produjo un error en la conexión
+if ($conexion->connect_error) {
+  die('Error de conexión: ' . $conexion->connect_error);
+}
+
+// Verificar si se ha enviado un formulario para agregar una categoría
+if (isset($_POST['agregar'])) {
+  // Obtener el nombre de la categoría desde el formulario
+  $nombre = $_POST['nombre'];
+
+  // Insertar la categoría en la base de datos
+  $query = "INSERT INTO categorias (nombre) VALUES ('$nombre')";
+  $resultado = $conexion->query($query);
+
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Agregar Categorías</title>
+  <title>Agregar Categoría</title>
 </head>
 <body>
-	<!-- Este es el menú de navegación que deberás incluir en todas las páginas que conforman tu aplicación -->
-	<nav>
-	  <ul>
-	    <li><a href="index.php?action=prestamos">Préstamos</a></li>
-	    <li><a href="index.php?action=socios">Socios</a></li>
-	    <li><a href="index.php?action=libros">Libros</a></li>
-	    <li><a href="index.php?action=categorias">Categorías</a></li>
-	  </ul>
-	</nav>
-<h1>Agregar nueva categoría</h1>
-
-<form action="/categoria/guardar" method="POST">
-    <label for="nombre">Nombre:</label>
-    <input type="text" id="nombre" name="nombre" required>
-
-    <label for="descripcion">Descripción:</label>
-    <textarea id="descripcion" name="descripcion" required></textarea>
-
-    <input type="submit" value="Guardar">
-</form>
+  <h2>Agregar Categoría</h2>
+  <form method="POST">
+    <label>Nombre:</label>
+    <input type="text" name="nombre">
+    <br><br>
+    <button type="submit" name="agregar">Agregar</button>
+  </form>
+  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+  <button onclick="location.href='listar.php'">Volver a la lista de categorías</button>
+  <script>
+    <?php if (isset($_POST['agregar'])): ?>
+      alert('La categoría ha sido agregada correctamente.');
+    <?php endif; ?>
+  </script>
 </body>
 </html>

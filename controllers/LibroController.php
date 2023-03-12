@@ -15,24 +15,77 @@ class LibroController {
         $categoria = new Categoria();
         $categorias = $categoria->listar();
 
+        if (isset($_POST['agregar'])) {
+            $titulo = $_POST['titulo'];
+            $autor = $_POST['autor'];
+            $editorial = $_POST['editorial'];
+            $isbn = $_POST['isbn'];
+            $id_categoria = $_POST['id_categoria'];
+            $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
+
+            $libro = new Libro();
+            $libro->setTitulo($titulo);
+            $libro->setAutor($autor);
+            $libro->setEditorial($editorial);
+            $libro->setIsbn($isbn);
+            $libro->setIdCategoria($id_categoria);
+            $libro->setCantidadEjemplares($cantidad_ejemplares);
+
+            $resultado = $libro->agregar();
+            if ($resultado) {
+                echo "<script>alert('El libro ha sido agregado correctamente.');</script>";
+            } else {
+                echo "<script>alert('Ha ocurrido un error al agregar el libro.');</script>";
+            }
+        }
+
         require_once '../views/libro/agregar.php';
     }
 
-    public function guardar() {
-        $titulo = $_POST['titulo'];
-        $autor = $_POST['autor'];
-        $categoria_id = $_POST['categoria_id'];
-        $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
-
+    public function eliminar($id) {
         $libro = new Libro();
-        $libro->setTitulo($titulo);
-        $libro->setAutor($autor);
-        $libro->setCategoriaId($categoria_id);
-        $libro->setCantidadEjemplares($cantidad_ejemplares);
+        $resultado = $libro->eliminar($id);
 
-        $libro->guardar();
+        if ($resultado) {
+            echo "<script>alert('El libro ha sido eliminado correctamente.');</script>";
+        } else {
+            echo "<script>alert('Ha ocurrido un error al eliminar el libro.');</script>";
+        }
 
-        header('Location: index.php?action=libros');
+        header('Location: index.php');
+    }
+
+    public function modificar($id) {
+        $libro = new Libro();
+        $libro->buscar($id);
+
+        $categoria = new Categoria();
+        $categorias = $categoria->listar();
+
+        if (isset($_POST['modificar'])) {
+            $titulo = $_POST['titulo'];
+            $autor = $_POST['autor'];
+            $editorial = $_POST['editorial'];
+            $isbn = $_POST['isbn'];
+            $id_categoria = $_POST['id_categoria'];
+            $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
+
+            $libro->setTitulo($titulo);
+            $libro->setAutor($autor);
+            $libro->setEditorial($editorial);
+            $libro->setIsbn($isbn);
+            $libro->setIdCategoria($id_categoria);
+            $libro->setCantidadEjemplares($cantidad_ejemplares);
+
+            $resultado = $libro->modificar();
+            if ($resultado) {
+                echo "<script>alert('El libro ha sido modificado correctamente.');</script>";
+            } else {
+                echo "<script>alert('Ha ocurrido un error al modificar el libro.');</script>";
+            }
+        }
+
+        require_once '../views/libro/modificar.php';
     }
 
     public function buscar($titulo) {
@@ -40,49 +93,5 @@ class LibroController {
         return $libro->buscar($titulo);
     }
 
-    public function mostrarFormularioActualizar() {
-        $categoria = new Categoria();
-        $categorias = $categoria->listar();
-
-        $id = $_GET['id'];
-
-        $libro = new Libro();
-        $libro->setId($id);
-        $libro->buscarPorId();
-
-        require_once('../views/libro/actualizar.php');
-    }
-
-    public function actualizar() {
-        $id = $_POST['id'];
-        $titulo = $_POST['titulo'];
-        $autor = $_POST['autor'];
-        $categoria_id = $_POST['categoria_id'];
-        $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
-
-        $libro = new Libro();
-        $libro->setId($id);
-        $libro->setTitulo($titulo);
-        $libro->setAutor($autor);
-        $libro->setCategoriaId($categoria_id);
-        $libro->setCantidadEjemplares($cantidad_ejemplares);
-
-        $libro->actualizar();
-
-        header('Location: index.php?action=libros');
-    }
-
-    public function eliminar($id) {
-        $libro = new Libro();
-        $libro->setId($id);
-
-        $libro->eliminar();
-
-        header('Location: index.php?action=libros');
-    }
 }
-
-
-
-
-
+?>

@@ -1,59 +1,40 @@
 <?php
-require_once '../core/Model.php';
-require_once '../models/Categoria.php';
-
+require_once(__DIR__ . '/../models/Categoria.php');
 
 class CategoriaController {
-    public function index() {
+    public function listar() {
         $categoria = new Categoria();
         $categorias = $categoria->listar();
 
-        require_once('../views/categoria/index.php');
+        require_once(__DIR__ . '/../views/categoria/listar.php');
     }
 
-    public function agregar() {
-        require_once('../views/categoria/agregar.php');
+    public function nuevo() {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            $categoria = new Categoria();
+            $categoria->setNombre($_POST['nombre']);
+
+            $guardado = $categoria->guardar();
+
+            if ($guardado) {
+                header('Location: index.php?action=listarCategorias');
+            } else {
+                echo "Error al guardar la categoría";
+            }
+        } else {
+            require_once(__DIR__ . '/../views/categoria/nuevo.php');
+        }
     }
 
-    public function guardar($nombre, $descripcion) {
-        $categoria = new Categoria();
-        $categoria->setNombre($nombre);
-        $categoria->guardar();
-    }
-
-    public function buscar($id) {
-        $categoria = new Categoria();
-        $categoria->setId($id);
-        $categoria->buscar();
-
-        return $categoria;
-    }
-
-    public function actualizar($id, $nombre) {
-        $categoria = new Categoria();
-        $categoria->setId($id);
-        $categoria->setNombre($nombre);
-
-        $categoria->actualizar();
-    }
-
-    public function eliminar($id) {
-        $categoria = new Categoria();
-        $categoria->setId($id);
-        $categoria->buscar();
-
-        // Pasar la categoría como parámetro a la vista eliminar.php
-        require_once('../views/categoria/eliminar.php');
-        
-        extract(['categoria' => $categoria]);
-    }
-
-    public function editar($id) {
+    public function editar() {
+        // Obtener el ID de la categoría desde la URL
         $id = $_GET['id'];
-        $categoria = $this->buscar($id);
-        require_once('../views/categoria/editar.php');
+    
+        // Obtener los datos de la categoría desde el modelo
+        $categoria = Categoria::buscarPorId($id);
+    
+        // Cargar la vista de edición de categoría
+        require_once(__DIR__ . '/../views/categoria/editar.php');
     }
-    
-    
 }
 ?>

@@ -1,45 +1,45 @@
+<?php
+// Establecer la conexión a la base de datos
+$conexion = new mysqli('localhost', 'root', '', 'booking a book');
+
+// Verificar si se produjo un error en la conexión
+if ($conexion->connect_error) {
+  die('Error de conexión: ' . $conexion->connect_error);
+}
+
+// Consulta SQL para obtener todos los socios
+$query = "SELECT * FROM socios";
+$resultado = $conexion->query($query);
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado de socios</title>
+  <title>Listado de Socios</title>
 </head>
 <body>
-	<!-- Este es el menú de navegación que deberás incluir en todas las páginas que conforman tu aplicación -->
-	<nav>
-	  <ul>
-	    <li><a href="index.php?action=prestamos">Préstamos</a></li>
-	    <li><a href="index.php?action=socios">Socios</a></li>
-	    <li><a href="index.php?action=libros">Libros</a></li>
-	    <li><a href="index.php?action=categorias">Categorías</a></li>
-	  </ul>
-	</nav>
-
-	
-<h1>Listado de socios</h1>
-<table>
-    <tr>
-        <th>ID</th>
+  <h2>Listado de Socios</h2>
+  <table border="1">
+    <thead>
+      <tr>
         <th>Nombre</th>
         <th>Apellidos</th>
         <th>Email</th>
         <th>Teléfono</th>
-        <th>Acciones</th>
-    </tr>
-    <?php foreach ($socios as $socio): ?>
-    <tr>
-        <td><?php echo $socio->getId(); ?></td>
-        <td><?php echo $socio->getNombre(); ?></td>
-        <td><?php echo $socio->getApellidos(); ?></td>
-        <td><?php echo $socio->getEmail(); ?></td>
-        <td><?php echo $socio->getTelefono(); ?></td>
-        <td>
-            <a href="#">Editar</a>
-            <a href="#">Eliminar</a>
-        </td>
-    </tr>
-    <?php endforeach; ?>
-</table>
-
-<a href="/socio/nuevo">Agregar nuevo socio</a>
+      </tr>
+    </thead>
+    <tbody>
+      <?php while ($socio = $resultado->fetch_assoc()): ?>
+        <tr>
+          <td><?= $socio['nombre'] ?></td>
+          <td><?= $socio['apellidos'] ?></td>
+          <td><?= $socio['email'] ?></td>
+          <td><?= $socio['telefono'] ?></td>
+        </tr>
+      <?php endwhile; ?>
+    </tbody>
+  </table>
+  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
 </body>
 </html>
+

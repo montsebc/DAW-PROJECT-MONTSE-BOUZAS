@@ -1,23 +1,60 @@
+<?php
+// establecer la conexión a la base de datos
+$conexion = new mysqli('localhost', 'root', '', 'booking a book');
+
+// verificar si se produjo un error en la conexión
+if ($conexion->connect_error) {
+  die('Error de conexión: ' . $conexion->connect_error);
+}
+
+// consulta SQL para obtener todas las categorías
+$query = "SELECT * FROM categorias";
+$resultado = $conexion->query($query);
+
+// verificar si se obtuvieron resultados
+if ($resultado->num_rows > 0) {
+  // inicializar un array vacío para almacenar las categorías
+  $categorias = [];
+
+  // iterar a través de los resultados y agregar cada categoría al array
+  while ($fila = $resultado->fetch_assoc()) {
+    $categorias[] = $fila;
+  }
+} else {
+  // no se encontraron resultados, asignar un array vacío
+  $categorias = [];
+}
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
-	<title>Listado de Categorías</title>
+  <title>Listado de Categorías</title>
 </head>
 <body>
-	<!-- Este es el menú de navegación que deberás incluir en todas las páginas que conforman tu aplicación -->
-	<nav>
-	  <ul>
-	    <li><a href="index.php?action=prestamos">Préstamos</a></li>
-	    <li><a href="index.php?action=socios">Socios</a></li>
-	    <li><a href="index.php?action=libros">Libros</a></li>
-	    <li><a href="index.php?action=categorias">Categorías</a></li>
-	  </ul>
-	</nav>
-
-	<h1>Listado de Categorías</h1>
-
-	<!-- Aquí incluirías el código PHP que genera la tabla de categorías -->
-
+  <h1>Listado de Categorías</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Nombre</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php foreach ($categorias as $categoria): ?>
+        <tr>
+          <td><?= $categoria['id'] ?></td>
+          <td><?= $categoria['nombre'] ?></td>
+        </tr>
+      <?php endforeach ?>
+    </tbody>
+  </table>
+  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+  
+  <script>
+    <?php if (isset($_GET['actualizado'])): ?>
+      alert('La categoría ha sido actualizada correctamente.');
+    <?php endif; ?>
+  </script>
 </body>
 </html>
-

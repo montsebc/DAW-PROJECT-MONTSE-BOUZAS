@@ -37,10 +37,10 @@ $email = $_SESSION['usuario'];
           Categoría
         </a>
         <div class="dropdown-menu" aria-labelledby="categoriaDropdown">
-		<a class="dropdown-item" href="index.php?action=editar_categoria&id=<?php echo $categoria['id']; ?>">Editar</a>
-          <a class="dropdown-item" href="#">Eliminar</a>
-          <a class="dropdown-item" href="#">Listar</a>
-          <a class="dropdown-item" href="#">Nuevo</a>
+        <a class="dropdown-item" href="views/categoria/editar.php">Editar</a>
+          
+          <a class="dropdown-item" href="views/categoria/listar.php">Listado</a>
+          <a class="dropdown-item" href="views/categoria/nuevo.php">Añadir nueva categoría</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -48,12 +48,10 @@ $email = $_SESSION['usuario'];
           Libro
         </a>
         <div class="dropdown-menu" aria-labelledby="libroDropdown">
-          <a class="dropdown-item" href="#">Actualizar</a>
-          <a class="dropdown-item" href="#">Agregar</a>
-          <a class="dropdown-item" href="#">Buscar</a>
-          <a class="dropdown-item" href="#">Eliminar</a>
-          <a class="dropdown-item" href="#">Guardar</a>
-          <a class="dropdown-item" href="#">Listar</a>
+          <a class="dropdown-item" href="views/libro/agregar.php">Añadir libro</a>
+          <a class="dropdown-item" href="views/libro/buscar.php">Buscar</a>
+          <a class="dropdown-item" href="views/libro/modificar.php">Modificar/borrar libros</a>
+          <a class="dropdown-item" href="views/libro/listar.php">Listado de libros</a>
         </div>
       </li>
       <li class="nav-item dropdown">
@@ -73,12 +71,12 @@ $email = $_SESSION['usuario'];
         <div class="dropdown-menu" aria-labelledby="socioDropdown">
           <a class="dropdown-item" href="#">Editar</a>
           <a class="dropdown-item" href="#">Eliminar</a>
-          <a class="dropdown-item" href="#">Listar</a>
+          <a class="dropdown-item" href="views/socio/listar.php">Listado de Socios</a>
           <a class="dropdown-item" href="#">Nuevo</a>
         </div>
 	  </li>
 	  <li class="nav-item">
-  		<a class="nav-link" href="logout.php">Cerrar sesión</a>
+  		<a class="nav-link" href="views/usuario/logout.php">Cerrar sesión</a>
 	</li>
 
 
