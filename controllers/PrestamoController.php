@@ -1,93 +1,123 @@
 <?php
-require_once '../models/Prestamo.php';
+require_once __DIR__ . "/../models/Prestamo.php";
+require_once __DIR__ . "/../models/Libro.php";
+require_once __DIR__ . "/../models/Socio.php";
 
 class PrestamoController {
-    public function devolver($id_libro, $id_socio) {
-        $prestamo = new Prestamo();
-        $prestamo->update($id_libro, $id_socio);
+    protected $table = 'prestamos';
 
-        // redirigir a la página de listar préstamos
-        echo "<script>window.location.href = 'listar.php';</script>";
-        exit();
-            
+    protected $id;
+    protected $id_libro;
+    protected $id_socio;
+    protected $fecha_prestamo;
+    protected $fecha_devolucion;
+
+    public function __construct($id_libro = '', $id_socio = '') {
+        $this->id_libro = $id_libro;
+        $this->id_socio = $id_socio;
     }
 
-    public function listar() {
-        $prestamo = new Prestamo();
-    
-        // obtener los préstamos de la base de datos
-        $prestamos = $prestamo->getBySocio($_SESSION['id_socio']);
-    
-        // obtener los libros disponibles en la base de datos
-        $libros_disponibles = $prestamo->getDisponibles();
-    
-        // incluir la vista
-        require_once '../views/listar.php';
+    public function getId() {
+        return $this->id;
     }
-    
-    
-    
 
-    public function nuevo() {
-        $prestamo = new Prestamo();
-    
-        // verificar si el socio ya tiene el máximo de préstamos permitidos
-        $prestamos = $prestamo->getBySocio($_SESSION['id_socio']);
-        if (count($prestamos) >= 3) {
-            throw new Exception('El socio ya tiene el máximo de préstamos permitidos.');
-        }
-    
-        // obtener los libros disponibles en la base de datos
-        $libro = new Libro();
-        $libros_disponibles = $prestamo->getDisponibles();
-    
-        // incluir la vista
-        require_once '../views/nuevo.php';
+    public function setId($id) {
+        $this->id = $id;
     }
-    
 
-    public function prestar($id_libro) {
-        $id_socio = $_SESSION['id_socio'];
-        $prestamo = new Prestamo();
-
-        // verificar si el socio ya tiene el máximo de préstamos permitidos
-        $prestamos = $prestamo->getBySocio($id_socio);
-        if (count($prestamos) >= 3) {
-            throw new Exception('El socio ya tiene el máximo de préstamos permitidos.');
-        }
-
-        // insertar el préstamo en la base de datos
-        $prestamo->insert($id_libro, $id_socio);
-
-        // redirigir a la página de listar préstamos
-        echo "<script>window.location.href = 'listar.php';</script>";
-        exit();
-
+    public function getIdLibro() {
+        return $this->id_libro;
     }
-    public function getDisponibles() {
-        // obtener la conexión a la base de datos
+
+    public function setIdLibro($id_libro) {
+        $this->id_libro = $id_libro;
+    }
+
+    public function getIdSocio() {
+        return $this->id_socio;
+    }
+
+    public function setIdSocio($id_socio) {
+        $this->id_socio = $id_socio;
+    }
+
+    public function getFechaPrestamo() {
+        return $this->fecha_prestamo;
+    }
+
+    public function setFechaPrestamo($fecha_prestamo) {
+        $this->fecha_prestamo = $fecha_prestamo;
+    }
+
+    public function getFechaDevolucion() {
+        return $this->fecha_devolucion;
+    }
+
+    public function setFechaDevolucion($fecha_devolucion) {
+        $this->fecha_devolucion = $fecha_devolucion;
+    }
+    public function guardar() {
+        $fecha_prestamo = date("Y-m-d H:i:s");
+        $fecha_devolucion = date("Y-m-d H:i:s", strtotime('+30 days'));
+    
+        $query = "INSERT INTO prestamos (id_libro, id_socio, fecha_prestamo, fecha_devolucion) VALUES ('{$this->id_libro}', '{$this->id_socio}', '{$fecha_prestamo}', '{$fecha_devolucion}')";
         $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+    }
     
-        // obtener los libros disponibles en la base de datos
-        $query = "SELECT id, titulo, autor, editorial, fecha_disponible FROM libros WHERE cantidad_ejemplares > 0";
+    public static function listar($conexion) {
+        $table = 'prestamos';
+        $query = "SELECT * FROM {$table}";
         $result = $conexion->query($query);
     
-        // verificar si se obtuvieron resultados
-        if ($result->num_rows > 0) {
-            // inicializar un array vacío para almacenar los libros disponibles
-            $libros_disponibles = [];
-    
-            // iterar a través de los resultados y agregar cada libro disponible al array
-            while ($fila = $result->fetch_assoc()) {
-                $libros_disponibles[] = $fila;
-            }
-        } else {
-            // no se encontraron resultados, asignar null
-            $libros_disponibles = null;
+        $prestamos = array();
+        while ($fila = $result->fetch_assoc()) {
+            $prestamo = new Prestamo();
+            $prestamo->setId($fila['id']);
+            $prestamo->setIdLibro($fila['id_libro']);
+            $prestamo->setIdSocio($fila['id_socio']);
+            $prestamo->setFechaPrestamo($fila['fecha_prestamo']);
+            $prestamo->setFechaDevolucion($fila['fecha_devolucion']);
+            $prestamos[] = $prestamo;
         }
-    
-        return $libros_disponibles;
+        $conexion->close();
+        return $prestamos;
     }
     
+    
+    
+    public function buscarPorId() {
+        $query = "SELECT * FROM {$this->table} WHERE id = {$this->id}";
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+        $result = $conexion->query($query);
+    
+        if ($result->num_rows == 1) {
+            $fila = $result->fetch_assoc();
+            $prestamo = new Prestamo();
+            $prestamo->setId($fila['id']);
+            $prestamo->setIdLibro($fila['id_libro']);
+            $prestamo->setIdSocio($fila['id_socio']);
+            $prestamo->setFechaPrestamo($fila['fecha_prestamo']);
+            $prestamo->setFechaDevolucion($fila['fecha_devolucion']);
+        } else {
+            throw new Exception('El préstamo no existe.');
+        }
+    }
+    
+    
+    
+    
+    public function actualizar() {
+        $query = "UPDATE {$this->table} SET id_libro = '{$this->id_libro}', id_socio = '{$this->id_socio}', fecha_prestamo = '{$this->fecha_prestamo}', fecha_devolucion = '{$this->fecha_devolucion}' WHERE id = '{$this->id}'";
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+    }
+    
+    public function eliminar() {
+        $query = "DELETE FROM {$this->table} WHERE id = {$this->id}";
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+    }
+    
+    
+    
 }
+
 ?>

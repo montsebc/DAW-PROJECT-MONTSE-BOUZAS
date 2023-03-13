@@ -34,5 +34,7 @@ class Usuario extends Model {
 
         return mysqli_fetch_assoc($resultado);
     }
+    
+    
 }
 ?>

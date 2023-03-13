@@ -93,7 +93,7 @@ class Socio extends Model {
     }
 
     public static function listar() {
-        $conexion = new mysqli('localhost', 'usuario', 'contraseña', 'biblioteca');
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
         $query = "SELECT * FROM socios";
         $resultado = $conexion->query($query);
         $socios = array();
