@@ -23,5 +23,6 @@ class Model {
         $this->conexion->close();
     }
 }
+
 ?>
 

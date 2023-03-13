@@ -69,10 +69,10 @@ $email = $_SESSION['usuario'];
           Socio
         </a>
         <div class="dropdown-menu" aria-labelledby="socioDropdown">
-          <a class="dropdown-item" href="#">Editar</a>
-          <a class="dropdown-item" href="#">Eliminar</a>
+          <a class="dropdown-item" href="views/socio/editar.php">Editar</a>
+          <a class="dropdown-item" href="views/socio/eliminar.php">Eliminar</a>
           <a class="dropdown-item" href="views/socio/listar.php">Listado de Socios</a>
-          <a class="dropdown-item" href="#">Nuevo</a>
+          <a class="dropdown-item" href="views/socio/nuevo.php">Nuevo</a>
         </div>
 	  </li>
 	  <li class="nav-item">

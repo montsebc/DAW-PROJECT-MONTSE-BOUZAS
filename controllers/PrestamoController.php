@@ -1,82 +1,93 @@
 <?php
-
-require_once __DIR__ . '/../core/Model.php';
-require_once __DIR__. '/../models/Prestamo.php';
-require_once __DIR__. '/../models/Socio.php';
-require_once __DIR__. '/../models/Libro.php';
+require_once '../models/Prestamo.php';
 
 class PrestamoController {
+    public function devolver($id_libro, $id_socio) {
+        $prestamo = new Prestamo();
+        $prestamo->update($id_libro, $id_socio);
+
+        // redirigir a la página de listar préstamos
+        echo "<script>window.location.href = 'listar.php';</script>";
+        exit();
+            
+    }
+
     public function listar() {
-        $conexion = new mysqli("localhost", "root", "", "booking a book");
-        $query = "SELECT * FROM prestamos";
+        $prestamo = new Prestamo();
+    
+        // obtener los préstamos de la base de datos
+        $prestamos = $prestamo->getBySocio($_SESSION['id_socio']);
+    
+        // obtener los libros disponibles en la base de datos
+        $libros_disponibles = $prestamo->getDisponibles();
+    
+        // incluir la vista
+        require_once '../views/listar.php';
+    }
+    
+    
+    
+
+    public function nuevo() {
+        $prestamo = new Prestamo();
+    
+        // verificar si el socio ya tiene el máximo de préstamos permitidos
+        $prestamos = $prestamo->getBySocio($_SESSION['id_socio']);
+        if (count($prestamos) >= 3) {
+            throw new Exception('El socio ya tiene el máximo de préstamos permitidos.');
+        }
+    
+        // obtener los libros disponibles en la base de datos
+        $libro = new Libro();
+        $libros_disponibles = $prestamo->getDisponibles();
+    
+        // incluir la vista
+        require_once '../views/nuevo.php';
+    }
+    
+
+    public function prestar($id_libro) {
+        $id_socio = $_SESSION['id_socio'];
+        $prestamo = new Prestamo();
+
+        // verificar si el socio ya tiene el máximo de préstamos permitidos
+        $prestamos = $prestamo->getBySocio($id_socio);
+        if (count($prestamos) >= 3) {
+            throw new Exception('El socio ya tiene el máximo de préstamos permitidos.');
+        }
+
+        // insertar el préstamo en la base de datos
+        $prestamo->insert($id_libro, $id_socio);
+
+        // redirigir a la página de listar préstamos
+        echo "<script>window.location.href = 'listar.php';</script>";
+        exit();
+
+    }
+    public function getDisponibles() {
+        // obtener la conexión a la base de datos
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+    
+        // obtener los libros disponibles en la base de datos
+        $query = "SELECT id, titulo, autor, editorial, fecha_disponible FROM libros WHERE cantidad_ejemplares > 0";
         $result = $conexion->query($query);
     
-        $prestamos = [];
+        // verificar si se obtuvieron resultados
+        if ($result->num_rows > 0) {
+            // inicializar un array vacío para almacenar los libros disponibles
+            $libros_disponibles = [];
     
-        while ($fila = $result->fetch_object('Prestamo')) {
-            $prestamos[] = $fila;
+            // iterar a través de los resultados y agregar cada libro disponible al array
+            while ($fila = $result->fetch_assoc()) {
+                $libros_disponibles[] = $fila;
+            }
+        } else {
+            // no se encontraron resultados, asignar null
+            $libros_disponibles = null;
         }
     
-        $result->free();
-        $conexion->close();
-    
-        return $prestamos;
+        return $libros_disponibles;
     }
     
-    
-    public function index()
-{
-    $prestamo = new Prestamo();
-    $prestamos = $prestamo->listar();
-
-    require_once 'views/prestamo/listar.php';
-}
-
-
-    public function crear() {
-        $libro = new Libro();
-        $libros = $libro->listarDisponibles();
-
-        $socio = new Socio();
-        $socios = $socio->listar();
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $idSocio = $_POST['socio'];
-            $idLibro = $_POST['libro'];
-
-            // Obtener la fecha actual
-            $fechaActual = date('Y-m-d');
-
-            // Calcular la fecha de devolución (15 días a partir de la fecha actual)
-            $fechaDevolucion = date('Y-m-d', strtotime($fechaActual . '+ 15 days'));
-
-            // Crear el objeto de préstamo
-            $prestamo = new Prestamo($idSocio, $idLibro, $fechaActual, $fechaDevolucion);
-            $prestamo->guardar();
-
-            // Redirigir al listado de préstamos
-            header('Location: /prestamo/listar');
-            exit;
-        }
-
-        require_once __DIR__ . '/../views/prestamo/nuevo.php';
-    }
-
-    public function devolver() {
-        $id = $_GET['id'];
-
-        $prestamo = new Prestamo();
-        $prestamo = $prestamo->buscar($id);
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $prestamo->devolver();
-
-            // Redirigir al listado de préstamos
-            header('Location: /prestamo/listar');
-            exit;
-        }
-
-        require_once __DIR__ . '/../views/prestamo/devolver.php';
-    }
 }
 ?>

@@ -1,34 +1,44 @@
 <?php
+
 require_once __DIR__ . "/../core/Model.php";
 
 class Libro extends Model {
-    private $id;
-    private $titulo;
-    private $autor;
-    private $editorial;
-    private $isbn;
-    private $cantidad_ejemplares;
-    private $id_categoria;
-    private $estado;
-    protected $conexion;
+    protected $table = 'libros';
+    protected $id;
+    protected $titulo;
+    protected $autor;
+    protected $editorial;
+    protected $isbn;
+    protected $cantidad_ejemplares;
+    protected $id_categoria;
+    protected $estado;
+    protected $categoria;
+    protected $disponibles;
 
-    public function setConexion($conexion) {
-        $this->conexion = $conexion;
+    public function getCategoria() {
+        return $this->categoria;
     }
+    
+    public function setCategoria($categoria) {
+        $this->categoria = $categoria;
+    }
+    
+    public function getDisponibles() {
+        return $this->disponibles;
+    }
+    
+    public function setDisponibles($disponibles) {
+        $this->disponibles = $disponibles;
+    }
+    
 
-    public function __construct($titulo = '', $autor = '', $editorial = '', $isbn = '', $cantidad_ejemplares = '') {
-        $this->titulo = $titulo;
-        $this->autor = $autor;
-        $this->editorial = $editorial;
-        $this->isbn = $isbn;
-        $this->cantidad_ejemplares = $cantidad_ejemplares;
-    }
-    public function setId($id) {
-        $this->id = $id;
-    }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getTitulo() {
@@ -88,92 +98,164 @@ class Libro extends Model {
     }
 
     public function agregar() {
-        $conexion = $this->connect();
-        $query = "INSERT INTO libros (titulo, autor, editorial, isbn, cantidad_ejemplares, id_categoria) VALUES ('$this->titulo', '$this->autor', '$this->editorial', '$this->isbn', '$this->cantidad_ejemplares', '$this->id_categoria')";
-        $resultado = $conexion->query($query);
+        $query = "INSERT INTO {$this->table} (titulo, autor, editorial, isbn, cantidad_ejemplares, id_categoria) VALUES ('$this->titulo', '$this->autor', '$this->editorial', '$this->isbn', '$this->cantidad_ejemplares', '$this->id_categoria')";
+        $this->conexion->query($query);
     }
+    public function prestarLibro($id_libro, $id_usuario)
+{
+    $libro = new Libro();
+    $libro->buscarPorId($id_libro);
     
-    public function listar() {
-        $conexion = $this->connect();
-        $query = "SELECT * FROM libros";
-        $resultado = $conexion->query($query);
-
-        $libros = array();
-        while ($fila = $resultado->fetch_assoc()) {
-            $libro = new Libro();
-            $libro->setId($fila['id']);
-            $libro->setTitulo($fila['titulo']);
-            $libro->setAutor($fila['autor']);
-            $libro->setEditorial($fila['editorial']);
-            $libro->setIsbn($fila['isbn']);
-            $libro->setCantidadEjemplares($fila['cantidad_ejemplares']);
-            $libro->setIdCategoria($fila['id_categoria']);
-            $libro->setEstado($fila['estado']);
-
-            $libros[] = $libro;
-        }
-
-        return $libros;
+    if ($libro->getCantidadEjemplares() > 0) {
+        // Actualizar cantidad de ejemplares
+        $nueva_cantidad = $libro->getCantidadEjemplares() - 1;
+        $libro->setCantidadEjemplares($nueva_cantidad);
+        $libro->setEstado($nueva_cantidad > 0 ? 'disponible' : 'no disponible');
+        $libro->actualizar();
+        
+        // Registrar préstamo
+        $query = "INSERT INTO {$this->table} (id_libro, id_usuario, fecha_prestamo) VALUES ('$id_libro', '$id_usuario', NOW())";
+        $this->conexion->query($query);
+        
+        return true;
+    } else {
+        return false;
     }
+}
+
+public function devolverLibro($id_libro)
+{
+    $libro = new Libro();
+    $libro->buscarPorId($id_libro);
     
+    // Actualizar cantidad de ejemplares
+    $nueva_cantidad = $libro->getCantidadEjemplares() + 1;
+    $libro->setCantidadEjemplares($nueva_cantidad);
+    $libro->setEstado($nueva_cantidad > 0 ? 'disponible' : 'no disponible');
+    $libro->actualizar();
+    
+    // Registrar devolución
+    $query = "UPDATE {$this->table} SET fecha_devolucion = NOW() WHERE id_libro = '$id_libro' AND fecha_devolucion IS NULL";
+    $this->conexion->query($query);
+    
+    return true;
+}
+
+
+
+public function listar() {
+    $query = "SELECT l.*, c.nombre AS categoria,
+              l.cantidad_ejemplares - IFNULL(p.cant_prestados, 0) AS disponibles
+              FROM libros l
+              INNER JOIN categorias c ON l.id_categoria = c.id
+              LEFT JOIN (
+                  SELECT id_libro, COUNT(*) AS cant_prestados
+                  FROM prestamos
+                  WHERE fecha_devolucion IS NULL
+                  GROUP BY id_libro
+              ) p ON l.id = p.id_libro";
+    $result = $this->conexion->query($query);
+
+    $libros = array();
+    while ($fila = $result->fetch_assoc()) {
+        $libro = new Libro();
+        $libro->setId($fila['id']);
+        $libro->setTitulo($fila['titulo']);
+        $libro->setAutor($fila['autor']);
+        $libro->setEditorial($fila['editorial']);
+        $libro->setIsbn($fila['isbn']);
+        $libro->setCantidadEjemplares($fila['cantidad_ejemplares']);
+        $libro->setIdCategoria($fila['id_categoria']);
+        $libro->setEstado($fila['estado']);
+        $libro->setDisponibles($fila['disponibles']);
+        $libro->setCategoria($fila['categoria']);
+
+        $libros[] = $libro;
+    }
+
+    return $libros;
+}
+
+
     public function buscarPorId($id) {
-        $conexion = $this->connect();
-        $query = "SELECT * FROM libros WHERE id = $id";
-        $resultado = $conexion->query($query);
-        if ($resultado->num_rows > 0) {
-            $fila = $resultado->fetch_assoc();
+        $query = "SELECT * FROM {$this->table} WHERE id = $id";
+        $result = $this->conexion->query($query);
+    
+        if ($result->num_rows == 1) {
+            $fila = $result->fetch_assoc();
             $this->setId($fila['id']);
             $this->setTitulo($fila['titulo']);
             $this->setAutor($fila['autor']);
             $this->setEditorial($fila['editorial']);
-            $this->setCantidadEjemplares($fila['cantidad_ejemplares']);
             $this->setIsbn($fila['isbn']);
+            $this->setCantidadEjemplares($fila['cantidad_ejemplares']);
             $this->setIdCategoria($fila['id_categoria']);
             $this->setEstado($fila['estado']);
+        } else {
+            throw new Exception('El libro no existe.');
         }
     }
     
-    public function listarPorCategoria($id_categoria) {
-        $conexion = $this->connect();
-        $query = "SELECT * FROM libros WHERE id_categoria = $id_categoria";
-        $resultado = $conexion->query($query);
-
+    public function actualizar() {
+        $query = "UPDATE {$this->table} SET titulo = '{$this->titulo}', autor = '{$this->autor}', editorial = '{$this->editorial}', isbn = '{$this->isbn}', cantidad_ejemplares = '{$this->cantidad_ejemplares}', id_categoria = '{$this->id_categoria}', estado = '{$this->estado}' WHERE id = '{$this->id}'";
+        $this->conexion->query($query);
+    }
+    
+    public function listarDisponibles() {
+        $query = "SELECT l.*, c.nombre AS categoria,
+                         l.cantidad_ejemplares - IFNULL(p.cant_prestados, 0) AS disponibles
+                  FROM libros l
+                  INNER JOIN categorias c ON l.id_categoria = c.id
+                  LEFT JOIN (
+                    SELECT id_libro, COUNT(*) AS cant_prestados
+                    FROM prestamos
+                    WHERE fecha_devolucion IS NULL
+                    GROUP BY id_libro
+                  ) p ON l.id = p.id_libro
+                  WHERE l.cantidad_ejemplares - IFNULL(p.cant_prestados, 0) > 0";
+        $result = $this->conexion->query($query);
+      
         $libros = array();
-        while ($fila = $resultado->fetch_assoc()) {
+        while ($fila = $result->fetch_assoc()) {
+          $libro = new Libro();
+          $libro->setId($fila['id']);
+          $libro->setTitulo($fila['titulo']);
+          $libro->setAutor($fila['autor']);
+          $libro->setEditorial($fila['editorial']);
+          $libro->setIsbn($fila['isbn']);
+          $libro->setCantidadEjemplares($fila['cantidad_ejemplares']);
+          $libro->setIdCategoria($fila['id_categoria']);
+          $libro->setEstado($fila['estado']);
+      
+          $libros[] = $libro;
+        }
+      
+        return $libros;
+      }
+      
+    
+    public function buscarPorTitulo($titulo) {
+        $query = "SELECT * FROM {$this->table} WHERE titulo LIKE '%$titulo%'";
+        $result = $this->conexion->query($query);
+    
+        $libros = array();
+        while ($fila = $result->fetch_assoc()) {
             $libro = new Libro();
             $libro->setId($fila['id']);
             $libro->setTitulo($fila['titulo']);
             $libro->setAutor($fila['autor']);
             $libro->setEditorial($fila['editorial']);
-            $libro->setCantidadEjemplares($fila['cantidad_ejemplares']);
             $libro->setIsbn($fila['isbn']);
+            $libro->setCantidadEjemplares($fila['cantidad_ejemplares']);
             $libro->setIdCategoria($fila['id_categoria']);
             $libro->setEstado($fila['estado']);
-            $libros[] = $libro;
-        }
-
-        return $libros;
-    }
     
-    public static function listarDisponibles($conexion)
-    {
-        $libros = array();
-
-        $sql = "SELECT * FROM libros WHERE estado = 'disponible'";
-        $result = $conexion->query($sql);
-
-        while ($row = $result->fetch_assoc()) {
-            $libro = new Libro();
-            $libro->setId($row['id']);
-            $libro->setTitulo($row['titulo']);
-            $libro->setAutor($row['autor']);
-            $libro->setEstado($row['estado']);
-            $libro->setConexion($conexion);
-
             $libros[] = $libro;
         }
-
+    
         return $libros;
     }
 }
+
 ?>
+    

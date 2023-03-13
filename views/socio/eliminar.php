@@ -1,54 +1,65 @@
 <?php
-// Establecer la conexión a la base de datos
+// establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
-// Verificar si se produjo un error en la conexión
+// verificar si se produjo un error en la conexión
 if ($conexion->connect_error) {
   die('Error de conexión: ' . $conexion->connect_error);
 }
 
-// Verificar si se ha pasado el id del socio a eliminar en la URL
-if (!isset($_GET['id'])) {
-  echo "<p>No se ha especificado el socio que desea eliminar.</p>";
-} else {
-  $id = mysqli_real_escape_string($conexion, $_GET['id']);
+// comprobar si se ha enviado un formulario para eliminar el socio
+if (isset($_POST['eliminar'])) {
+  // obtener el id del socio a eliminar
+  $id = $_POST['socio'];
 
-  // Obtener los datos del socio a eliminar
-  $query = "SELECT * FROM socios WHERE id = '$id'";
+  // eliminar el socio de la base de datos
+  $query = "DELETE FROM socios WHERE id = $id";
   $resultado = $conexion->query($query);
 
-  // Verificar si se encontró el socio
-  if ($resultado->num_rows == 0) {
-    echo "<p>No se encontró el socio que desea eliminar.</p>";
-  } else {
-    $socio = $resultado->fetch_assoc();
-
-    // Verificar si se ha enviado un formulario para confirmar la eliminación del socio
-    if (isset($_POST['eliminar'])) {
-      // Eliminar el socio de la base de datos
-      $query = "DELETE FROM socios WHERE id = '$id'";
-      $resultado = $conexion->query($query);
-
-      // Verificar si se eliminó el socio correctamente
-      if ($conexion->affected_rows > 0) {
-        echo "<p>El socio ha sido eliminado correctamente.</p>";
-        header('Location: editar.php');
-        exit;
-      } else {
-        echo "<p>No se pudo eliminar al socio.</p>";
-      }
-    } else {
-      // Mostrar formulario de eliminación
-      echo "<h2>Eliminar socio</h2>";
-      echo "<p>¿Está seguro que desea eliminar el socio " . $socio['nombre'] . ' ' . $socio['apellidos'] . "?</p>";
-      echo "<form method='post'>";
-      echo "<input type='submit' name='eliminar' value='Eliminar'>";
-      echo "<button onclick=\"location.href='editar.php'\">Cancelar</button>";
-      echo "</form>";
-    }
-  }
+  // mostrar mensaje de éxito
+  echo "<script>alert('El socio ha sido eliminado correctamente.');</script>";
 }
 
-// Cerrar la conexión a la base de datos
+// consulta SQL para obtener todos los socios
+$query = "SELECT * FROM socios";
+$resultado = $conexion->query($query);
+
+// verificar si se obtuvieron resultados
+if ($resultado->num_rows > 0) {
+  // inicializar un array vacío para almacenar los socios
+  $socios = [];
+
+  // iterar a través de los resultados y agregar cada socio al array
+  while ($fila = $resultado->fetch_assoc()) {
+    $socios[] = $fila;
+  }
+} else {
+  // no se encontraron resultados, asignar un array vacío
+  $socios = [];
+}
+
+// cerrar la conexión a la base de datos
 $conexion->close();
 ?>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Eliminar Socio</title>
+</head>
+<body>
+  <h2>Eliminar Socio</h2>
+  <form method="POST" action="">
+    <label for="socio">Seleccione un socio:</label>
+    <select name="socio" id="socio">
+      <option value="">Seleccione un socio</option>
+      <?php foreach ($socios as $socio): ?>
+        <option value="<?= $socio['id'] ?>"><?= $socio['nombre'] . ' ' . $socio['apellidos'] ?></option>
+      <?php endforeach ?>
+    </select>
+    <br>
+    <button type="submit" name="eliminar" onclick="return confirm('¿Está seguro que desea eliminar este socio?')">Eliminar</button>
+  </form>
+  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+</body>
+</html>

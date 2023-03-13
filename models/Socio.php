@@ -1,25 +1,32 @@
 <?php
-require_once __DIR__ . "/../core/Model.php";
+
+require_once '../core/Model.php';
 
 class Socio extends Model {
-    private $id;
-    private $nombre;
-    private $apellidos;
-    private $email;
-    private $telefono;
-    private $max_libros_prestados = 3;
-    protected $conexion;
+    
+    protected $table = 'socios';
 
+    protected $id;
+    protected $nombre;
+    protected $apellidos;
+    protected $email;
+    protected $telefono;
+    protected $max_libros_prestados;
 
-    public function __construct($nombre = '', $apellidos = '', $email = '', $telefono = '') {
+    public function __construct($nombre = '', $apellidos = '', $email = '', $telefono = '', $max_libros_prestados = '') {
         $this->nombre = $nombre;
         $this->apellidos = $apellidos;
         $this->email = $email;
         $this->telefono = $telefono;
+        $this->max_libros_prestados = $max_libros_prestados;
     }
 
     public function getId() {
         return $this->id;
+    }
+
+    public function setId($id) {
+        $this->id = $id;
     }
 
     public function getNombre() {
@@ -58,17 +65,37 @@ class Socio extends Model {
         return $this->max_libros_prestados;
     }
 
-    public function agregar() {
-        $conexion = $this->connect();
-        $query = "INSERT INTO socios (nombre, apellidos, email, telefono) VALUES ('$this->nombre', '$this->apellidos', '$this->email', '$this->telefono')";
-        $resultado = $conexion->query($query);
+    public function setMaxLibrosPrestados($max_libros_prestados) {
+        $this->max_libros_prestados = $max_libros_prestados;
     }
 
-    public function listar() {
-        $conexion = $this->connect();
+    public function guardar() {
+        $query = "INSERT INTO socios (nombre, apellidos, email, telefono, max_libros_prestados) VALUES ('{$this->nombre}', '{$this->apellidos}', '{$this->email}', '{$this->telefono}', '{$this->max_libros_prestados}')";
+        $this->conexion->query($query);
+    }
+
+    public function buscarPorId() {
+        $query = "SELECT * FROM socios WHERE id = {$this->id}";
+        $resultado = $this->conexion->query($query);
+        if ($resultado && $resultado->num_rows == 1) {
+            $fila = $resultado->fetch_assoc();
+            $this->nombre = $fila['nombre'];
+            $this->apellidos = $fila['apellidos'];
+            $this->email = $fila['email'];
+            $this->telefono = $fila['telefono'];
+            $this->max_libros_prestados = $fila['max_libros_prestados'];
+        }
+    }
+
+    public function eliminar() {
+        $query = "DELETE FROM socios WHERE id = {$this->id}";
+        $this->conexion->query($query);
+    }
+
+    public static function listar() {
+        $conexion = new mysqli('localhost', 'usuario', 'contraseña', 'biblioteca');
         $query = "SELECT * FROM socios";
         $resultado = $conexion->query($query);
-
         $socios = array();
         while ($fila = $resultado->fetch_assoc()) {
             $socio = new Socio();
@@ -77,65 +104,12 @@ class Socio extends Model {
             $socio->setApellidos($fila['apellidos']);
             $socio->setEmail($fila['email']);
             $socio->setTelefono($fila['telefono']);
-
+            $socio->setMaxLibrosPrestados($fila['max_libros_prestados']);
             $socios[] = $socio;
         }
-
+        $conexion->close();
         return $socios;
     }
-
-    public function buscarPorId() {
-        $conexion = $this->connect();
-        $query = "SELECT * FROM socios WHERE id = '$this->id'";
-        $resultado = $conexion->query($query);
-
-        if ($resultado->num_rows > 0) {
-            $fila = $resultado->fetch_assoc();
-            $this->setNombre($fila['nombre']);
-            $this->setApellidos($fila['apellidos']);
-            $this->setEmail($fila['email']);
-            $this->setTelefono($fila['telefono']);
-        }
-    }
-
-    public function setId($id) {
-        $this->id = $id;
-    }
-
-    public function setConexion($conexion) {
-        $this->conexion = $conexion;
-    }
-    public function buscar($id) {
-        $query = "SELECT * FROM socios WHERE id = $id";
-        $conexion = $this->connect();
-        $resultado = $conexion->query($query);
-        $socio = null;
-        if ($resultado->num_rows > 0) {
-            $fila = $resultado->fetch_assoc();
-            $socio = new Socio();
-            $socio->setId($fila['id']);
-            $socio->setNombre($fila['nombre']);
-            $socio->setApellidos($fila['apellidos']);
-            $socio->setEmail($fila['email']);
-            $socio->setTelefono($fila['telefono']);
-        }
-    
-        $conexion->close();
-        return $socio;
-    }
-    
-    public function devolver($prestamo_id, $libro_id) {
-        $conexion = $this->connect();
-    
-        // Eliminar el préstamo de la base de datos
-        $query = "DELETE FROM prestamos WHERE id = $prestamo_id";
-        $resultado = $conexion->query($query);
-    
-        // Incrementar la cantidad de ejemplares disponibles del libro
-        $query = "UPDATE libros SET cantidad_ejemplares = cantidad_ejemplares + 1 WHERE id = $libro_id";
-        $resultado = $conexion->query($query);
-    
-        $conexion->close();
-    }
 }
-?>  
+?>
+    

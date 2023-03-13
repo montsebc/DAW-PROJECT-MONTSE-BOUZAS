@@ -27,7 +27,6 @@ $resultado = $conexion->query($query);
         <th>Editorial</th>
         <th>ISBN</th>
         <th>Categoría</th>
-        <th>Cantidad de Ejemplares</th>
       </tr>
     </thead>
     <tbody>
@@ -38,7 +37,6 @@ $resultado = $conexion->query($query);
           <td><?= $libro['editorial'] ?></td>
           <td><?= $libro['isbn'] ?></td>
           <td><?= $libro['categoria'] ?></td>
-          <td><?= $libro['cantidad_ejemplares'] ?></td>
         </tr>
       <?php endwhile; ?>
     </tbody>
