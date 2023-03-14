@@ -13,16 +13,18 @@ if (isset($_POST['agregar'])) {
   $titulo = $_POST['titulo'];
   $autor = $_POST['autor'];
   $editorial = $_POST['editorial'];
-  $anio_publicacion = $_POST['anio_publicacion'];
   $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
-  $categoria_id = $_POST['categoria_id'];
+  $id_categoria = $_POST['id_categoria'];
 
-  // Insertar los datos del libro en la base de datos
-  $query = "INSERT INTO libros (titulo, autor, editorial, anio_publicacion, cantidad_ejemplares, categoria_id) VALUES ('$titulo', '$autor', '$editorial', '$anio_publicacion', '$cantidad_ejemplares', '$categoria_id')";
-  $resultado = $conexion->query($query);
+  // Validar la cantidad de ejemplares
+  if (!filter_var($cantidad_ejemplares, FILTER_VALIDATE_INT) || $cantidad_ejemplares < 0 || $cantidad_ejemplares > 10) {
+    echo "<script>alert('La cantidad de ejemplares debe ser un número entre 0 y 10');</script>";
+  } else {
+    // Insertar los datos del libro en la base de datos
+    $query = "INSERT INTO libros (titulo, autor, editorial, cantidad_ejemplares, id_categoria) VALUES ('$titulo', '$autor', '$editorial', '$cantidad_ejemplares', '$id_categoria')";
+    $resultado = $conexion->query($query);
 
-  // Mostrar mensaje de éxito
-  echo "<script>alert('El libro ha sido agregado correctamente.');</script>";
+  }
 }
 ?>
 
@@ -43,14 +45,11 @@ if (isset($_POST['agregar'])) {
     <label>Editorial:</label>
     <input type="text" name="editorial">
     <br><br>
-    <label>Año de publicación:</label>
-    <input type="number" name="anio_publicacion">
-    <br><br>
     <label>Cantidad de Ejemplares:</label>
     <input type="number" name="cantidad_ejemplares">
     <br><br>
     <label>Categoría:</label>
-    <select name="categoria_id">
+    <select name="id_categoria">
       <?php
       // Consulta SQL para obtener las categorías disponibles
       $query = "SELECT * FROM categorias";
@@ -60,7 +59,7 @@ if (isset($_POST['agregar'])) {
       if ($resultado->num_rows > 0) {
         // Recorrer los resultados y crear una opción para cada categoría
         while ($categoria = $resultado->fetch_assoc()) {
-          echo '<option value="' . $categoria['id'] . '">' . $categoria['nombre'] . '</option>';
+          echo '<option value="' . $categoria['id_categoria'] . '">' . $categoria['nombre'] . '</option>';
         }
       }
       ?>
@@ -70,10 +69,8 @@ if (isset($_POST['agregar'])) {
   </form>
   <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
   <button onclick="location.href='listar.php'">Volver a la lista de libros</button>
-  <script>
-    <?php if (isset($_POST['agregar'])): ?>
-      alert('El libro ha sido agregado correctamente.');
-    <?php endif; ?>
+
+
   </script>
 </body>
 </html>

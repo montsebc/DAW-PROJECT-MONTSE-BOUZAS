@@ -1,57 +1,58 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
-    <title>Listado de libros</title>
+    <title>Listado de Libros</title>
 </head>
 <body>
-    <h1>Listado de libros</h1>
+    <h2>Listado de Libros</h2>
     <table>
-        <thead>
-            <tr>
-                <th>Título</th>
-                <th>Autor</th>
-                <th>Editorial</th>
-                <th>Estado</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php if (isset($libros_disponibles)) : ?>
-                <?php foreach ($libros_disponibles as $libro) : ?>
-                    <tr>
-                        <td><?= $libro['titulo'] ?></td>
-                        <td><?= $libro['autor'] ?></td>
-                        <td><?= $libro['editorial'] ?></td>
-                        <td>Disponible a partir de <?= $libro['fecha_disponible'] ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <tr>
-                    <td colspan="4">No hay libros disponibles en este momento.</td>
-                </tr>
-            <?php endif; ?>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>Cantidad de Ejemplares</th>
+            <th>Estado</th>
+            <th>Fecha de Disponibilidad</th>
+        </tr>
+        <?php
+        // Conectarse a la base de datos
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+        if ($conexion->connect_error) {
+            die('Error de conexión: ' . $conexion->connect_error);
+        }
 
-            <?php if (isset($prestamos)) : ?>
-                <?php foreach ($prestamos as $prestamo) : ?>
-                    <tr>
-                        <td><?= $prestamo['titulo'] ?></td>
-                        <td><?= $prestamo['autor'] ?></td>
-                        <td><?= $prestamo['editorial'] ?></td>
-                        <td>
-                            <?php if ($prestamo['fecha_devolucion']) : ?>
-                                Prestado hasta <?= $prestamo['fecha_devolucion'] ?>
-                            <?php else : ?>
-                                Disponible
-                            <?php endif; ?>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            <?php else : ?>
-                <tr>
-                    <td colspan="4">No hay préstamos actuales.</td>
-                </tr>
-            <?php endif; ?>
-        </tbody>
+        // Consulta SQL para obtener todos los libros
+        $query = "SELECT * FROM libros";
+        $resultado = $conexion->query($query);
+
+        // Verificar si se obtuvieron resultados
+        if ($resultado->num_rows > 0) {
+            // Iterar a través de los resultados y mostrar cada libro en una fila de la tabla
+            while ($libro = $resultado->fetch_assoc()) {
+                echo "<tr>";
+                echo "<td>" . $libro['titulo'] . "</td>";
+                echo "<td>" . $libro['autor'] . "</td>";
+                echo "<td>" . $libro['editorial'] . "</td>";
+                echo "<td>" . $libro['cantidad_ejemplares'] . "</td>";
+                echo "<td>" . $libro['estado'] . "</td>";
+                echo "<td>";
+                if ($libro['estado'] == 'disponible') {
+                    echo "inmediata";
+                } else {
+                    echo $libro['fecha_disponible'];
+                }
+                echo "</td>";
+                echo "</tr>";
+            }
+        } else {
+            echo "<tr><td colspan='6'>No se encontraron libros</td></tr>";
+        }
+
+        // Cerrar la conexión a la base de datos
+        $conexion->close();
+        ?>
     </table>
+    <button onclick="location.href='../libro/agregar.php'">Agregar Libro</button>
+    <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
 </body>
 </html>

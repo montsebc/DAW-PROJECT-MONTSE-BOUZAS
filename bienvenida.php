@@ -59,9 +59,9 @@ $email = $_SESSION['usuario'];
           Préstamo
         </a>
         <div class="dropdown-menu" aria-labelledby="prestamoDropdown">
-          <a class="dropdown-item" href="#">Devolver</a>
-          <a class="dropdown-item" href="#">Listar</a>
-          <a class="dropdown-item" href="#">Nuevo</a>
+          <a class="dropdown-item" href="views/prestamo/devolver.php">Devolución</a>
+          <a class="dropdown-item" href="views/prestamo/listar.php">Listado de préstamos y disponibles</a>
+          <a class="dropdown-item" href="views/prestamo/nuevo.php">Nuevo préstamo</a>
         </div>
       </li>
       <li class="nav-item dropdown">
