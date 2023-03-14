@@ -1,49 +1,29 @@
 <?php
 class Prestamo {
-    protected $id;
-    protected $id_libro;
-    protected $id_socio;
-    protected $fecha_prestamo;
-    protected $fecha_devolucion;
+    public static function listar() {
+        // Conectarse a la base de datos
+        $conexion = new mysqli('localhost', 'root', '', 'booking a book');
+        if ($conexion->connect_error) {
+            die('Error de conexión: ' . $conexion->connect_error);
+        }
 
-    public function getId() {
-        return $this->id;
-    }
+        // Consulta SQL para obtener todos los préstamos
+        $query = "SELECT p.*, l.titulo as titulo_libro, l.autor as autor_libro FROM prestamos p JOIN libros l ON p.id_libro = l.id";
+        $resultado = $conexion->query($query);
 
-    public function setId($id) {
-        $this->id = $id;
-    }
+        // Verificar si se obtuvieron resultados
+        if ($resultado->num_rows > 0) {
+            // Crear un array para almacenar los préstamos
+            $prestamos = array();
 
-    public function getIdLibro() {
-        return $this->id_libro;
-    }
+            // Iterar a través de los resultados y crear un objeto Prestamo por cada préstamo
+            while ($fila = $resultado->fetch_assoc()) {
+                $prestamo = new Prestamo($fila['id'], $fila['id_libro'], $fila['id_socio'], $fila['fecha_prestamo'], $fila['fecha_devolucion']);
+                $prestamo->titulo_libro = $fila['titulo_libro'];
+                $prestamo->autor_libro = $fila['autor_libro'];
+                $prestamos[] = $prestamo;
+            }
 
-    public function setIdLibro($id_libro) {
-        $this->id_libro = $id_libro;
-    }
-
-    public function getIdSocio() {
-        return $this->id_socio;
-    }
-
-    public function setIdSocio($id_socio) {
-        $this->id_socio = $id_socio;
-    }
-
-    public function getFechaPrestamo() {
-        return $this->fecha_prestamo;
-    }
-
-    public function setFechaPrestamo($fecha_prestamo) {
-        $this->fecha_prestamo = $fecha_prestamo;
-    }
-
-    public function getFechaDevolucion() {
-        return $this->fecha_devolucion;
-    }
-
-    public function setFechaDevolucion($fecha_devolucion) {
-        $this->fecha_devolucion = $fecha_devolucion;
-    }
-}
-?>
+            // Cerrar la conexión a la base de datos y devolver el array de préstamos
+            $conexion->close();
+            return $prestamos;
