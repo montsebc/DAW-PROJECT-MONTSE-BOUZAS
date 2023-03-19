@@ -3,6 +3,10 @@ require __DIR__ ."/../config/database.php";
 
 class Model {
     protected $conexion;
+    public function __construct($conexion) {
+        $this->conexion = $conexion;
+    }
+    
 
     public function connect() {
         $servername = "localhost";
@@ -18,6 +22,10 @@ class Model {
 
         return $this->conexion;
     }
+    public function __destruct() {
+        $this->closeConnection();
+    }
+    
 
     protected function closeConnection() {
         $this->conexion->close();
