@@ -1,4 +1,7 @@
 <?php
+include('../includes/header.php'); 
+
+
 require_once __DIR__ . "/../../controllers/PrestamoController.php";
 $prestamoController = new PrestamoController();
 
@@ -10,7 +13,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $id = $_POST['id'];
     $prestamoController->devolverPrestamo($id);
     unset($prestamoController);
-    header('Location: listar.php');
+
+  echo "<script>location.href='listar.php';</script>";
     exit;
 }
 ?>
@@ -34,6 +38,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </script>
 </head>
 <body>
+<div class="container main-container">
+
     <h1>Devolver Préstamo</h1>
     <table>
         <thead>
@@ -67,5 +73,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </tbody>
     </table>
     <a href="listar.php">Volver a la lista de préstamos</a>
+</div>
 </body>
 </html>

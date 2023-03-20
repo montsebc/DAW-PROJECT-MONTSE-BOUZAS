@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -25,6 +27,8 @@ if (isset($_POST['agregar'])) {
   <title>Agregar Categoría</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Agregar Categoría</h2>
   <form method="POST">
     <label>Nombre:</label>
@@ -32,8 +36,7 @@ if (isset($_POST['agregar'])) {
     <br><br>
     <button type="submit" name="agregar">Agregar</button>
   </form>
-  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
-  <button onclick="location.href='listar.php'">Volver a la lista de categorías</button>
+  
   <script>
     <?php if (isset($_POST['agregar'])): ?>
       alert('La categoría ha sido agregada correctamente.');

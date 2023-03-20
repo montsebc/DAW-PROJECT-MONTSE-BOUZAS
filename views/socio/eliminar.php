@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -48,6 +50,8 @@ $conexion->close();
   <title>Eliminar Socio</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Eliminar Socio</h2>
   <form method="POST" action="">
     <label for="socio">Seleccione un socio:</label>
@@ -61,5 +65,6 @@ $conexion->close();
     <button type="submit" name="eliminar" onclick="return confirm('¿Está seguro que desea eliminar este socio?')">Eliminar</button>
   </form>
   <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+</div>
 </body>
 </html>

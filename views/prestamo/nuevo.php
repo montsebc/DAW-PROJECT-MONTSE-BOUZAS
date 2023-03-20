@@ -1,4 +1,7 @@
 <?php
+
+include('../includes/header.php'); 
+
 require_once __DIR__ . "/../../controllers/PrestamoController.php";
 $prestamoController = new PrestamoController();
 $libros = $prestamoController->listarLibrosDisponibles();
@@ -24,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 if (!$prestamoExitoso) {
     $mensajeError = "No se pudo realizar el préstamo. El socio ya tiene 3 libros prestados.";
 } else {
-    header('Location: listar.php');    
+    echo "<script>location.href='listar.php';</script>";
 }
 }
 ?>
@@ -57,6 +60,8 @@ if (!$prestamoExitoso) {
     </script>
 </head>
 <body>
+<div class="container main-container">
+
     <h1>Nuevo Préstamo</h1>
     <form action="nuevo.php" method="POST">
         <label for="id">Libro:</label>
@@ -91,6 +96,7 @@ if (!$prestamoExitoso) {
 <button type="submit">Crear préstamo</button>
 </form>
 <a href="listar.php">Volver a la lista de préstamos</a>
+</div>
 </body>
 </html>
 

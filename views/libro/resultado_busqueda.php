@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 

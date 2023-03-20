@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -49,6 +51,8 @@ if ($resultado->num_rows > 0) {
   <title>Editar Categorías</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Editar Categorías</h2>
   <table>
     <thead>
@@ -73,11 +77,12 @@ if ($resultado->num_rows > 0) {
       <?php endforeach ?>
     </tbody>
   </table>
-  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+  
   <script>
     <?php if (isset($_POST['actualizar'])): ?>
       alert('La categoría ha sido actualizada correctamente.');
     <?php endif; ?>
   </script>
+  </div>
 </body>
 </html>

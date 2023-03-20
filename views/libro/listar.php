@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -18,6 +20,8 @@ $resultado = $conexion->query($query);
   <title>Listado de Libros</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Listado de Libros</h2>
   <table border="1">
     <thead>
@@ -42,5 +46,6 @@ $resultado = $conexion->query($query);
     </tbody>
   </table>
   <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
-</body>
+  </div>
+  </body>
 </html>

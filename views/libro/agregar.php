@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -13,17 +15,20 @@ if (isset($_POST['agregar'])) {
   $titulo = $_POST['titulo'];
   $autor = $_POST['autor'];
   $editorial = $_POST['editorial'];
+  $isbn = $_POST['isbn'];
   $cantidad_ejemplares = $_POST['cantidad_ejemplares'];
-  $id_categoria = $_POST['id_categoria'];
+  $id_categoria = $_POST['categoria_id'];
 
   // Validar la cantidad de ejemplares
   if (!filter_var($cantidad_ejemplares, FILTER_VALIDATE_INT) || $cantidad_ejemplares < 0 || $cantidad_ejemplares > 10) {
-    echo "<script>alert('La cantidad de ejemplares debe ser un número entre 0 y 10');</script>";
+    echo "La cantidad de ejemplares debe ser un número entre 0 y 10";
   } else {
     // Insertar los datos del libro en la base de datos
-    $query = "INSERT INTO libros (titulo, autor, editorial, cantidad_ejemplares, id_categoria) VALUES ('$titulo', '$autor', '$editorial', '$cantidad_ejemplares', '$id_categoria')";
+    $query = "INSERT INTO libros (titulo, autor, editorial,isbn, cantidad_ejemplares, id_categoria) VALUES ('$titulo', '$autor', '$editorial','$isbn', '$cantidad_ejemplares', '$id_categoria')";
     $resultado = $conexion->query($query);
 
+    // Mostrar mensaje de éxito
+    echo "<script>alert('El libro ha sido agregado correctamente.');</script>";
   }
 }
 ?>
@@ -34,6 +39,8 @@ if (isset($_POST['agregar'])) {
   <title>Agregar Libro</title>
 </head>
 <body>
+<div class="container main-container">
+
 <h2>Agregar Libro</h2>
   <form method="POST">
     <label>Título:</label>
@@ -45,11 +52,14 @@ if (isset($_POST['agregar'])) {
     <label>Editorial:</label>
     <input type="text" name="editorial">
     <br><br>
+    <label>ISBN:</label>
+    <input type="text" name="isbn">
+    <br><br>
     <label>Cantidad de Ejemplares:</label>
     <input type="number" name="cantidad_ejemplares">
     <br><br>
     <label>Categoría:</label>
-    <select name="id_categoria">
+    <select name="categoria_id">
       <?php
       // Consulta SQL para obtener las categorías disponibles
       $query = "SELECT * FROM categorias";
@@ -59,7 +69,7 @@ if (isset($_POST['agregar'])) {
       if ($resultado->num_rows > 0) {
         // Recorrer los resultados y crear una opción para cada categoría
         while ($categoria = $resultado->fetch_assoc()) {
-          echo '<option value="' . $categoria['id_categoria'] . '">' . $categoria['nombre'] . '</option>';
+          echo '<option value="' . $categoria['id'] . '">' . $categoria['nombre'] . '</option>';
         }
       }
       ?>
@@ -67,10 +77,10 @@ if (isset($_POST['agregar'])) {
     <br><br>
     <button type="submit" name="agregar">Agregar</button>
   </form>
-  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
-  <button onclick="location.href='listar.php'">Volver a la lista de libros</button>
-
-
+  
+  <script>
+    
   </script>
+  </div>
 </body>
 </html>

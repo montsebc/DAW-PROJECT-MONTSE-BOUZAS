@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 require_once __DIR__ . "/../../controllers/PrestamoController.php";
 
 $prestamoController = new PrestamoController();
@@ -16,6 +18,8 @@ $prestamos = $prestamosResult->fetch_all(MYSQLI_ASSOC);
     <title>Listado de préstamos devueltos</title>
 </head>
 <body>
+<div class="container main-container">
+
     <h1>Listado de préstamos devueltos</h1>
     <table>
         <thead>
@@ -58,5 +62,6 @@ $prestamos = $prestamosResult->fetch_all(MYSQLI_ASSOC);
     </table>
     <a href="../../bienvenida.php">Volver al menú principal</a><br>
     <a href="devolver.php">Devolver un libro</a>
+</div>
 </body>
 </html>

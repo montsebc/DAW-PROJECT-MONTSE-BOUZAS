@@ -46,8 +46,14 @@ class PrestamoController {
     
 
     public function listarLibrosDisponibles() {
-        return $this->prestamo->listarLibrosDisponibles();
+        $conexion = $this->prestamo->getConexion();
+    
+        $query = "SELECT * FROM libros WHERE cantidad_ejemplares > 0 ORDER BY titulo";
+        $resultado = $conexion->query($query);
+    
+        return $resultado;
     }
+    
 
     public function listarSocios() {
         return $this->prestamo->listarSocios();

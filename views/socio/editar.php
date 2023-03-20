@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -59,6 +61,8 @@ if ($resultado->num_rows > 0) {
   <title>Editar Socios</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Editar Socios</h2>
   <table>
     <thead>
@@ -91,6 +95,7 @@ if ($resultado->num_rows > 0) {
   </tbody>
   </table>
   <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+    </div>
 </body>
 </html>
 

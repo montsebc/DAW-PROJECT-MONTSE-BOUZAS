@@ -1,11 +1,14 @@
+<?php include('../includes/header.php'); ?>
+
 <!DOCTYPE html>
 <html>
 <head>
     <title>Nuevo socio</title>
 </head>
 <body>
+<div class="container main-container">
     <h2>Nuevo socio</h2>
-    <form action="" method="POST">
+    <form action="" method="POST" class="formulario-socio">
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" required>
         <br>
@@ -19,10 +22,11 @@
         <input type="text" name="telefono" required>
         <br>
         <input type="submit" name="guardar" value="Agregar">
+
     </form>
     <button onclick="location.href='index.php'">Cancelar</button>
-
     <?php
+    
     // Verificar si se recibieron datos del formulario
     if (isset($_POST['guardar'])) {
         // Obtener los datos del formulario
@@ -53,5 +57,7 @@
     ?>
 
     <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+    </div>
+
 </body>
 </html>

@@ -1,4 +1,6 @@
 <?php
+include('../includes/header.php'); 
+
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
 
@@ -15,9 +17,11 @@ if (isset($_POST['actualizar'])) {
   $autor = $_POST['autor'];
   $categoria = $_POST['categoria'];
   $editorial = $_POST['editorial'];
+  $isbn = $_POST['isbn'];
+
 
   // actualizar el libro en la base de datos
-  $query = "UPDATE libros SET titulo = '$titulo', autor = '$autor', id_categoria = $categoria, editorial = '$editorial' WHERE id = $id";
+  $query = "UPDATE libros SET titulo = '$titulo', autor = '$autor', id_categoria = $categoria, editorial = '$editorial',isbn =$isbn WHERE id = $id";
   $resultado = $conexion->query($query);
 
   // mostrar mensaje de éxito
@@ -35,7 +39,7 @@ if (isset($_POST['actualizar'])) {
 }
 
 // consulta SQL para obtener todos los libros
-$query = "SELECT libros.id, libros.titulo, libros.autor, libros.editorial, categorias.nombre as categoria, categorias.id as categoria_id FROM libros JOIN categorias ON libros.id_categoria = categorias.id";
+$query = "SELECT libros.id, libros.titulo, libros.autor, libros.editorial,libros.isbn, categorias.nombre as categoria, categorias.id as categoria_id FROM libros JOIN categorias ON libros.id_categoria = categorias.id";
 $resultado = $conexion->query($query);
 
 // verificar si se obtuvieron resultados
@@ -59,6 +63,8 @@ if ($resultado->num_rows > 0) {
   <title>Editar Libros</title>
 </head>
 <body>
+<div class="container main-container">
+
   <h2>Editar Libros</h2>
   <table>
     <thead>
@@ -68,6 +74,7 @@ if ($resultado->num_rows > 0) {
         <th>Autor</th>
         <th>Categoría</th>
         <th>Editorial</th>
+        <th>ISBN</th>
         <th>Acciones</th>
       </tr>
     </thead>
@@ -106,6 +113,9 @@ if ($resultado->num_rows > 0) {
               </select>
             </td>
             <td><input type="text" name="editorial" value="<?= $libro['editorial'] ?>"></td>
+            <td><input type="text" name="isbn" value="<?= $libro['isbn'] ?>"></td>
+
+
             <td>
               <button type="submit" name="actualizar">Guardar</button>
               <button type="submit" name="eliminar" onclick="return confirm('¿Está seguro que desea eliminar este libro?')">Eliminar</button>
@@ -115,7 +125,7 @@ if ($resultado->num_rows > 0) {
       <?php endforeach ?>
     </tbody>
   </table>
-  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+  </div>
 </body>
 </html>
 
