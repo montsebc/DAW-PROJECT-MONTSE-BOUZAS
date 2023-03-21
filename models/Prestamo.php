@@ -18,32 +18,31 @@ class Prestamo extends Model {
     }
 
     public function listarPrestamos($socio = null, $titulo = null, $fecha_prestamo = null) {
-        $this->connect();
-        $query = "SELECT p.id, l.titulo, l.autor, s.nombre, s.apellidos, p.fecha_prestamo, p.fecha_devolucion, 
-                        CASE 
-    WHEN p.devuelto = 1 THEN IF(p.entrega_anticipada IS NULL, 'No', DATE_FORMAT(p.entrega_anticipada, '%d/%m/%Y')) 
-    ELSE 'En préstamo'
-END AS entrega_anticipada 
-
-                  FROM prestamos p 
-                  JOIN libros l ON p.id_libro = l.id 
-                  JOIN socios s ON p.id_socio = s.id 
+        $query = "SELECT p.id, p.id_libro, p.id_socio, p.fecha_prestamo, p.fecha_devolucion, p.entrega_anticipada, l.titulo, l.autor, s.nombre, s.apellidos, l.cantidad_ejemplares - COUNT(p.id_libro) AS ejemplares_disponibles
+                  FROM prestamos p
+                  JOIN libros l ON p.id_libro = l.id
+                  JOIN socios s ON p.id_socio = s.id
                   WHERE p.devuelto = 0";
     
         if ($socio !== null) {
             $query .= " AND CONCAT(s.nombre, ' ', s.apellidos) = '$socio'";
         }
+    
         if ($titulo !== null) {
             $query .= " AND l.titulo = '$titulo'";
         }
+    
         if ($fecha_prestamo !== null) {
             $query .= " AND p.fecha_prestamo = '$fecha_prestamo'";
         }
     
-        $resultado = $this->conexion->query($query);
+        $query .= " GROUP BY p.id_libro, p.id_socio, p.fecha_prestamo";
     
-        return $resultado;
+        $result = $this->conexion->query($query);
+    
+        return $result;
     }
+    
     
     
 
