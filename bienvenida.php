@@ -21,13 +21,27 @@ $email = $_SESSION['usuario'];
 
     <!-- Tu archivo de estilos CSS -->
     <link rel="stylesheet" href="css/styles.css">
+    <style>
+
+        .bg-index {
+            background-image: url('assets/images/fraseInspiradora.png'); 
+            background-size: contain; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            min-height: 100vh; 
+        }
+    </style>
 
 </head>
-<body>
+<body class="bg-index">
 	<?php if (isset($_SESSION['usuario'])): ?>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
       
-    <a class="navbar-brand" href="bienvenida.php">Booking a Book</a>
+    <a class="navbar-brand" href="../../bienvenida.php">
+    <img src="assets/images/house-icon.png" alt="Home" style="height: 24px; width: 24px;">
+    Booking a Book
+</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>

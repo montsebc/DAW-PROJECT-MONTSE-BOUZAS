@@ -9,6 +9,13 @@
     margin-left: 20px;
   }
   
+  .bg-index {
+    background-image: url('../assets/images/inicioSesion.png');
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
   
 
 
