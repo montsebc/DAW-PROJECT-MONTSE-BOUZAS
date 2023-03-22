@@ -52,38 +52,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
 </head>
 <body class="bg-index">
-    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="../../bienvenida.php">
-    <img src="assets/images/house-icon.png" alt="Home" style="height: 24px; width: 24px;">
-    Booking a Book
-</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                <a class="nav-link" href="#">Préstamos</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Socios</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Libros</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Categorías</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Cerrar sesión</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
-    
-
-    <div class="container">
+<div class="container">
         <h1>Iniciar sesión</h1>
         <?php if (isset($mensaje)): ?>
             <p><?php echo $mensaje; ?></p>
