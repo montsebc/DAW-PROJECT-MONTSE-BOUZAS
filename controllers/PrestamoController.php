@@ -20,6 +20,8 @@ class PrestamoController {
     
     
     public function listarPrestamosFiltrados($socio, $titulo, $fecha_prestamo) {
+        $conexion = $this->prestamo->getConexion();
+    
         // Si los valores de los filtros son null, llamar a la función sin filtros
         if ($socio === null && $titulo === null && $fecha_prestamo === null) {
             return $this->prestamo->listarPrestamos();
@@ -36,23 +38,43 @@ class PrestamoController {
         }
     
         // Construir la consulta con los filtros correspondientes
-        $resultado = $this->prestamo->listarPrestamos($socio, $titulo, $fecha_prestamo);
-        
-        return $resultado;
-    }
-    
-    
-    
-    
+        $query = "SELECT p.*, l.titulo, l.autor, s.nombre, s.apellidos, 
+          l.cantidad_ejemplares - IFNULL(SUM(CASE WHEN p.fecha_devolucion IS NULL THEN 1 ELSE 0 END), 0) AS ejemplares_disponibles
+          FROM prestamos p
+          JOIN libros l ON p.id_libro = l.id
+          JOIN socios s ON p.id_socio = s.id
+          WHERE (p.id_socio = ? OR ? IS NULL) AND (l.titulo = ? OR ? IS NULL) AND (DATE(p.fecha_prestamo) = ? OR ? IS NULL) AND p.devuelto = 0
+          GROUP BY l.id
+          ORDER BY p.id";
 
+
+$stmt = $conexion->prepare($query);
+$stmt->bind_param("isssss", $socio, $socio, $titulo, $titulo, $fecha_prestamo, $fecha_prestamo);
+$stmt->execute();
+$result = $stmt->get_result();
+return $result;
+}
     public function listarLibrosDisponibles() {
         $conexion = $this->prestamo->getConexion();
     
-        $query = "SELECT * FROM libros WHERE cantidad_ejemplares > 0 ORDER BY titulo";
+        $query = "SELECT 
+                      libros.id, 
+                      libros.titulo, 
+                      libros.cantidad_ejemplares - IFNULL(SUM(CASE WHEN prestamos.fecha_devolucion IS NULL THEN 1 ELSE 0 END), 0) AS ejemplares_disponibles
+                  FROM 
+                      libros
+                  LEFT JOIN 
+                      prestamos ON libros.id = prestamos.id_libro
+                  GROUP BY 
+                      libros.id
+                  ORDER BY
+                      libros.titulo";
         $resultado = $conexion->query($query);
     
         return $resultado;
     }
+    
+    
     
 
     public function listarSocios() {
@@ -83,6 +105,8 @@ class PrestamoController {
     
         // Contar la cantidad de libros en préstamo por el socio
         $total_prestamos = $this->contarPrestamosActivosPorSocio($conexion, $id_socio);
+            // Obtener la cantidad total de ejemplares del libro
+        
     
         // Obtener información sobre el libro
         $query_libro = "SELECT cantidad_ejemplares FROM libros WHERE id = ?";

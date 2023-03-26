@@ -18,11 +18,22 @@ class Prestamo extends Model {
     }
 
     public function listarPrestamos($socio = null, $titulo = null, $fecha_prestamo = null) {
-        $query = "SELECT p.id, p.id_libro, p.id_socio, p.fecha_prestamo, p.fecha_devolucion, p.entrega_anticipada, l.titulo, l.autor, s.nombre, s.apellidos, l.cantidad_ejemplares - COUNT(p.id_libro) AS ejemplares_disponibles
-                  FROM prestamos p
-                  JOIN libros l ON p.id_libro = l.id
-                  JOIN socios s ON p.id_socio = s.id
-                  WHERE p.devuelto = 0";
+        $query = "SELECT 
+        p.id, 
+        p.id_libro, 
+        p.id_socio, 
+        p.fecha_prestamo, 
+        p.fecha_devolucion, 
+        p.entrega_anticipada, 
+        l.titulo, 
+        l.autor, 
+        s.nombre, 
+        s.apellidos, 
+        l.cantidad_ejemplares - SUM(IF(p.devuelto = 0, 1, 0)) AS ejemplares_disponibles
+    FROM prestamos p
+    JOIN libros l ON p.id_libro = l.id
+    JOIN socios s ON p.id_socio = s.id
+    WHERE p.devuelto = 0";
     
         if ($socio !== null) {
             $query .= " AND CONCAT(s.nombre, ' ', s.apellidos) = '$socio'";
@@ -121,6 +132,8 @@ class Prestamo extends Model {
         $row_libro = $result_libro->fetch_assoc();
         $cantidad_ejemplares = $row_libro['cantidad_ejemplares'];
         $stmt_libro->close();
+
+        
     
         // Verificar las condiciones y crear el préstamo si se cumplen
         if ($total_prestamos < 3 && $cantidad_ejemplares > 0) {

@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . "/../core/Model.php";
+require_once __DIR__ . "/../models/Libro.php";
 
-class Libro extends Model {
+class LibroController {
     protected $table = 'libros';
     protected $id;
     protected $titulo;
