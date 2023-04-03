@@ -25,9 +25,8 @@ $email = $_SESSION['usuario'];
 
 
 </head>
-<body class="bg-index">
+<body class="bg-index bg-image">
   <div class="bg-container">
-    <div class="bg-image"></div>
 
     <?php if (isset($_SESSION['usuario'])): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -99,7 +98,7 @@ $email = $_SESSION['usuario'];
             <h1>Bienvenido</h1>
             <p>¡Bienvenido/a <?php echo $email; ?>! Esta es la página de bienvenida.</p>
         </div>
-    </div>
+    
 </div>
 <?php endif; ?>
 

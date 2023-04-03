@@ -32,34 +32,33 @@ if ($resultado->num_rows > 0) {
 <html>
 <head>
   <title>Listado de Categorías</title>
-</head>
-<div class="container main-container">
-
-<body>
-  <h1>Listado de Categorías</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($categorias as $categoria): ?>
-        <tr>
-          <td><?= $categoria['id'] ?></td>
-          <td><?= $categoria['nombre'] ?></td>
-        </tr>
-      <?php endforeach ?>
-    </tbody>
-  </table>
-  
-  
+  </head>
+<body class="listado-body">
+  <div class="listado-bg-wrapper">
+    <div class="listado-main-container">
+      <h1>Listado de Categorías</h1>
+      <table class="listado-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($categorias as $categoria): ?>
+            <tr>
+              <td><?= $categoria['id'] ?></td>
+              <td><?= $categoria['nombre'] ?></td>
+            </tr>
+          <?php endforeach ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <script>
     <?php if (isset($_GET['actualizado'])): ?>
       alert('La categoría ha sido actualizada correctamente.');
     <?php endif; ?>
   </script>
-  </div>
 </body>
 </html>

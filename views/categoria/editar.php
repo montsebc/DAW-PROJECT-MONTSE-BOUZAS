@@ -49,40 +49,46 @@ if ($resultado->num_rows > 0) {
 <html>
 <head>
   <title>Editar Categorías</title>
-</head>
-<body>
-<div class="container main-container">
+  <!-- Biblioteca de estilos de Bootstrap -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
-  <h2>Editar Categorías</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>ID</th>
-        <th>Nombre</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php foreach ($categorias as $categoria): ?>
-        <tr>
-          <form method="POST" action="editar.php">
-            <input type="hidden" name="id" value="<?= $categoria['id'] ?>">
-            <td><?= $categoria['id'] ?></td>
-            <td><input type="text" name="nombre" value="<?= $categoria['nombre'] ?>"></td>
-            <td>
-              <button type="submit" name="actualizar">Guardar</button>
-            </td>
-          </form>
-        </tr>
-      <?php endforeach ?>
-    </tbody>
-  </table>
-  
+  <!-- Tu archivo de estilos CSS -->
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  </head>
+<body>
+  <div class="background-wrapper">
+    <div class="container editar-main-container">
+      <h2 class="titulo-centrado">Editar Categorías</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nombre</th>
+            <th>Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php foreach ($categorias as $categoria): ?>
+            <tr>
+              <form method="POST" action="editar.php">
+                <input type="hidden" name="id" value="<?= $categoria['id'] ?>">
+                <td class="id-column"><?= $categoria['id'] ?></td>
+                <td><input type="text" name="nombre" value="<?= $categoria['nombre'] ?>"></td>
+                <td>
+                  <button type="submit" name="actualizar">Guardar</button>
+                </td>
+              </form>
+            </tr>
+          <?php endforeach ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
   <script>
     <?php if (isset($_POST['actualizar'])): ?>
       alert('La categoría ha sido actualizada correctamente.');
     <?php endif; ?>
   </script>
-  </div>
 </body>
 </html>
+
