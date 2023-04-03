@@ -29,7 +29,7 @@ class Prestamo extends Model {
         l.autor, 
         s.nombre, 
         s.apellidos, 
-        l.cantidad_ejemplares - SUM(IF(p.devuelto = 0, 1, 0)) AS ejemplares_disponibles
+l.cantidad_ejemplares - SUM(IF(p.devuelto = 0, 1, 0)) AS ejemplares_disponibles
     FROM prestamos p
     JOIN libros l ON p.id_libro = l.id
     JOIN socios s ON p.id_socio = s.id
@@ -74,25 +74,9 @@ class Prestamo extends Model {
         }
     }
 
-    // Agregar condición para filtrar por socio
-    if ($socio !== null) {
-        if ($socio === 'Todos') {
-            $query .= '';
-        } else {
-            $nombre_apellidos = explode(" ", $socio);
-            $nombre = $nombre_apellidos[0];
-            $apellidos = $nombre_apellidos[1];
-            $query .= " AND s.nombre = '$nombre' AND s.apellidos = '$apellidos'";
-        }
-    }
-
-    // Agregar condición para filtrar por fecha de préstamo
-    if ($fecha_prestamo !== null) {
-        $fecha_sql = date('Y-m-d', strtotime($fecha_prestamo));
-        $query .= " AND p.fecha_prestamo = '$fecha_sql'";
-    }
         
-    
+    // Añadir ordenación por ID
+    $query .= " ORDER BY p.id";
     $resultado = $this->conexion->query($query);
     
     return $resultado;

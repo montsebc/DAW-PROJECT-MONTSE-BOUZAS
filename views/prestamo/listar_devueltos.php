@@ -16,6 +16,21 @@ $prestamos = $prestamosResult->fetch_all(MYSQLI_ASSOC);
 <head>
     <meta charset="utf-8">
     <title>Listado de préstamos devueltos</title>
+    <style>
+        table {
+            border-collapse: collapse;
+        }
+
+        th, td {
+            border: 1px solid black;
+            padding: 5px;
+        }
+
+        th:first-child,
+        td:first-child {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
 <div class="container main-container">
