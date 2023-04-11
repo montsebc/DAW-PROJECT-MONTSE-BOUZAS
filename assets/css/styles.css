@@ -18,7 +18,7 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
-.editar-main-container {
+.editar--main-container {
   background-color: rgba(0, 0, 0, 0.5); /* negro con un 50% de opacidad */
   padding: 20px; /* añadir un poco de espacio alrededor del contenido */
   border-radius: 5px; /* opcional, para redondear las esquinas */
@@ -91,9 +91,10 @@ button[type="submit"]:hover {
 }
 .bg-container h1,
 p {
-  font-size: 20px;
+  font-size: 40px;
+  color:#fff;
 }
-.listado-body {
+.listados-body {
   margin: 0;
   font-family: Arial, sans-serif;
   background-image: url("../images/portada-libros.png");
@@ -101,7 +102,7 @@ p {
   background-repeat: no-repeat;
 }
 
-.listado-bg-wrapper {
+.listados-bg-wrapper {
   display: flex;
   justify-content: left;
   align-items: center;
@@ -109,26 +110,26 @@ p {
   background-color: rgba(0, 0, 0, 0.5);
 }
 
-.listado-main-container {
+.listados-main-container {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
   border-radius: 10px;
   margin-left: 20px;
 }
 
-.listado-table {
+.listados-table {
   width: 100%;
   border-collapse: collapse;
 }
 
-.listado-table th,
-.listado-table td {
+.listados-table th,
+.listados-table td {
   padding: 10px;
   text-align: left;
   border-bottom: 1px solid #ddd;
 }
 
-.listado-table th {
+.listados-table th {
   background-color: #f2f2f2;
 }
 
@@ -164,8 +165,177 @@ h1 {
   margin:auto;
 }
 
+.addLibro-background-wrapper {
+  display: flex;
+  justify-content: center;
+  background-color: #f0f0f0;
+  padding: 40px 0;
+}
+
+.addLibro-main-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 5px;
+  width: auto;
+  margin:auto;
+}
+
+.addLibro-form-container {
+  margin-left: 20px;
+}
+.nuevo-body {
+  background: linear-gradient(to bottom, #345995, #2d6a8c, #26a6b5);
+}
 
 
 
+.buscar-body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.buscar-bg-image {
+  background-image: url('../images/montessori.png');
+  background-size: contain;
+  background-position: center;
+  height: 100vh;
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+.listado-body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+  
+.listado-bg-wrapper {
+  display: flex;
+  justify-content: left;
+  align-items: center;
+  min-height: 100vh;
+  background-color: transparent;
+}
+
+  
+  .listado-main-container {
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  margin-left: 20px;
+  }
+  
+  .listado-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  } 
+  
+  .listado-table th,
+  .listado-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+  }
+  
+  .listado-table th {
+  background-color: #f2f2f2;
+  }
+  
+  h1 {
+  text-align: center;
+  margin-bottom: 20px;
+  }
+
+  body.devolver-body {
+    background: linear-gradient(to bottom, #345995, #2d6a8c, #26a6b5);
+}
+
+  
+  
+  
+  @media only screen and (max-width: 767px) {
+    body.devolver-body {
+      background-position: center center;
+    }
+  }
+  .devolver-no-results {
+    font-size: 2rem;
+    color: white;
+}
+.devuelto-table {
+  margin: auto; 
+  max-width: 2200px; 
+  padding: 20px;
+  
+ 
+  }
+  
+  .devuelto-table th {
+  background-color: #af4c93;
+  color: white;
+  font-weight: bold;
+  padding: 10px;
+  text-align: auto;
+  }
+  
+  .devuelto-table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: auto;
+  }
+  .devuelto-container {
+    margin: 0 0 0 20px; /* Cambiar margen para que empiece al inicio de la página */
+    max-width: 1400px; /* Hacer el listado más ancho */
+    padding: 20px;
+  }
+  .devuelto-table {
+    border-collapse: collapse;
+}
+
+.devuelto-th, .devuelto-td {
+    border: 1px solid black;
+    padding: 5px;
+    color: #333;
+    background-color: #f2f2f2;
+}
+
+.devuelto-th:first-child,
+.devuelto-td:first-child {
+    margin-right: 10px;
+}
+
+.devuelto-container {
+    margin: 0 0 0 20px; /* Cambiar margen para que empiece al inicio de la página */
+    max-width: 1400px; /* Hacer el listado más ancho */
+    padding: 20px;
+}
+
+.devuelto-header {
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.devuelto-link {
+    margin-top: 20px;
+    display: block;
+    text-align: center;
+    color: #333;
+}
+
+.devuelto-link:hover {
+    text-decoration: underline;
+}
+  
 
 

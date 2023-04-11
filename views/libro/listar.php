@@ -1,5 +1,5 @@
 <?php
-include('../includes/header.php'); 
+include('../../includes/header.php'); 
 
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -18,34 +18,35 @@ $resultado = $conexion->query($query);
 <html>
 <head>
   <title>Listado de Libros</title>
+  <link rel="stylesheet" type="text/css" href="../styles.css">
 </head>
-<body>
-<div class="container main-container">
-
-  <h2>Listado de Libros</h2>
-  <table border="1">
-    <thead>
-      <tr>
-        <th>Título</th>
-        <th>Autor</th>
-        <th>Editorial</th>
-        <th>ISBN</th>
-        <th>Categoría</th>
-      </tr>
-    </thead>
-    <tbody>
-      <?php while ($libro = $resultado->fetch_assoc()): ?>
-        <tr>
-          <td><?= $libro['titulo'] ?></td>
-          <td><?= $libro['autor'] ?></td>
-          <td><?= $libro['editorial'] ?></td>
-          <td><?= $libro['isbn'] ?></td>
-          <td><?= $libro['categoria'] ?></td>
-        </tr>
-      <?php endwhile; ?>
-    </tbody>
-  </table>
-  <button onclick="location.href='../../bienvenida.php'">Volver a la página de bienvenida</button>
+<body class="listado-body">
+  <div class="listado-bg-wrapper">
+    <div class="listado-main-container">
+      <h1>Listado de Libros</h1>
+      <table class="listado-table">
+        <thead>
+          <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Editorial</th>
+            <th>ISBN</th>
+            <th>Categoría</th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php while ($libro = $resultado->fetch_assoc()): ?>
+            <tr>
+              <td><?= $libro['titulo'] ?></td>
+              <td><?= $libro['autor'] ?></td>
+              <td><?= $libro['editorial'] ?></td>
+              <td><?= $libro['isbn'] ?></td>
+              <td><?= $libro['categoria'] ?></td>
+            </tr>
+          <?php endwhile; ?>
+        </tbody>
+      </table>
+    </div>
   </div>
-  </body>
+</body>
 </html>

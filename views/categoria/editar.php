@@ -1,5 +1,5 @@
 <?php
-include('../includes/header.php'); 
+include('../../includes/header.php');
 
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -9,21 +9,28 @@ if ($conexion->connect_error) {
   die('Error de conexión: ' . $conexion->connect_error);
 }
 
-// comprobar si se ha enviado un formulario para actualizar la categoría
-if (isset($_POST['actualizar'])) {
+// comprobar si se ha enviado un formulario para actualizar o eliminar la categoría
+if (isset($_POST['actualizar']) || isset($_POST['eliminar'])) {
   // obtener el id y el nuevo nombre de la categoría
   $id = $_POST['id'];
   $nombre = $_POST['nombre'];
 
-  // actualizar la categoría en la base de datos
-  $query = "UPDATE categorias SET nombre = '$nombre' WHERE id = $id";
+  // determinar si se está eliminando la categoría
+  $eliminar = isset($_POST['eliminar']) && $_POST['eliminar'] === 'true';
+
+  // actualizar o eliminar la categoría en la base de datos
+  if ($eliminar) {
+    $query = "DELETE FROM categorias WHERE id = $id";
+    $mensaje = "La categoría ha sido eliminada correctamente.";
+  } else {
+    $query = "UPDATE categorias SET nombre = '$nombre' WHERE id = $id";
+    $mensaje = "La categoría ha sido actualizada correctamente.";
+  }
+
   $resultado = $conexion->query($query);
 
-  // mostrar mensaje de éxito
-  echo "<script>alert('La categoría ha sido actualizada correctamente.');</script>";
-
-  // redirigir al archivo listar.php para mostrar el nuevo listado de categorías
-  echo "<script>location.href='listar.php';</script>";
+  // mostrar mensaje de éxito y redirigir al listado de categorías
+  echo "<script>alert('$mensaje'); location.href='listar.php';</script>";
 }
 
 // consulta SQL para obtener todas las categorías
@@ -54,7 +61,7 @@ if ($resultado->num_rows > 0) {
 
   <!-- Tu archivo de estilos CSS -->
   <link rel="stylesheet" href="../assets/css/styles.css">
-  </head>
+</head>
 <body>
   <div class="background-wrapper">
     <div class="container editar-main-container">
@@ -68,18 +75,25 @@ if ($resultado->num_rows > 0) {
           </tr>
         </thead>
         <tbody>
-          <?php foreach ($categorias as $categoria): ?>
-            <tr>
+        <?php foreach ($categorias as $categoria): ?>
+          <tr>
+            <form method="POST" action="editar.php">
+              <input type="hidden" name="id" value="<?= $categoria['id'] ?>">
+              <td class="id-column"><?= $categoria['id'] ?></td>
+              <td><input type="text" name="nombre" value="<?= $categoria['nombre'] ?>"></td>
+              <td>
+                <button type="submit" name="actualizar">Guardar</button>
+              </td>
+            </form>
+            <td>
               <form method="POST" action="editar.php">
                 <input type="hidden" name="id" value="<?= $categoria['id'] ?>">
-                <td class="id-column"><?= $categoria['id'] ?></td>
-                <td><input type="text" name="nombre" value="<?= $categoria['nombre'] ?>"></td>
-                <td>
-                  <button type="submit" name="actualizar">Guardar</button>
-                </td>
+                <input type="hidden" name="eliminar" value="true">
+                <button type="submit" onclick="return confirm('¿Está seguro de que desea eliminar esta categoría?')">Eliminar</button>
               </form>
-            </tr>
-          <?php endforeach ?>
+            </td>
+          </tr>
+        <?php endforeach ?>
         </tbody>
       </table>
     </div>
@@ -87,8 +101,17 @@ if ($resultado->num_rows > 0) {
   <script>
     <?php if (isset($_POST['actualizar'])): ?>
       alert('La categoría ha sido actualizada correctamente.');
+      location.href = 'listar.php'; // redirigir al listado
+    <?php endif; ?>
+    <?php if (isset($_POST['eliminar'])): ?>
+      <?php 
+        $id = $_POST['id'];
+        $query = "DELETE FROM categorias WHERE id = $id";
+        $resultado = $conexion->query($query);
+      ?>
+      alert('La categoría ha sido eliminada correctamente.');
+      location.href = 'listar.php'; // redirigir al listado
     <?php endif; ?>
   </script>
 </body>
 </html>
-

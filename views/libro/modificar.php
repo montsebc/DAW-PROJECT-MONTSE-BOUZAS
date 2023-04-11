@@ -1,5 +1,5 @@
 <?php
-include('../includes/header.php'); 
+include('../../includes/header.php'); 
 
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -19,9 +19,8 @@ if (isset($_POST['actualizar'])) {
   $editorial = $_POST['editorial'];
   $isbn = $_POST['isbn'];
 
-
   // actualizar el libro en la base de datos
-  $query = "UPDATE libros SET titulo = '$titulo', autor = '$autor', id_categoria = $categoria, editorial = '$editorial',isbn =$isbn WHERE id = $id";
+  $query = "UPDATE libros SET titulo = '$titulo', autor = '$autor', id_categoria = $categoria, editorial = '$editorial', isbn = $isbn WHERE id = $id";
   $resultado = $conexion->query($query);
 
   // mostrar mensaje de éxito
@@ -30,12 +29,26 @@ if (isset($_POST['actualizar'])) {
   // obtener el id del libro a eliminar
   $id = $_POST['id'];
 
-  // eliminar el libro de la base de datos
-  $query = "DELETE FROM libros WHERE id = $id";
+  // verificar si hay préstamos registrados para el libro
+  $query = "SELECT COUNT(*) as num_prestamos FROM prestamos WHERE id_libro = $id";
   $resultado = $conexion->query($query);
 
-  // mostrar mensaje de éxito
-  echo "<script>alert('El libro ha sido eliminado correctamente.');</script>";
+  if ($resultado->num_rows > 0) {
+    $fila = $resultado->fetch_assoc();
+    $num_prestamos = $fila['num_prestamos'];
+
+    if ($num_prestamos > 0) {
+      // si hay préstamos registrados para el libro, mostrar mensaje de error
+      echo "<script>alert('No se puede eliminar este libro para mantener el historial de préstamos.');</script>";
+    } else {
+      // si no hay préstamos registrados para el libro, eliminar el libro de la base de datos
+      $query = "DELETE FROM libros WHERE id = $id";
+      $resultado = $conexion->query($query);
+
+      // mostrar mensaje de éxito
+      echo "<script>alert('El libro ha sido eliminado correctamente.');</script>";
+    }
+  }
 }
 
 // consulta SQL para obtener todos los libros
@@ -56,7 +69,6 @@ if ($resultado->num_rows > 0) {
   $libros = [];
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -122,7 +134,7 @@ if ($resultado->num_rows > 0) {
             </td>
           </form>
         </tr>
-      <?php endforeach ?>
+      <?php endforeach?>
     </tbody>
   </table>
   </div>

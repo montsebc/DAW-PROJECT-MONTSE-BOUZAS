@@ -1,5 +1,5 @@
 <?php
-include('../includes/header.php'); 
+include('../../includes/header.php'); 
 
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -37,50 +37,54 @@ if (isset($_POST['agregar'])) {
 <html>
 <head>
   <title>Agregar Libro</title>
+ <!-- Biblioteca de estilos de Bootstrap -->
+ <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+<!-- Tu archivo de estilos CSS -->
+<link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
-<div class="container main-container">
+  <div class="addLibro-background-wrapper">
+    <div class="container addLibro-main-container">
+      <h2 class="titulo-centrado">Agregar Libro</h2>
+      <div class="addLibro-form-container">
+        <form method="POST">
+          <label>Título:</label>
+          <input type="text" name="titulo">
+          <br><br>
+          <label>Autor:</label>
+          <input type="text" name="autor">
+          <br><br>
+          <label>Editorial:</label>
+          <input type="text" name="editorial">
+          <br><br>
+          <label>ISBN:</label>
+          <input type="text" name="isbn">
+          <br><br>
+          <label>Cantidad de Ejemplares:</label>
+          <input type="number" name="cantidad_ejemplares">
+          <br><br>
+          <label>Categoría:</label>
+          <select name="categoria_id">
+            <?php
+            // Consulta SQL para obtener las categorías disponibles
+            $query = "SELECT * FROM categorias";
+            $resultado = $conexion->query($query);
 
-<h2>Agregar Libro</h2>
-  <form method="POST">
-    <label>Título:</label>
-    <input type="text" name="titulo">
-    <br><br>
-    <label>Autor:</label>
-    <input type="text" name="autor">
-    <br><br>
-    <label>Editorial:</label>
-    <input type="text" name="editorial">
-    <br><br>
-    <label>ISBN:</label>
-    <input type="text" name="isbn">
-    <br><br>
-    <label>Cantidad de Ejemplares:</label>
-    <input type="number" name="cantidad_ejemplares">
-    <br><br>
-    <label>Categoría:</label>
-    <select name="categoria_id">
-      <?php
-      // Consulta SQL para obtener las categorías disponibles
-      $query = "SELECT * FROM categorias";
-      $resultado = $conexion->query($query);
-
-      // Verificar si se obtuvieron resultados
-      if ($resultado->num_rows > 0) {
-        // Recorrer los resultados y crear una opción para cada categoría
-        while ($categoria = $resultado->fetch_assoc()) {
-          echo '<option value="' . $categoria['id'] . '">' . $categoria['nombre'] . '</option>';
-        }
-      }
-      ?>
-    </select>
-    <br><br>
-    <button type="submit" name="agregar">Agregar</button>
-  </form>
-  
-  <script>
-    
-  </script>
+            // Verificar si se obtuvieron resultados
+            if ($resultado->num_rows > 0) {
+              // Recorrer los resultados y crear una opción para cada categoría
+              while ($categoria = $resultado->fetch_assoc()) {
+                echo '<option value="' . $categoria['id'] . '">' . $categoria['nombre'] . '</option>';
+              }
+            }
+            ?>
+          </select>
+          <br><br>
+          <button type="submit" name="agregar">Agregar</button>
+        </form>
+      </div>
+    </div>
   </div>
 </body>
 </html>

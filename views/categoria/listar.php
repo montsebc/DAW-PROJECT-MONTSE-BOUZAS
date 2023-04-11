@@ -1,5 +1,5 @@
 <?php
-include('../includes/header.php'); 
+include('../../includes/header.php'); 
 
 // establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -33,7 +33,7 @@ if ($resultado->num_rows > 0) {
 <head>
   <title>Listado de Categorías</title>
   </head>
-<body class="listado-body">
+<body class="listados-body">
   <div class="listado-bg-wrapper">
     <div class="listado-main-container">
       <h1>Listado de Categorías</h1>
