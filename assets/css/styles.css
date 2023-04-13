@@ -1,6 +1,6 @@
 .main-container {
   margin: 20px;
-  margin-left: 50px; /* Agrega este estilo para agregar un margen izquierdo */
+  margin-left: 50px; 
 }
 .container {
   margin-left: 20px;
@@ -10,7 +10,7 @@
 }
 
 .bg-image {
-  background-image: url("../images/fraseInspiradora.png");
+  background-image: url("../images/estante-librosBonita.png");
   background-size: 100vw 100vh;
   background-attachment: fixed;
 }
@@ -18,62 +18,68 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
-.editar--main-container {
-  background-color: rgba(0, 0, 0, 0.5); /* negro con un 50% de opacidad */
-  padding: 20px; /* añadir un poco de espacio alrededor del contenido */
-  border-radius: 5px; /* opcional, para redondear las esquinas */
+.editar.background-wrapper {
+  position: relative;
 }
-.titulo-centrado {
-  text-align: center;
-  margin-top: 20px;
+
+.editar.background-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  opacity: 0.3; 
+  z-index: -1;
 }
-.background-wrapper {
-  display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
-  padding: 40px 0;
+
+table {
+  border-collapse: collapse;
+  
 }
-th,
-td {
-  border-bottom: 1px solid #ccc;
+
+td,
+th {
+  border: 1px solid #140101;
   padding: 8px;
   text-align: left;
+  vertical-align: middle;
+  color:black;
+}
+
+.id-column {
+  width: 50px;
+}
+
+button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 20px;
+  padding: 8px 12px;
+}
+
+
+
+button:hover {
+  background-color: #0069d9;
 }
 .container1 {
-  background-color: white;
+  
   padding: 20px;
   border-radius: 8px;
   width: 80%;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.id-column {
-  color: #333;
-}
-table {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  border-collapse: separate;
-  border-spacing: 0;
-  width: 100%;
-}
-input[type="text"] {
-  width: 100%;
-  box-sizing: border-box;
+  background-color: rgba(255, 255, 255, 0.8);
 }
 
-button[type="submit"] {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1), 0 1px 3px rgba(0, 0, 0, 0.08);
-  background-color: #1c87c9;
-  border: none;
-  color: white;
-  padding: 8px 16px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
-  transition-duration: 0.4s;
-}
+
 
 button[type="submit"]:hover {
   background-color: #8e44ad;
@@ -92,22 +98,22 @@ button[type="submit"]:hover {
 .bg-container h1,
 p {
   font-size: 40px;
-  color:#fff;
+  color:#5c0d41;
 }
 .listados-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-image: url("../images/portada-libros.png");
-  background-size: cover;
-  background-repeat: no-repeat;
+  background-color: rgba(255, 255, 255, 0.);
+  /* background-image: url(../images/estante-librosBonita.png); */
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  overflow-y: hidden;
 }
 
 .listados-bg-wrapper {
   display: flex;
-  justify-content: left;
+  /* justify-content: left; */
   align-items: center;
-  min-height: 100vh;
-  background-color: rgba(0, 0, 0, 0.5);
+  /* min-height: 100vh; */
+  background-color: transparent;
 }
 
 .listados-main-container {
@@ -120,6 +126,7 @@ p {
 .listados-table {
   width: 100%;
   border-collapse: collapse;
+  margin-top: 20px;
 }
 
 .listados-table th,
@@ -137,33 +144,53 @@ h1 {
   text-align: center;
   margin-bottom: 20px;
 }
-.agregar-body {
+
+body.listados-body {
   margin: 0;
   font-family: Arial, sans-serif;
 }
 
-.agregar-bg-image {
-  background-image: url('../images/escalera_libros.png');
-  background-size: contain;
-  background-position: center;
-  height: 100vh;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
+.listados-bg-wrapper::before {
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  opacity: 0.3; 
+  z-index: -1;
+}
+
+@media only screen and (max-width: 767px) {
+  body.listados-body {
+    background-position: center center;
+  }
+}
+
+.agregar-bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  opacity: 0.3;
   z-index: -1;
 }
 
 .agregar-main-container {
   background-color: rgba(255, 255, 255, 0.8);
   padding: 20px;
-  border-radius: 5px;
-  width: auto;
-  margin:auto;
+  border-radius: 10px;
+  margin: 50px auto;
+  max-width: 600px;
 }
+
 
 .addLibro-background-wrapper {
   display: flex;
@@ -195,26 +222,17 @@ h1 {
 }
 
 .buscar-bg-image {
-  background-image: url('../images/montessori.png');
-  background-size: contain;
-  background-position: center;
-  height: 100vh;
-  background-size: auto 100%;
-  background-repeat: no-repeat;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: -1;
-}
+  
+    background-image: url("../images/estante-librosBonita.png");
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+  }
 .listado-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-image: url("../images/estante-librosBonita.png");
-  background-size: 100% 100%;
-  background-repeat: no-repeat;
-}
+  
+    background-image: url("../images/estante-librosBonita.png");
+    background-size: 100vw 100vh;
+    background-attachment: fixed;
+  }
 
   
 .listado-bg-wrapper {

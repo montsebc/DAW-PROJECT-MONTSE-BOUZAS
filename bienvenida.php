@@ -30,7 +30,7 @@ $email = $_SESSION['usuario'];
 
     <?php if (isset($_SESSION['usuario'])): ?>
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-      <a class="navbar-brand" href="../../bienvenida.php">
+      <a class="navbar-brand" href="./bienvenida.php">
         <img src="assets/images/house-icon.png" alt="Home" style="height: 24px; width: 24px;">
         Booking a Book
       </a>
@@ -95,8 +95,7 @@ $email = $_SESSION['usuario'];
 <div class="bg-container">
     <div class="bg-index">
         <div class="container">
-            <h1>Bienvenido</h1>
-            <p>¡Bienvenido/a <?php echo $email; ?>! Esta es la página de bienvenida.</p>
+            <p>¡Bienvenida <?php echo $email; ?>!<br> ¡Ya puedes disfrutar de Booking a Book!.</p>
         </div>
     
 </div>

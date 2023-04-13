@@ -34,8 +34,8 @@ if ($resultado->num_rows > 0) {
   <title>Listado de Categorías</title>
   </head>
 <body class="listados-body">
-  <div class="listado-bg-wrapper">
-    <div class="listado-main-container">
+  <div class="listados-bg-wrapper">
+    <div class="listados-main-container">
       <h1>Listado de Categorías</h1>
       <table class="listado-table">
         <thead>
