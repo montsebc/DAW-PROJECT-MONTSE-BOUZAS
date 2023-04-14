@@ -28,21 +28,28 @@ if (isset($_POST['agregar'])) {
   <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body class="agregar-body">
-  <div class="agregar-bg-image">
-    <div class="agregar-main-container">
+ 
+
+  <div class="agregar-container1">
       <h2>Agregar Categoría</h2>
-      <form method="POST">
-        <label>Introduzca la nueva Categoría:</label>
-        <input type="text" name="nombre">
+      <form method="POST" class="agregar-form">
+        <label class="agregar-label">Introduzca la nueva Categoría:</label>
+        <input type="text" name="nombre" class="agregar-input">
         <br><br>
-        <button type="submit" name="agregar">Agregar</button>
+        <button type="submit" name="agregar" class="agregar-button">Agregar</button>
       </form>
-    </div>
   </div>
   <script>
     <?php if (isset($_POST['agregar'])): ?>
       alert('La categoría ha sido agregada correctamente.');
-    <?php endif; ?>
+      location.href = 'listar.php'; // redirigir al listado
+
+      <?php endif; ?>
   </script>
 </body>
 </html>
+
+
+
+
+

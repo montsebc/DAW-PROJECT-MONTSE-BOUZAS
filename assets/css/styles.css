@@ -163,15 +163,28 @@ body.listados-body {
   opacity: 0.3; 
   z-index: -1;
 }
-
-@media only screen and (max-width: 767px) {
-  body.listados-body {
-    background-position: center center;
-  }
+.agregar-body {
+  /* float:left; */
+  font-family: Arial, sans-serif;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center center;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
-
-.agregar-bg-image {
-  position: fixed;
+.agregar-header {
+  grid-column: 1;
+  grid-row: 1;
+  align-self: start;
+}
+.agregar-background-wrapper {
+  position: relative;
+}
+.agregar-background-wrapper::before {
+  content: "";
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
@@ -182,178 +195,155 @@ body.listados-body {
   opacity: 0.3;
   z-index: -1;
 }
-
 .agregar-main-container {
-  background-color: rgba(255, 255, 255, 0.8);
+  margin: 20px;
+  margin-left: 50px;
+}
+.agregar-container1 {
   padding: 20px;
-  border-radius: 10px;
-  margin: 50px auto;
-  max-width: 600px;
-}
-
-
-.addLibro-background-wrapper {
-  display: flex;
-  justify-content: center;
-  background-color: #f0f0f0;
-  padding: 40px 0;
-}
-
-.addLibro-main-container {
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 5px;
-  width: auto;
-  margin:auto;
+  margin-left: 20px;
+  /* margin-right: auto; */
+  /* margin-top: 20px; */
+  /* float: left;*/
 }
 
-.addLibro-form-container {
+.agregar-form {
   margin-left: 20px;
 }
-.nuevo-body {
-  background: linear-gradient(to bottom, #345995, #2d6a8c, #26a6b5);
+
+.agregar-input {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
 }
 
+.agregar-button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 20px;
+  padding: 8px 12px;
+}
 
+.agregar-button:hover {
+  background-color: #0069d9;
+}
 
-.buscar-body {
+.agregar-label {
+  display: block;
+  margin-bottom: 5px;
+}
+.add-body {
   margin: 0;
   font-family: Arial, sans-serif;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  background-position: center center;
+  flex-direction: column;
 }
 
-.buscar-bg-image {
-  
-    background-image: url("../images/estante-librosBonita.png");
-    background-size: 100vw 100vh;
-    background-attachment: fixed;
-  }
-.listado-body {
-  
-    background-image: url("../images/estante-librosBonita.png");
-    background-size: 100vw 100vh;
-    background-attachment: fixed;
-  }
-
-  
-.listado-bg-wrapper {
-  display: flex;
-  justify-content: left;
-  align-items: center;
-  min-height: 100vh;
-  background-color: transparent;
+.add-background-wrapper {
+  position: relative;
+  flex: 1;
 }
 
-  
-  .listado-main-container {
-  background-color: rgba(255, 255, 255, 0.8);
-  padding: 20px;
-  border-radius: 10px;
-  margin-left: 20px;
-  }
-  
-  .listado-table {
+.add-background-wrapper::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: url("../images/estante-librosBonita.png");
+  background-size: 100vw 100vh;
+  background-attachment: fixed;
+  z-index: -1;
+}
+
+.add-form-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
-  } 
-  
-  .listado-table th,
-  .listado-table td {
-  padding: 10px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-  }
-  
-  .listado-table th {
-  background-color: #f2f2f2;
-  }
-  
-  h1 {
-  text-align: center;
-  margin-bottom: 20px;
-  }
-
-  body.devolver-body {
-    background: linear-gradient(to bottom, #345995, #2d6a8c, #26a6b5);
+  height: 100%;
+  background: rgba(0, 0, 0, 0.4);
 }
 
-  
-  
-  
-  @media only screen and (max-width: 767px) {
-    body.devolver-body {
-      background-position: center center;
-    }
-  }
-  .devolver-no-results {
-    font-size: 2rem;
-    color: white;
+.add-main-container {
+  display: flex;
+  flex-direction: column;
 }
-.devuelto-table {
-  margin: auto; 
-  max-width: 2200px; 
+
+.add-form-wrapper {
+  max-width: 500px;
+}
+
+.add-form-container {
   padding: 20px;
-  
- 
-  }
-  
-  .devuelto-table th {
-  background-color: #af4c93;
-  color: white;
-  font-weight: bold;
-  padding: 10px;
-  text-align: auto;
-  }
-  
-  .devuelto-table td {
-  border: 1px solid #ddd;
-  padding: 8px;
-  text-align: auto;
-  }
-  .devuelto-container {
-    margin: 0 0 0 20px; /* Cambiar margen para que empiece al inicio de la página */
-    max-width: 1400px; /* Hacer el listado más ancho */
-    padding: 20px;
-  }
-  .devuelto-table {
-    border-collapse: collapse;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-left: 0;
+  height: 100%; /* Agregar altura del contenedor */
 }
 
-.devuelto-th, .devuelto-td {
-    border: 1px solid black;
-    padding: 5px;
-    color: #333;
-    background-color: #f2f2f2;
+.add-form label {
+  display: block;
+  margin-bottom: 5px;
 }
 
-.devuelto-th:first-child,
-.devuelto-td:first-child {
-    margin-right: 10px;
+.add-form input,
+.add-form select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
 }
 
-.devuelto-container {
-    margin: 0 0 0 20px; /* Cambiar margen para que empiece al inicio de la página */
-    max-width: 1400px; /* Hacer el listado más ancho */
-    padding: 20px;
+.add-form button {
+  background-color: #007bff;
+  border: none;
+  border-radius: 3px;
+  color: #fff;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 20px;
+  padding: 8px 12px;
 }
 
-.devuelto-header {
-    font-size: 2rem;
-    font-weight: bold;
-    margin-bottom: 20px;
-    color: #333;
+.add-form button:hover {
+  background-color: #0069d9;
 }
 
-.devuelto-link {
-    margin-top: 20px;
-    display: block;
-    text-align: center;
-    color: #333;
-}
 
-.devuelto-link:hover {
-    text-decoration: underline;
-}
-  
+
+
+
+
+
+
+
+
+
+
 
 
