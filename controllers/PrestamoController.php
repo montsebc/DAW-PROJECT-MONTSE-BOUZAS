@@ -19,41 +19,49 @@ class PrestamoController {
     
     
     
-    public function listarPrestamosFiltrados($socio, $titulo, $fecha_prestamo) {
+    public function listarPrestamosFiltrados($socio = null, $titulo = null, $fecha_prestamo = null) {
         $conexion = $this->prestamo->getConexion();
     
-        // Si los valores de los filtros son null, llamar a la función sin filtros
-        if ($socio === null && $titulo === null && $fecha_prestamo === null) {
-            return $this->prestamo->listarPrestamos();
-        }
-        
-        // Si se ha seleccionado la opción "Todos los libros", cambiar el valor de $titulo a null
-        if ($titulo === '') {
-            $titulo = null;
-        }
-        
         // Si se ha seleccionado la opción "Todos los socios", cambiar el valor de $socio a null
         if ($socio === '') {
             $socio = null;
         }
     
+        // Si se ha seleccionado la opción "Todos los libros", cambiar el valor de $titulo a null
+        if ($titulo === '') {
+            $titulo = null;
+        }
+    
+        // Si no se ha seleccionado una fecha, cambiar el valor de $fecha_prestamo a null
+        if ($fecha_prestamo === '') {
+            $fecha_prestamo = null;
+        }
+    
         // Construir la consulta con los filtros correspondientes
         $query = "SELECT p.*, l.titulo, l.autor, s.nombre, s.apellidos, 
-          l.cantidad_ejemplares - IFNULL(SUM(CASE WHEN p.fecha_devolucion IS NULL THEN 1 ELSE 0 END), 0) AS ejemplares_disponibles
-          FROM prestamos p
-          JOIN libros l ON p.id_libro = l.id
-          JOIN socios s ON p.id_socio = s.id
-          WHERE (p.id_socio = ? OR ? IS NULL) AND (l.titulo = ? OR ? IS NULL) AND (DATE(p.fecha_prestamo) = ? OR ? IS NULL) AND p.devuelto = 0
-          GROUP BY l.id
-          ORDER BY p.id";
+        l.cantidad_ejemplares - IFNULL(SUM(CASE WHEN p.fecha_devolucion IS NULL THEN 1 ELSE 0 END), 0) AS ejemplares_disponibles
+        FROM prestamos p
+        JOIN libros l ON p.id_libro = l.id
+        JOIN socios s ON p.id_socio = s.id
+        WHERE (CONCAT(s.nombre, ' ', s.apellidos) LIKE CONCAT('%', ?, '%') OR ? IS NULL)
+          AND (l.titulo LIKE CONCAT('%', ?, '%') OR ? IS NULL) AND (DATE(p.fecha_prestamo) = ? OR ? IS NULL) AND p.devuelto = 0
+        GROUP BY l.id
+        ORDER BY p.id";
+
 
 
 $stmt = $conexion->prepare($query);
-$stmt->bind_param("isssss", $socio, $socio, $titulo, $titulo, $fecha_prestamo, $fecha_prestamo);
+$stmt->bind_param("ssssss", $socio, $socio, $titulo, $titulo, $fecha_prestamo, $fecha_prestamo);
 $stmt->execute();
 $result = $stmt->get_result();
 return $result;
-}
+
+    }
+    
+    
+    
+    
+
     public function listarLibrosDisponibles() {
         $conexion = $this->prestamo->getConexion();
     

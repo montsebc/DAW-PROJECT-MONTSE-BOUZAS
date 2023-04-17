@@ -4,7 +4,7 @@
 
 <?php 
 $prestamoController = new PrestamoController();
-
+$prestamos = $prestamoController->listarPrestamosFiltrados(null, null, null);
 $socio = isset($_GET['socio']) ? $_GET['socio'] : null;
 $titulo = isset($_GET['titulo']) ? $_GET['titulo'] : null;
 $fecha_prestamo = isset($_GET['fecha_prestamo']) ? $_GET['fecha_prestamo'] : null;
@@ -19,134 +19,70 @@ if ($socio !== null || $titulo !== null || $fecha_prestamo !== null) {
 <head>
     <meta charset="UTF-8">
     <title>Listado de Préstamos</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .main-container {
-            width: 80%;
-            margin: auto;
-            text-align: center;
-            font-family: Arial, Helvetica, sans-serif;
-            color: #333;
+        body {
+          background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../assets/images/estante-librosBonita.png");
+          background-size: cover;
+          background-position: center;
         }
         
-        h1 {
-            font-size: 36px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #008080;
+        .bg-opacity {
+          background-color: rgba(255, 255, 255, 0.8);
+          border-radius: 10px;
+          padding: 20px;
         }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
+        .table-container {
+          overflow-y: scroll;
+          height: 400px; /* ajusta esta altura según sea necesario */
         }
-        
-        table th,
-        table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-            text-align: center;
-        }
-        
-        table th {
-            background-color: #f2f2f2;
-            color: #333;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        
-        table td {
-            font-size: 16px;
-        }
-        
-        form {
-            margin-bottom: 20px;
-        }
-        
-        form label {
-            font-size: 18px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-        
-        form select,
-        form input[type="date"] {
-            font-size: 16px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            margin-right: 10px;
-        }
-        
-        form button[type="submit"] {
-            font-size: 16px;
-            font-weight: bold;
-            padding: 5px 10px;
-            border-radius: 5px;
-            background-color: #008080;
-            color: #fff;
-            border: none;
-            cursor: pointer;
-        }
-        
-        p {
-            font-size: 18px;
-            font-weight: bold;
-            color: #008080;
-            margin-bottom: 20px;
-        }
-        
-        a {
-            font-size: 16px;
-            font-weight: bold;
-            color: #008080;
-            text-decoration: none;
-            margin-right: 10px;
-        }
-        
-        a:hover {
-            text-decoration: underline;
+        thead th {
+          position: sticky;
+          top: 0;
+          background-color: #fff;
+          z-index: 1;
         }
     </style>
 </head>
-<body>
-    <div class="container main-container">
-    <h1>Listado de Préstamos Activos</h1>
-        <form method="GET">
-            <label for="socio">Filtrar por Socio:</label>
-            <select name="socio" id="socio">
-                <option value="">Todos los socios</option>
-                <?php foreach ($prestamoController->listarSocios() as $s): ?>
-                    <option value="<?php echo $s['nombre'] . ' ' . $s['apellidos']; ?>"
-                        <?php if ($socio === $s['nombre'] . ' ' . $s['apellidos']): ?>
-                            selected
-                        <?php endif; ?>>
-                        <?php echo $s['nombre'] . ' ' . $s['apellidos']; ?>
-                    </option>
-                <?php endforeach; ?>
-            </select>
-            <label for="titulo">Filtrar por Título:</label>
-        <select name="titulo" id="titulo">
-            <option value="">Todos los títulos</option>
-            <?php foreach ($prestamoController->listarLibrosDisponibles() as $l): ?>
-                <option value="<?php echo $l['titulo']; ?>"
-                    <?php if ($titulo === $l['titulo']): ?>
-                        selected
-                    <?php endif; ?>>
-                    <?php echo $l['titulo']; ?>
-                    <?php if (isset($l['ejemplares_disponibles'])): ?>(<?php echo $l['ejemplares_disponibles']; ?> ejemplares disponibles)<?php endif; ?>
-                </option>
-            <?php endforeach; ?>
-        </select>
-
-        <label for="fecha_prestamo">Filtrar por Fecha de Préstamo:</label>
-        <input type="date" name="fecha_prestamo" id="fecha_prestamo" value="<?php echo $fecha_prestamo; ?>">
-
-        <button type="submit">Filtrar</button>
-    </form>
+<body class="listado-body">
+    <div class="container mt-5">
+        <div class="bg-opacity">
+            <div class="listado-main-container">
+                <h1 class="text-center mb-4">Listado de Préstamos Activos</h1>
+                <form method="GET">
+                    <label for="socio">Filtrar por Socio:</label>
+                    <select name="socio" id="socio">
+                            <option value="">Todos los socios</option>
+                            <?php foreach ($prestamoController->listarSocios() as $s): ?>
+                                <option value="<?php echo $s['nombre'] . ' ' . $s['apellidos']; ?>"
+                                    <?php if ($socio === $s['nombre'] . ' ' . $s['apellidos']): ?>
+                                        selected
+                                    <?php endif; ?>>
+                                    <?php echo $s['nombre'] . ' ' . $s['apellidos']; ?>
+                                </option>
+                            <?php endforeach; ?>
+                            </select>
+                    <label for="titulo">Filtrar por Título:</label>
+                    <select name="titulo" id="titulo">
+                                <option value="">Todos los títulos</option>
+                                <?php foreach ($prestamoController->listarLibrosDisponibles() as $l): ?>
+                                    <option value="<?php echo $l['titulo']; ?>"
+                                        <?php if ($titulo === $l['titulo']): ?>
+                                            selected
+                                        <?php endif; ?>>
+                                        <?php echo $l['titulo']; ?>
+                                        <?php if (isset($l['ejemplares_disponibles'])): ?>(<?php echo $l['ejemplares_disponibles']; ?> ejemplares disponibles)<?php endif; ?>
+                                    </option>
+                            <?php endforeach; ?>
+                            </select>
+                    <label for="fecha_prestamo">Filtrar por Fecha de Préstamo:</label>
+                    <input type="date" name="fecha_prestamo" id="fecha_prestamo" value="<?php echo $fecha_prestamo; ?>">
+                    <button type="submit">Filtrar</button>
+                </form>
+                <div class="table-container">
+                    <table class="activos-table">
 
     <?php if (isset($prestamos) && $prestamos->num_rows > 0): ?>
-        <table class="activos-table">
         <thead>
         <tr>
             <th>ID Préstamo</th>
@@ -186,8 +122,16 @@ echo ($prestamo['entrega_anticipada'] === '' || $prestamo['entrega_anticipada'] 
     <?php endif; ?>
 <?php endif; ?>
 
-<a href="../../bienvenida.php">Volver al menú principal</a><br>
 <a href="devolver.php">Devolver un libro</a>
 </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
+
+
+
+
+

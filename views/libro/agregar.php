@@ -27,8 +27,11 @@ if (isset($_POST['agregar'])) {
     $query = "INSERT INTO libros (titulo, autor, editorial,isbn, cantidad_ejemplares, id_categoria) VALUES ('$titulo', '$autor', '$editorial','$isbn', '$cantidad_ejemplares', '$id_categoria')";
     $resultado = $conexion->query($query);
 
-    // Mostrar mensaje de éxito
-    echo "<script>alert('El libro ha sido agregado correctamente.');</script>";
+    // Mostrar mensaje de éxito y redirigir al listado de libros
+  echo "<script>
+  alert('El libro ha sido agregado correctamente.');
+  window.location.href = 'listar.php';
+</script>";
   }
 }
 ?>
@@ -37,33 +40,55 @@ if (isset($_POST['agregar'])) {
 <html>
 <head>
   <title>Agregar Libro</title>
-  <link rel="stylesheet" href="../assets/css/styles.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" type="text/css" href="../styles.css">
+  <style>
+    body {
+      background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../assets/images/estante-librosBonita.png");
+      background-size: cover;
+      background-position: center;
+    }
+    
+    .bg-opacity {
+      background-color: rgba(255, 255, 255, 0.8);
+      border-radius: 10px;
+      padding: 20px;
+    }
+    .formulario-estrecho {
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    .fondo-limitado {
+      max-width: 550px;
+      margin: 0 auto;
+    }
+  </style>
 </head>
-<body class="add-body">
-  <div class="add-background-wrapper">
-    <div class="container add-main-container">
-      <h2 class="titulo-centrado">Agregar Libro</h2>
-      <div class="add-form-container">
+<body class="listado-body">
+<div class="container mt-5">
+    <div class="bg-opacity fondo-limitado">
+      <div class="listado-main-container formulario-estrecho">
+        <h1 class="text-center mb-4">Agregar Libro</h1>
         <form method="POST">
-          <div>
-            <label>Título</label>
-            <input type="text" name="titulo" placeholder="Título">
+          <div class="mb-3">
+            <label class="form-label">Título</label>
+            <input type="text" name="titulo" placeholder="Título" class="form-control">
           </div>
-          <div>
-            <label>Autor</label>
-            <input type="text" name="autor" placeholder="Autor">
+          <div class="mb-3">
+            <label class="form-label">Autor</label>
+            <input type="text" name="autor" placeholder="Autor" class="form-control">
           </div>
-          <div>
-            <label>Editorial</label>
-            <input type="text" name="editorial" placeholder="Editorial">
+          <div class="mb-3">
+            <label class="form-label">Editorial</label>
+            <input type="text" name="editorial" placeholder="Editorial" class="form-control">
           </div>
-          <div>
-            <label>ISBN</label>
-            <input type="text" name="isbn" placeholder="ISBN">
+          <div class="mb-3">
+            <label class="form-label">ISBN</label>
+            <input type="text" name="isbn" placeholder="ISBN" class="form-control">
           </div>
-          <div>
-            <label>Ejemplares:</label>
-            <select name="cantidad_ejemplares">
+          <div class="mb-3">
+            <label class="form-label">Ejemplares:</label>
+            <select name="cantidad_ejemplares" class="form-select">
               <?php
                 for ($i = 0; $i <= 10; $i++) {
                   echo "<option value=\"$i\">$i</option>";
@@ -71,10 +96,9 @@ if (isset($_POST['agregar'])) {
               ?>
             </select>
           </div>
-
-          <div>
-            <label>Categoría</label>
-            <select name="categoria_id">
+          <div class="mb-3">
+            <label class="form-label">Categoría</label>
+            <select name="categoria_id" class="form-select">
               <?php
               // Consulta SQL para obtener las categorías disponibles
               $query = "SELECT * FROM categorias";
@@ -90,11 +114,13 @@ if (isset($_POST['agregar'])) {
               ?>
             </select>
           </div>
-          <button type="submit" name="agregar">Agregar</button>
+          <button type="submit" name="agregar" class="btn btn-primary">Agregar</button>
         </form>
       </div>
     </div>
   </div>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
 </body>
 </html>
 

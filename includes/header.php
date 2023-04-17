@@ -67,7 +67,6 @@
                         Usuario
                     </a>
     <div class="dropdown-menu" aria-labelledby="usuarioDropdown">
-                    <a class="dropdown-item" href="../usuario/login.php">Iniciar sesión</a>
                     <a class="dropdown-item" href="../usuario/logout.php">Cerrar sesión</a>
     </div>
                 </li>

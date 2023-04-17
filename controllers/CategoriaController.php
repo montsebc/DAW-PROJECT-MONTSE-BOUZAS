@@ -36,5 +36,26 @@ class CategoriaController {
         // Cargar la vista de edición de categoría
         require_once(__DIR__ . '/../views/categoria/editar.php');
     }
+    // En tu controlador CategoriaController.php
+
+public function eliminar() {
+    $id = $_GET['id'];
+
+    $categoria = new Categoria();
+    $categoria->setId($id);
+
+    if (!$categoria->tieneHistorialAsociado()) {
+        $eliminado = $categoria->eliminar();
+
+        if ($eliminado) {
+            header('Location: index.php?action=listarCategorias');
+        } else {
+            echo "Error al eliminar la categoría";
+        }
+    } else {
+        echo "No se puede eliminar la categoría porque tiene historial asociado";
+    }
+}
+
 }
 ?>

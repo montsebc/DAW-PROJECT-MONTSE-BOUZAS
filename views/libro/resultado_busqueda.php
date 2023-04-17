@@ -1,5 +1,5 @@
 <?php
-include('../../includes/header.php'); 
+
 
 // Establecer la conexión a la base de datos
 $conexion = new mysqli('localhost', 'root', '', 'booking a book');
@@ -10,15 +10,20 @@ if ($conexion->connect_error) {
 }
 
 // Obtener los datos de la búsqueda desde el formulario
-$opcion = $_GET['opcion'];
-$valor_busqueda = $_GET['valor_busqueda'];
+$opcion = isset($_GET['opcion']) ? $_GET['opcion'] : '';
+$valor_busqueda = isset($_GET['valor_busqueda']) ? $_GET['valor_busqueda'] : '';
 
 // Consulta SQL para buscar el libro según la opción seleccionada y el valor de búsqueda
-$query = "SELECT * FROM libros WHERE $opcion LIKE '%$valor_busqueda%'";
+$query = "SELECT * FROM libros";
+if (!empty($opcion) && !empty($valor_busqueda)) {
+  $query .= " WHERE $opcion LIKE '%$valor_busqueda%'";
+}
+
 $resultado = $conexion->query($query);
 
+
 // Verificar si se obtuvieron resultados
-if ($resultado->num_rows > 0) {
+if ($resultado && $resultado->num_rows > 0) {
   // Mostrar los resultados en una tabla
   echo "<table>";
   echo "<tr><th>Título</th><th>Autor</th><th>Editorial</th><th>ISBN</th></tr>";
@@ -39,4 +44,3 @@ if ($resultado->num_rows > 0) {
 // Cerrar la conexión a la base de datos
 $conexion->close();
 ?>
-

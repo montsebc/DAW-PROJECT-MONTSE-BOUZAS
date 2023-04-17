@@ -30,57 +30,84 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Inicio de sesión</title>
-    
-    <!-- Biblioteca de estilos de Bootstrap -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
-    <!-- Tu archivo de estilos CSS -->
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <title>Iniciar sesión</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css">
     <style>
-        .bg-index {
-    background-image: url('assets/images/inicioSesion.png');
-    background-size: contain;
-    background-position: center center;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
+        body {
+            background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("./assets/images/estante-librosBonita.png");
+            background-size: cover;
+            background-position: center;
+        }
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            opacity: 0.9;
+        }
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 20px;
+        }
+        button[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            width: 100%;
+        }
+        button[type="submit"]:hover {
+            background-color: #0069d9;
+        }
+        
     </style>
-    <!-- Script para resaltar el enlace  en lactivoa navegación -->
-    <script src="assets/js/navigation.js"></script>
-    
 </head>
-<body class="bg-index">
-<div class="container">
-        <h1>Iniciar sesión</h1>
-        <?php if (isset($mensaje)): ?>
-            <p><?php echo $mensaje; ?></p>
-        <?php endif; ?>
-        <form method="post">
-        <label>Email:</label>
-        <input type="text" name="email" /><br>
-        <label>Password:</label>
-        <input type="password" name="password" /><br>
-        <input type="submit" value="Iniciar sesión" />
-    </form>
-</div>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Iniciar sesión</h1>
 
-<!-- Biblioteca de scripts de jQuery -->
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+            <?php if (isset($mensaje)): ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo $mensaje; ?>
+                </div>
+            <?php endif; ?>
 
-<!-- Biblioteca de scripts de Bootstrap -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
-<!-- Tu archivo de script JS -->
-<script src="assets/js/navigation.js"></script>
-<script>
-    $(document).ready(function(){
-        highlightActiveLink();
-    });
-</script>
+            <form method="post">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required class="form-control">
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required class="form-control">
+		    </div>
+		    <button type="submit" class="btn btn-primary">Ingresar</button>
+		</form>
+	</div>
 </body>
 </html>
-
-            

@@ -38,10 +38,31 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <title>Nuevo Préstamo</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+      body {
+        background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../assets/images/estante-librosBonita.png");
+        background-size: cover;
+        background-position: center;
+      }
+      
+      .bg-opacity {
+        background-color: rgba(255, 255, 255, 0.8);
+        border-radius: 10px;
+        padding: 20px;
+      }
+      .formulario-estrecho {
+        max-width: 500px;
+        margin: 0 auto;
+      }
+      .fondo-limitado {
+        max-width: 550px;
+        margin: 0 auto;
+      }
+    </style>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
         function calcularFechaDevolucion() {
             const fechaPrestamo = document.getElementById('fecha_prestamo');
@@ -49,56 +70,55 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             const diasPrestamo = 14;
 
             fechaPrestamo.addEventListener('change', function() {
-                const fechaPrestamoMoment = new Date(fechaPrestamo.value);
-                fechaPrestamoMoment.setDate(fechaPrestamoMoment.getDate() + diasPrestamo);
-                fechaDevolucion.valueAsDate = fechaPrestamoMoment;
-            });
+                const fechaPrestamoMoment = new Date();
+        fechaPrestamoMoment.setDate(fechaPrestamoMoment.getDate() + diasPrestamo);
+        fechaDevolucion.valueAsDate = fechaPrestamoMoment;
+    }
 
-            const fechaPrestamoMoment = new Date();
-            fechaPrestamoMoment.setDate(fechaPrestamoMoment.getDate() + diasPrestamo);
-            fechaDevolucion.valueAsDate = fechaPrestamoMoment;
-        }
-
-        document.addEventListener("DOMContentLoaded", function() {
-            calcularFechaDevolucion();
-        });
-    </script>
+    document.addEventListener("DOMContentLoaded", function() {
+        calcularFechaDevolucion();
+    });
+</script>
 </head>
 <body class="nuevo-body">
-    <div class="container main-container">
-        <h1 class="mt-5 mb-4">Nuevo Préstamo</h1>
-        <form action="nuevo.php" method="POST">
-            <div class="form-group">
-                <label for="id_libro">Libro:</label>
+    <div class="container main-container mt-5">
+        <div class="bg-opacity fondo-limitado">
+          <h1 class="text-center mb-4">Nuevo Préstamo</h1>
+          <form action="nuevo.php" method="POST" class="formulario-estrecho">
+              <div class="mb-3">
+                <label for="id_libro" class="form-label">Libro:</label>
                 <select name="id_libro" id="id_libro" class="form-control">
                     <?php while ($libro = $libros->fetch_assoc()): ?>
                         <option value="<?php echo $libro['id']; ?>"><?php echo $libro['titulo']; ?></option>
                     <?php endwhile; ?>
                 </select>
-            </div>
-            <div class="form-group">
-                <label for="id_socio">Socio:</label>
-                <select name="id_socio" id="id_socio" class="form-control">
-                    <?php while ($socio = $socios->fetch_assoc()): ?>
-                        <option value="<?php echo $socio['id']; ?>"><?php echo $socio['nombre'] . ' ' . $socio['apellidos']; ?></option>
-                    <?php endwhile; ?>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="fecha_prestamo">Fecha de préstamo:</label>
-                <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" value="<?php echo date('Y-m-d'); ?>">
-            </div>
-            <div class="form-group">
-                <label for="fecha_devolucion">Fecha de devolución:</label>
-                <input type="date" id="fecha_devolucion" name="fecha_devolucion" class="form-control">
-            </div>
-            <?php if (isset($mensajeError)): ?>
-                <p style="color: red;"><?php echo $mensajeError; ?></p>
-            <?php endif; ?>
-            <button type="submit">Crear préstamo</button>
-</form>
-<a href="listar.php">Volver a la lista de préstamos</a>
-</div>
-
+              </div>
+              <div class="mb-3">
+                  <label for="id_socio" class="form-label">Socio:</label>
+                  <select name="id_socio" id="id_socio" class="form-control">
+                      <?php while ($socio = $socios->fetch_assoc()): ?>
+                          <option value="<?php echo $socio['id']; ?>"><?php echo $socio['nombre'] . ' ' . $socio['apellidos']; ?></option>
+                      <?php endwhile; ?>
+                  </select>
+              </div>
+              <div class="mb-3">
+                  <label for="fecha_prestamo" class="form-label">Fecha de préstamo:</label>
+                  <input type="date" id="fecha_prestamo" name="fecha_prestamo" class="form-control" value="<?php echo date('Y-m-d'); ?>">
+              </div>
+              <div class="mb-3">
+                  <label for="fecha_devolucion" class="form-label">Fecha de devolución:</label>
+                  <input type="date" id="fecha_devolucion" name="fecha_devolucion" class="form-control">
+              </div>
+              <?php if (isset($mensajeError)): ?>
+                  <p class="text-danger"><?php echo $mensajeError; ?></p>
+              <?php endif; ?>
+              <div class="d-grid gap-2">
+                  <button type="submit" class="btn btn-primary">Crear préstamo</button>
+              </div>
+          </form>
+          <div class="text-center mt-3">
+          </div>
+        </div>
+    </div>
 </body>
 </html>
