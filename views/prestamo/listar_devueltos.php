@@ -84,7 +84,6 @@ $prestamos = $prestamosResult->fetch_all(MYSQLI_ASSOC);
     </tbody>
     </table>
         </div>
-        <a href="devolver.php" class="btn btn-primary mt-3">Devolver un libro</a>
     </div>
 </div>
 </body>

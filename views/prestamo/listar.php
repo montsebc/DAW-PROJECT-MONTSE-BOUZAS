@@ -122,7 +122,6 @@ echo ($prestamo['entrega_anticipada'] === '' || $prestamo['entrega_anticipada'] 
     <?php endif; ?>
 <?php endif; ?>
 
-<a href="devolver.php">Devolver un libro</a>
 </div>
         </div>
     </div>

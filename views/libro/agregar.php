@@ -114,7 +114,7 @@ if (isset($_POST['agregar'])) {
               ?>
             </select>
           </div>
-          <button type="submit" name="agregar" class="btn btn-primary">Agregar</button>
+          <button type="submit" name="agregar" class="btn btn-primary" style="background-color: #8c9390; border-color: #8c9390;">Agregar</button>
         </form>
       </div>
     </div>

@@ -88,7 +88,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                                     <td>
                                         <form action="devolver.php" method="POST" id="devolver-form-<?php echo $prestamo['id']; ?>">
                                             <input type="hidden" name="id" value="<?php echo $prestamo['id']; ?>">
-                                            <button type="button" onclick="confirmarDevolucion(<?php echo $prestamo['id']; ?>);" class="btn btn-danger">Devolver</button>
+                                            <button type="button" onclick="confirmarDevolucion(<?php echo $prestamo['id']; ?>);" class="btn btn-danger" style="background-color: #e0cc8d; border-color: #e0cc8d;">Devolver</button>
                                         </form>
                                     </td>
                                 </tr>

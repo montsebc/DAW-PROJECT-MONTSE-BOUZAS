@@ -70,7 +70,6 @@ $resultado = $conexion->query($query);
                     </tbody>
                 </table>
             </div>
-            <button onclick="location.href='../../bienvenida.php'" class="btn btn-primary mt-3">Volver a la página de bienvenida</button>
         </div>
     </div>
 </body>

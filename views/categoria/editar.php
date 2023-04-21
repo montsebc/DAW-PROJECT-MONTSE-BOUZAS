@@ -89,15 +89,17 @@ if ($resultado->num_rows > 0) {
     }
     .bg-opacity {
       background-color: rgba(255, 255, 255, 0.8);
-      border-radius: 10px;
+      border-radius: 20px;
       padding: 20px;
-      max-width: 100%;
+      max-width: 35%;
       margin: auto;
     }
 
     .table-container {
       overflow-y: scroll;
       height: 600px;
+      width: fit-content;
+
     }
     thead th {
       position: sticky;
@@ -105,6 +107,13 @@ if ($resultado->num_rows > 0) {
       background-color: #fff;
       z-index: 1;
     }
+    button.btn:hover {
+    background-color: transparent;
+    color: #000;
+    }
+
+
+
   </style>
 </head>
 <body>
@@ -129,8 +138,8 @@ if ($resultado->num_rows > 0) {
         <td><?= $categoria['id'] ?></td>
         <td><input type="text" name="nombre" class="form-control" value="<?= $categoria['nombre'] ?>"></td>
         <td>
-          <button type="submit" name="actualizar" class="btn btn-success">Guardar</button>
-          <button type="submit" name="eliminar" class="btn btn-danger" onclick="return confirm('¿Está seguro de que desea eliminar esta categoría?')">Eliminar</button>
+        <button type="submit" name="actualizar" class="btn btn-success guardar">Guardar</button>
+        <button type="submit" name="eliminar" class="btn btn-danger btn-eliminar" onclick="return confirm('¿Está seguro de que desea eliminar esta categoría?')">Eliminar</button>
         </td>
       </form>
     </tr>

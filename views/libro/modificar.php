@@ -174,8 +174,8 @@ if ($resultado->num_rows > 0) {
                     <td><input type="text" name="isbn" class="form-control" value="<?= $libro['isbn'] ?>"></td>
                     <td>
                       <div class="button-container"> <!-- Agregar esta línea -->
-                        <button type="submit" name="actualizar" class="btn btn-primary">Guardar</button>
-                        <button type="submit" name="eliminar" class="btn btn-danger" onclick="return confirm('¿Está seguro que desea eliminar este libro?')">Eliminar</button>
+                      <button type="submit" name="actualizar" class="btn btn-primary" style="background-color: #8c9390; border-color: #8c9390;">Guardar</button>
+                      <button type="submit" name="eliminar" class="btn btn-danger" onclick="return confirm('¿Está seguro que desea eliminar este libro?')" style="background-color: #e0cc8d; border-color: #e0cc8d;">Eliminar</button>
                       </div> <!-- Agregar esta línea -->
                     </td>
                   </form>

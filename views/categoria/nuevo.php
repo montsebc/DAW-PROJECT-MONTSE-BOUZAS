@@ -29,11 +29,10 @@ if (isset($_POST['agregar'])) {
   <link rel="stylesheet" href="../assets/css/styles.css">
   <style>
     body {
-      background-image: linear-gradient(rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.9)), url("../../assets/images/estante-librosBonita.png");
+      background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)), url("../../assets/images/estante-librosBonita.png");
       background-size: cover;
       background-position: center;
     }
-    
     .bg-opacity {
       background-color: rgba(255, 255, 255, 0.8);
       border-radius: 10px;
@@ -53,7 +52,7 @@ if (isset($_POST['agregar'])) {
       left: 0;
       width: 100%;
       height: 100%;
-      background-color: rgba(255, 255, 255, 0.7);
+      background-color: rgba(255, 255, 255, 0.8);
       z-index: -1;
     }
 
@@ -71,7 +70,7 @@ if (isset($_POST['agregar'])) {
             <label class="form-label">Introduzca la nueva Categoría:</label>
             <input type="text" name="nombre" class="form-control">
           </div>
-          <button type="submit" name="agregar" class="btn btn-primary">Agregar</button>
+          <button type="submit" name="agregar" class="btn btn-primary" style="background-color: #8c9390; border-color: #8c9390;">Agregar</button>
         </form>
       </div>
     </div>

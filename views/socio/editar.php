@@ -144,8 +144,8 @@ if ($resultado->num_rows > 0) {
                     <td><input type="text" name="telefono" class="form-control" value="<?= $socio['telefono'] ?>"></td>
                     <td>
                       <div class="button-container">
-                        <button type="submit" name="actualizar" class="btn btn-primary">Guardar</button>
-                        <button type="submit" name="eliminar" class="btn btn-danger" onclick="return confirm('¿Está seguro que desea eliminar este socio?')">Eliminar</button>
+                      <button type="submit" name="actualizar" class="btn btn-primary" style="background-color: #8c9390;">Guardar</button>
+                      <button type="submit" name="eliminar" class="btn btn-danger" onclick="return confirm('¿Está seguro que desea eliminar este socio?')" style="background-color: #e0cc8d;">Eliminar</button>
                       </div>
                     </td>
                   </form>

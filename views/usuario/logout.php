@@ -45,8 +45,8 @@
     <div class="container">
         <div class="form-container">
             <p>¿Estás seguro de que quieres cerrar la sesión?</p>
-            <button onclick="confirmLogout()" class="btn btn-primary">Cerrar sesión</button>
-            <button onclick="goBack()" class="btn btn-secondary">Volver atrás</button>
+            <button onclick="confirmLogout()" class="btn" style="background-color: #8c9390; color: white;">Cerrar sesión</button>
+            <button onclick="goBack()" class="btn" style="background-color: #e0cc8d; color: white;">Volver atrás</button>
         </div>
     </div>
 </body>

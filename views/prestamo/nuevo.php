@@ -64,21 +64,23 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js"></script>
     <script>
-        function calcularFechaDevolucion() {
-            const fechaPrestamo = document.getElementById('fecha_prestamo');
-            const fechaDevolucion = document.getElementById('fecha_devolucion');
-            const diasPrestamo = 14;
+    function calcularFechaDevolucion() {
+        const fechaPrestamo = document.getElementById('fecha_prestamo');
+        const fechaDevolucion = document.getElementById('fecha_devolucion');
+        const diasPrestamo = 14;
 
-            fechaPrestamo.addEventListener('change', function() {
-                const fechaPrestamoMoment = new Date();
-        fechaPrestamoMoment.setDate(fechaPrestamoMoment.getDate() + diasPrestamo);
-        fechaDevolucion.valueAsDate = fechaPrestamoMoment;
+        fechaPrestamo.addEventListener('change', function() {
+            const fechaPrestamoMoment = new Date();
+            fechaPrestamoMoment.setDate(fechaPrestamoMoment.getDate() + diasPrestamo);
+            fechaDevolucion.valueAsDate = fechaPrestamoMoment;
+        });
     }
 
-    document.addEventListener("DOMContentLoaded", function() {
-        calcularFechaDevolucion();
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", function() {
+            calcularFechaDevolucion();
+        });
+    </script>
+
 </head>
 <body class="nuevo-body">
     <div class="container main-container mt-5">
@@ -113,7 +115,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                   <p class="text-danger"><?php echo $mensajeError; ?></p>
               <?php endif; ?>
               <div class="d-grid gap-2">
-                  <button type="submit" class="btn btn-primary">Crear préstamo</button>
+              <button type="submit" class="btn btn-primary" style="background-color: #8c9390; border-color: #8c9390;">Crear préstamo</button>
               </div>
           </form>
           <div class="text-center mt-3">

@@ -7,14 +7,16 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     
     <!-- Tu archivo de estilos CSS -->
-    <link rel="stylesheet" href="../../assets/css/styles.css">
+    <link rel="stylesheet" href="../assets/css/styles.css">
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
-<a class="navbar-brand" href="../../bienvenida.php">
-    <img src="../../assets/images/house-icon.png" alt="Home" style="height: 24px; width: 24px;">
-    Booking a Book
-</a>
+    <a class="navbar-brand" href="../../bienvenida.php">
+        <div style="display: flex; align-items: center;">
+            <img src="../../assets/images/house-icon.png" alt="Home" style="height: 24px; width: 24px;margin-left:20px">
+            <span>Booking a Book</span>
+        </div>
+    </a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -70,8 +72,6 @@
                     <a class="dropdown-item" href="../usuario/logout.php">Cerrar sesión</a>
     </div>
                 </li>
-
-
 
 
             </li>

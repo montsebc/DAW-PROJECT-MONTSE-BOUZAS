@@ -46,7 +46,7 @@
 						<input type="text" name="valor_busqueda" id="valor_busqueda" class="form-control" placeholder="Ingrese búsqueda...">
 					</div>
 					<div class="form-group text-center">
-						<button type="submit" class="btn btn-primary">Buscar</button>
+						<button type="submit" class="btn btn-primary" style="background-color: #8c9390; border-color: #8c9390;">Buscar</button>
 					</div>
 				</form>
 			</div>

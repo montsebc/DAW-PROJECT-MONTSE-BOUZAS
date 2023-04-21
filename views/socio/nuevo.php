@@ -45,7 +45,7 @@
         <label for="telefono">Teléfono:</label>
         <input type="text" name="telefono" required class="form-control">
         <br>
-        <input type="submit" name="guardar" value="Añadir" class="btn btn-primary">
+        <input type="submit" name="guardar" value="Añadir" class="btn btn-primary" style="background-color: #8c9390;">
     </form>
 
     <?php
